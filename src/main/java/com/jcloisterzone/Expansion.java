@@ -63,7 +63,7 @@ public class Expansion {
     @NotImplemented public static Expansion CASTLES = new Expansion("CASTLES", "CS", _tr("Castles in Germany"), ExpansionType.MINOR);
     @NotImplemented public static Expansion HALFINGS_I = new Expansion("HALFINGS_I", "H1", _tr("Halfings") + " I", ExpansionType.MINOR);
     @NotImplemented public static Expansion HALFINGS_II = new Expansion("HALFINGS_II", "H2", _tr("Halfings") + " II", ExpansionType.MINOR);
-    @NotImplemented public static Expansion WATCHTOWER = new Expansion("WATCHTOWER", "WT", _tr("The Watchtower"), new Class[] { WatchtowerCapability.class }, ExpansionType.MINOR);
+//    @NotImplemented public static Expansion WATCHTOWER = new Expansion("WATCHTOWER", "WT", _tr("The Watchtower"), new Class[] { WatchtowerCapability.class }, ExpansionType.MINOR);
 
     // Minis expansion line
     public static Expansion FLIER = new Expansion("FLIER", "FL", "#1 - " + _tr("The Flier"), new Class[] { FlierCapability.class }, ExpansionType.MINI);
