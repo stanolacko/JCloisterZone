@@ -27,7 +27,7 @@ public class FanWellCapability extends Capability<Void> {
     @Override
     public Feature initFeature(GameState state, String tileId, Feature feature, Element xml) {
         if (feature instanceof Road) {
-            feature = ((Road) feature).setWell(attributeIntValue(xml, "wells", 0));
+            feature = ((Road) feature).setWells(attributeIntValue(xml, "wells", 0));
         }
         return feature;
     }
