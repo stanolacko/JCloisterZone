@@ -47,7 +47,8 @@ public class LegacyAiPlayer extends RankingAiPlayer {
             PhantomCapability.class,
             FestivalCapability.class,
             WindRoseCapability.class,
-            LabyrinthCapability.class
+            LabyrinthCapability.class,
+            FanWellCapability.class
         );
         return value.toJavaSet();
     }

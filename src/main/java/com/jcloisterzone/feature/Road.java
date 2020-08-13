@@ -30,9 +30,11 @@ public class Road extends CompletableFeature<Road> {
     private final boolean inn;
     private final boolean labyrinth;
     private final Set<FeaturePointer> openTunnelEnds;
-
+    
+    private int wells = 0;
+    
     public Road(List<FeaturePointer> places, Set<Edge> openEdges) {
-        this(places, openEdges, HashSet.empty(), false, false, HashSet.empty());
+        this(places, openEdges, HashSet.empty(), false, false, HashSet.empty(), 0);
     }
 
     public Road(
@@ -41,12 +43,16 @@ public class Road extends CompletableFeature<Road> {
             Set<FeaturePointer> neighboring,
             boolean inn,
             boolean labyrinth,
-            Set<FeaturePointer> openTunnelEnds
+            Set<FeaturePointer> openTunnelEnds,
+            int wells
         ) {
+
         super(places, openEdges, neighboring);
+
         this.inn = inn;
         this.labyrinth = labyrinth;
         this.openTunnelEnds = openTunnelEnds;
+        this.wells = wells;
     }
 
     @Override
@@ -63,7 +69,8 @@ public class Road extends CompletableFeature<Road> {
             mergeNeighboring(road),
             inn || road.inn,
             labyrinth || road.labyrinth,
-            mergeTunnelEnds(road)
+            mergeTunnelEnds(road),
+            wells + road.wells
         );
     }
 
@@ -75,7 +82,8 @@ public class Road extends CompletableFeature<Road> {
             neighboring,
             inn,
             labyrinth,
-            openTunnelEnds
+            openTunnelEnds,
+            wells
         );
     }
 
@@ -87,7 +95,8 @@ public class Road extends CompletableFeature<Road> {
             neighboring,
             inn,
             labyrinth,
-            openTunnelEnds
+            openTunnelEnds,
+            wells
         );
     }
 
@@ -113,7 +122,8 @@ public class Road extends CompletableFeature<Road> {
             placeOnBoardNeighboring(pos, rot),
             inn,
             labyrinth,
-            placeOnBoardTunnelEnds(pos, rot)
+            placeOnBoardTunnelEnds(pos, rot),
+            wells
         );
     }
 
@@ -123,7 +133,7 @@ public class Road extends CompletableFeature<Road> {
 
     public Road setInn(boolean inn) {
         if (this.inn == inn) return this;
-        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds);
+        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds, wells);
     }
 
     public boolean isLabyrinth() {
@@ -132,7 +142,7 @@ public class Road extends CompletableFeature<Road> {
 
     public Road setLabyrinth(boolean labyrinth) {
         if (this.labyrinth == labyrinth) return this;
-        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds);
+        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds, wells);
     }
 
     public Set<FeaturePointer> getOpenTunnelEnds() {
@@ -141,13 +151,27 @@ public class Road extends CompletableFeature<Road> {
 
     public Road setOpenTunnelEnds(Set<FeaturePointer> openTunnelEnds) {
         if (this.openTunnelEnds == openTunnelEnds) return this;
-        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds);
+        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds, wells);
     }
+
+    public int getWells() {
+        return wells;
+    }
+
+    public Road getWells(int wells) {
+        if (this.wells == wells) return this;
+        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds, wells);
+    }
+    public Road setWells(int wells) {
+        if (this.wells == wells) return this;
+        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds, wells);
+    }
+
 
     @Override
     public Road setNeighboring(Set<FeaturePointer> neighboring) {
         if (this.neighboring == neighboring) return this;
-        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds);
+        return new Road(places, openEdges, neighboring, inn, labyrinth, openTunnelEnds, wells);
     }
 
     private int getBasePoints(GameState state, boolean completed) {
@@ -158,6 +182,9 @@ public class Road extends CompletableFeature<Road> {
         int points = inn ? tileCount * 2 : tileCount;
         if (labyrinth && completed) {
             points += 2 * getMeeples(state).size();
+        }
+        if (wells>0) {
+        	points += inn ? wells * 2 : wells;
         }
         return points;
 

@@ -62,8 +62,8 @@ public class Expansion {
     public static Expansion GERMAN_MONASTERIES = new Expansion("GERMAN_MONASTERIES", "GM", _tr("The German Monasteries"), new Class[] { GermanMonasteriesCapability.class }, ExpansionType.MINOR);
     @NotImplemented public static Expansion CASTLES = new Expansion("CASTLES", "CS", _tr("Castles in Germany"), ExpansionType.MINOR);
     @NotImplemented public static Expansion HALFINGS_I = new Expansion("HALFINGS_I", "H1", _tr("Halfings") + " I", ExpansionType.MINOR);
-    @NotImplemented public static Expansion HALFINGS_II = new Expansion("HALFINGS_II", "H2", _tr("Halfings") + " ÏI", ExpansionType.MINOR);
-    @NotImplemented public static Expansion WATCHTOWER = new Expansion("WATCHTOWER", "WT", _tr("The Watchtower"), ExpansionType.MINOR);
+    @NotImplemented public static Expansion HALFINGS_II = new Expansion("HALFINGS_II", "H2", _tr("Halfings") + " II", ExpansionType.MINOR);
+    @NotImplemented public static Expansion WATCHTOWER = new Expansion("WATCHTOWER", "WT", _tr("The Watchtower"), new Class[] { WatchtowerCapability.class }, ExpansionType.MINOR);
 
     // Minis expansion line
     public static Expansion FLIER = new Expansion("FLIER", "FL", "#1 - " + _tr("The Flier"), new Class[] { FlierCapability.class }, ExpansionType.MINI);
@@ -81,14 +81,21 @@ public class Expansion {
     public static Expansion DARMSTADT = new Expansion("DARMSTADT", "DA", _tr("Darmstadt Promo"), new Class[] { ChurchCapability.class }, ExpansionType.PROMO);
     public static Expansion LABYRINTH = new Expansion("LABYRINTH", "LA", _tr("Labyrinth"), new Class[] { LabyrinthCapability.class }, ExpansionType.PROMO);
 
+    // Fan expansion line
+    public static Expansion FAN_WELLS = new Expansion("FAN_WELLS", "FAN_WL", _tr("Fan Wells"), new Class[] { FanWellCapability.class }, ExpansionType.FAN);
+    
     @NotImplemented public static Expansion _MISSING_PLACEHOLDER = new Expansion("(Unknown expansion)", "??", _tr("(Unknown expansion)"), ExpansionType.UNKNOWN);
 
     private static Vector<Expansion> _values = Vector.of(
         BASIC, WINTER,
+        
+        FAN_WELLS,
+
         INNS_AND_CATHEDRALS, TRADERS_AND_BUILDERS, PRINCESS_AND_DRAGON, TOWER,
         ABBEY_AND_MAYOR, BRIDGES_CASTLES_AND_BAZAARS, HILLS_AND_SHEEP,
         KING_AND_ROBBER_BARON, RIVER, RIVER_II, CATHARS, BESIEGERS, COUNT, GQ11, CULT, TUNNEL,
-        CORN_CIRCLES, PHANTOM, FESTIVAL, LITTLE_BUILDINGS, WIND_ROSE, GERMAN_MONASTERIES,
+        CORN_CIRCLES, PHANTOM, FESTIVAL, LITTLE_BUILDINGS, WIND_ROSE, GERMAN_MONASTERIES, 
+//		WATCHTOWER, 
         FLIER, FERRIES, GOLDMINES, MAGE_AND_WITCH, CORN_CIRCLES_II,
         RUSSIAN_PROMOS, DARMSTADT, LABYRINTH
     );
