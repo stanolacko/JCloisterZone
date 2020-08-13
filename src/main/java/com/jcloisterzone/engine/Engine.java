@@ -196,7 +196,6 @@ public class Engine implements  Runnable {
     public void run() {
         Config config = new Config();
 
-        initialSeed = random.nextLong();
         // debug seeds
         // initialSeed = -1507029652130839674L; // L
         // initialSeed = 4125305802896227250L; // RR
@@ -204,10 +203,11 @@ public class Engine implements  Runnable {
 
         // initialSeed = -6476999185744582589L; // BA.C as first tile
         // initialSeed = 5898276208915289755L; // Princess and Dragon: early volcano + move, + also early princess (in general this provides early non BA tile, works also at least for Tower
-        err.println("%set initial-seed " + initialSeed);
+
 
         String line = in.nextLine();
         GameSetupMessage setupMsg = (GameSetupMessage) parser.fromJson(line);
+        initialSeed = Long.valueOf(setupMsg.getInitialSeed());
 
         PlayerSlot[] slots = createPlayerSlots(setupMsg.getPlayers().size());
         GameSetup gameSetup = createSetupFromMessage(setupMsg);
@@ -226,7 +226,6 @@ public class Engine implements  Runnable {
         state = phaseReducer.applyStepResult(firstPhase.enter(state));
         game.replaceState(state);
 
-        //out.println(initialSeed);
         out.println(gson.toJson(game));
 
         while (true) {
