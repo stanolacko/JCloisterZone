@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pack>
+    <tile count="1" id="Rrrr.ww">
+        <road wells="2">N E S W</road>
+        <farm>WR NL</farm>
+        <farm>NR EL</farm>
+        <farm>ER SL</farm>
+        <farm>SR WL</farm>
+    </tile>
+    <tile count="1" id="R.w">
+        <road wells="1">W</road>
+        <farm>WR NL NR EL ER SL SR WL</farm>
+    </tile>
+    <tile count="1" id="Rr.w">
+        <road wells="1">W S</road>
+        <farm>WR NL NR EL ER SL</farm>
+        <farm>SR WL</farm>
+    </tile>
+    <tile count="1" id="Rr.ww">
+        <road wells="2">W S</road>
+        <farm>WR NL NR EL ER SL</farm>
+        <farm>SR WL</farm>
+    </tile>
+    <tile count="1" id="RFr.w">
+        <road wells="1">W E</road>
+        <farm>WR NL NR EL</farm>
+        <farm>ER SL SR WL</farm>
+    </tile>
+    <tile count="2" id="RFr.ww">
+        <road wells="2">W E</road>
+        <farm>WR NL NR EL</farm>
+        <farm>ER SL SR WL</farm>
+    </tile>
+    <tile count="1" id="CR.w">
+        <city castle-base="true">S</city>
+        <road wells="1">W</road>
+        <farm>WR NL NR EL ER WL</farm>
+    </tile>
+    <tile count="1" id="Rrr.w">
+        <road wells="1">E N W</road>
+        <farm>WR NL</farm>
+        <farm>NR EL</farm>
+        <farm>ER SL SR WL</farm>
+    </tile>
+</pack>

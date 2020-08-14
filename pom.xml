@@ -297,6 +297,27 @@
                             </target>
                         </configuration>
                     </execution>
+                    <execution>
+                        <!-- Package plugin resource files in a flat hierarchy. -->
+                        <!-- jar cfM build/plugins/classic.jar -C src/main/resources/plugins/fanc1 . -->
+                        <id>plugin-fanc1</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="build/plugins" />
+                                <exec executable="jar">
+                                    <arg value="cfM" />
+                                    <arg value="build/plugins/fanc1.jar" />
+                                    <arg value="-C" />
+                                    <arg value="src/main/resources/plugins/fanc1" />
+                                    <arg value="." />
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
                     <!--execution>
                         <id>plugin-jcz3d</id>
                         <phase>package</phase>
