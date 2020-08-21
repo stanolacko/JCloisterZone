@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shapes xmlns="http://www.jcloisterzone.com/shapes" xmlns:svg="http://www.w3.org/2000/svg">
+
+    <shape feature="ROAD">
+        <svg:polygon points="0,400 999,400 999,600 600,600 600,999 400,999 400,600 0,600"/>
+        <apply allRotations="1">* _N</apply>
+    </shape>
+    <shape feature="CITY">
+        <svg:polygon points="0,999 0,987 77,900 55,880 55,767 177,692 212,692 215,682 275,667 287,677 365,647 397,647 407,635 437,635 442,642 510,642 607,655 640,637 662,635 697,655 695,677 797,745 825,735 867,735 895,757 895,855 927,892 955,927 999,999"/>
+        <apply>FAN_WL.CR.w S</apply>
+    </shape>
+
+    <complement-farm>
+        <!--  <apply>BA.CcRr EL.SR</apply> -->
+    </complement-farm>
+
+    <shape feature="CITY">
+        <svg:polygon points="0,0 999,0 937,72 932,92 840,162 810,185 790,185 707,225 687,247 642,247 617,235 495,242 470,257 415,247 355,257 337,265 317,267 300,255 262,250 202,225 172,222 145,212 142,202 100,182"/>
+        <apply>FAN_WL.CRRr.w N</apply>
+        <apply>FAN_WL.CRR.w N</apply>
+    </shape>
+    <shape feature="ROAD">
+        <svg:polygon points="0,600 0,400 70,375 135,315 180,272 240,235 267,230 327,267 367,267 447,257 495,247 570,290 637,350 692,445 700,532 690,655 650,730 615,812 605,905 600,999 400,999 407,890 422,787 465,660 505,570 505,502 465,455 410,432 345,425 262,480 217,535 130,585"/>
+        <apply>FAN_WL.Rr.ww SW</apply>
+        <apply>FAN_WL.Rr.w SW</apply>
+    </shape>
+    <shape feature="ROAD">
+        <svg:polygon points="400,0 600,0 600,87 913,87 913,400 999,400 999,600 913,600 913,913 600,913 600,999 400,999 400,913 87,913 87,600 0,600 0,400 87,400 87,87 400,87"/>
+        <apply>FAN_WL.Rrrr.ww NWSE</apply>
+    </shape>
+</shapes>

@@ -7,17 +7,17 @@
         <farm>ER SL</farm>
         <farm>SR WL</farm>
     </tile>
-    <tile count="1" id="R.w">
+    <tile count="2" id="R.w">
         <road wells="1">W</road>
         <farm>WR NL NR EL ER SL SR WL</farm>
     </tile>
-    <tile count="1" id="Rr.w">
-        <road wells="1">W S</road>
+    <tile count="2" id="Rr.w">
+        <road wells="1">S W</road>
         <farm>WR NL NR EL ER SL</farm>
         <farm>SR WL</farm>
     </tile>
     <tile count="1" id="Rr.ww">
-        <road wells="2">W S</road>
+        <road wells="2">S W</road>
         <farm>WR NL NR EL ER SL</farm>
         <farm>SR WL</farm>
     </tile>
@@ -26,7 +26,7 @@
         <farm>WR NL NR EL</farm>
         <farm>ER SL SR WL</farm>
     </tile>
-    <tile count="2" id="RFr.ww">
+    <tile count="1" id="RFr.ww">
         <road wells="2">W E</road>
         <farm>WR NL NR EL</farm>
         <farm>ER SL SR WL</farm>
@@ -42,4 +42,27 @@
         <farm>NR EL</farm>
         <farm>ER SL SR WL</farm>
     </tile>
+	<tile count="1" id="CRR.w">
+		<city castle-base="true">N</city>
+		<road wells="1">E</road>
+		<road>S</road>
+		<farm city="N">EL</farm>
+		<farm>ER</farm>
+		<farm city="N">WL WR SR</farm>
+		<wagon-move>
+			<neighbouring>N S</neighbouring>
+		</wagon-move>
+	</tile>
+	<tile count="1" id="CRRr.w">
+		<city castle-base="true">N</city>
+		<road>E W</road>
+		<road wells="1">S</road>
+		<farm city="N">EL</farm>
+		<farm>WL SR</farm>
+		<farm city="N">WR</farm>
+		<farm>ER SL</farm>
+		<wagon-move>
+			<neighbouring>N S</neighbouring>
+		</wagon-move>
+	</tile>
 </pack>
