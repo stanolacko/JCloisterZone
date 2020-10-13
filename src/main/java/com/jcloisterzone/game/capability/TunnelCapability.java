@@ -10,7 +10,6 @@ import com.jcloisterzone.game.state.ActionsState;
 import com.jcloisterzone.game.state.Flag;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.game.state.PlacedTunnelToken;
-
 import io.vavr.Predicates;
 import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
@@ -23,27 +22,29 @@ import io.vavr.collection.Set;
  */
 public final class TunnelCapability extends Capability<Map<FeaturePointer, PlacedTunnelToken>> {
 
-	public static enum Tunnel implements Token {
+	public enum Tunnel implements Token {
 		TUNNEL_A,
 		TUNNEL_B,
-		TUNNEL_C;
-	}
+		TUNNEL_C
+    }
 
 	private static final long serialVersionUID = 1L;
 
     @Override
     public GameState onStartGame(GameState state) {
         int playersCount = state.getPlayers().getPlayers().length();
-        boolean moreTokens = state.getBooleanValue(Rule.MORE_TUNNEL_TOKENS);
+        String moreTokens = state.getStringRule(Rule.MORE_TUNNEL_TOKENS);
         state = state.mapPlayers(ps -> {
             ps = ps.setTokenCountForAllPlayers(Tunnel.TUNNEL_A, 2);
-            if (playersCount == 3 && moreTokens) {
+            if (playersCount == 3 && "3/2".equals(moreTokens)) {
                 ps = ps.setTokenCountForAllPlayers(Tunnel.TUNNEL_B, 2);
             }
             if (playersCount < 3) {
-                ps = ps.setTokenCountForAllPlayers(Tunnel.TUNNEL_B, 2);
-                if (moreTokens) {
-                    ps = ps.setTokenCountForAllPlayers(Tunnel.TUNNEL_C, 2);
+                if (!"1/1".equals(moreTokens)) {
+                    ps = ps.setTokenCountForAllPlayers(Tunnel.TUNNEL_B, 2);
+                    if ("3/2".equals(moreTokens)) {
+                        ps = ps.setTokenCountForAllPlayers(Tunnel.TUNNEL_C, 2);
+                    }
                 }
             }
             return ps;

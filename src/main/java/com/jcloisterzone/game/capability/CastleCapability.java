@@ -1,9 +1,5 @@
 package com.jcloisterzone.game.capability;
 
-import static com.jcloisterzone.XMLUtils.attributeBoolValue;
-
-import org.w3c.dom.Element;
-
 import com.jcloisterzone.board.Position;
 import com.jcloisterzone.feature.Castle;
 import com.jcloisterzone.feature.City;
@@ -15,19 +11,17 @@ import com.jcloisterzone.game.Token;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.reducers.ScoreCastle;
 import com.jcloisterzone.reducers.UndeployMeeples;
-
 import io.vavr.Tuple2;
-import io.vavr.collection.Array;
-import io.vavr.collection.HashMap;
-import io.vavr.collection.Map;
-import io.vavr.collection.Set;
-import io.vavr.collection.Stream;
+import io.vavr.collection.*;
+import org.w3c.dom.Element;
+
+import static com.jcloisterzone.XMLUtils.attributeBoolValue;
 
 public class CastleCapability extends Capability<Void> {
 
-	public static enum CastleToken implements Token {
-		CASTLE;
-	}
+	public enum CastleToken implements Token {
+		CASTLE
+    }
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,27 +34,31 @@ public class CastleCapability extends Capability<Void> {
     @Override
     public Feature initFeature(GameState state, String tileId, Feature feature, Element xml) {
         if (feature instanceof City) {
-            feature = ((City) feature).setCastleBase(attributeBoolValue(xml, "castle-base"));
+            City city = (City) feature;
+            boolean castleForbidden = "false".equals(xml.getAttribute( "castle-base"));
+            if (city.getOpenEdges().size() == 1 && city.getMultiEdges().isEmpty() && !castleForbidden) {
+                feature = city.setCastleBase(true);
+            }
         }
         return feature;
     }
 
     private Stream<Castle> getOccupiedCastles(GameState state) {
-        return state.getFeatures(Castle.class).filter(c -> c.isOccupied(state));
+        Position placedThisTurn = state.getLastPlaced().getPosition();
+        return state.getFeatures(Castle.class)
+                .filter(c -> c.isOccupied(state))
+                .filter(c -> !c.getTilePositions().contains(placedThisTurn));
+
     }
 
     public Tuple2<GameState, Map<Castle, ScoreFeatureReducer>> scoreCastles(GameState state, HashMap<Completable, ScoreFeatureReducer> completed) {
         java.util.Map<Castle, ScoreFeatureReducer> scoredCastles = new java.util.HashMap<>();
-        Array<Tuple2<Completable, ScoreFeatureReducer>> scored = Array.ofAll(completed).sortBy(t -> -t._2.getFeaturePoints());
+        Array<Tuple2<Completable, ScoreFeatureReducer>> scored = Array.ofAll(completed).sortBy(t -> -t._2.getFeaturePoints().getPoints());
         HashMap<Castle, ScoreFeatureReducer> allScoredCastled = HashMap.empty();
 
-        Position placedThisTurn = state.getLastPlaced().getPosition();
+
 
         for (Castle castle : getOccupiedCastles(state)) {
-            if (castle.getTilePositions().contains(placedThisTurn)) {
-                continue;
-            }
-
             Set<Position> vicinity = castle.getVicinity();
             for (Tuple2<Completable, ScoreFeatureReducer> t : scored) {
                 if (!vicinity.intersect(t._1.getTilePositions()).isEmpty()) {

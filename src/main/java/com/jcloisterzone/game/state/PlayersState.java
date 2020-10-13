@@ -1,20 +1,19 @@
 package com.jcloisterzone.game.state;
 
-import java.io.Serializable;
-import java.util.function.Predicate;
-
 import com.jcloisterzone.Immutable;
 import com.jcloisterzone.Player;
-import com.jcloisterzone.PlayerScore;
 import com.jcloisterzone.figure.Follower;
 import com.jcloisterzone.figure.Special;
 import com.jcloisterzone.game.Token;
-
 import io.vavr.collection.Array;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import io.vavr.collection.Seq;
 import io.vavr.control.Option;
+
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents the state of all players in a game.
@@ -25,9 +24,9 @@ public class PlayersState implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Array<Player> players;
-    private final Array<PlayerScore> score;
+    private final Array<Integer> score;
     private final Array<Map<Token, Integer>> tokens;
-    private final int turnPlayerIndex;
+    private final Integer turnPlayerIndex;
 
     private final Array<Seq<Follower>> followers;
     private final Array<Seq<Special>> specialMeeples;
@@ -39,10 +38,10 @@ public class PlayersState implements Serializable {
      * @param turnPlayerIndex the turn player index
      * @return the players state
      */
-    public static PlayersState createInitial(Array<Player> players, int turnPlayerIndex) {
+    public static PlayersState createInitial(Array<Player> players, Integer turnPlayerIndex) {
         return new PlayersState(
             players,
-            players.map(p -> new PlayerScore()),
+            players.map(p -> 0),
             players.map(p -> HashMap.empty()),
             turnPlayerIndex,
             null,
@@ -62,9 +61,9 @@ public class PlayersState implements Serializable {
      */
     public PlayersState(
             Array<Player> players,
-            Array<PlayerScore> score,
+            Array<Integer> score,
             Array<Map<Token, Integer>> tokens,
-            int turnPlayerIndex,
+            Integer turnPlayerIndex,
             Array<Seq<Follower>> followers,
             Array<Seq<Special>> specialMeeples
     ) {
@@ -82,7 +81,7 @@ public class PlayersState implements Serializable {
      * @param score the scores
      * @return a new instance with the scores updated
      */
-    public PlayersState setScore(Array<PlayerScore> score) {
+    public PlayersState setScore(Array<Integer> score) {
         if (this.score == score) return this;
         return new PlayersState(
             players, score, tokens, turnPlayerIndex,
@@ -147,7 +146,7 @@ public class PlayersState implements Serializable {
      *
      * @param index the index of the player
      * @param token the token type to update
-     * @param count the amount to add
+     * @param count the amount to merge
      * @return a new instance with the token count updated
      */
     public PlayersState addTokenCount(int index, Token token, int count) {
@@ -162,8 +161,8 @@ public class PlayersState implements Serializable {
      * @param turnPlayerIndex the turn player index
      * @return a new instance with the turn player index updated
      */
-    public PlayersState setTurnPlayerIndex(int turnPlayerIndex) {
-        if (this.turnPlayerIndex == turnPlayerIndex) return this;
+    public PlayersState setTurnPlayerIndex(Integer turnPlayerIndex) {
+        if (Objects.equals(this.turnPlayerIndex, turnPlayerIndex)) return this;
         return new PlayersState(
             players, score, tokens, turnPlayerIndex,
             followers, specialMeeples
@@ -242,7 +241,7 @@ public class PlayersState implements Serializable {
      *
      * @return the scores of all players
      */
-    public Array<PlayerScore> getScore() {
+    public Array<Integer> getScore() {
         return score;
     }
 
@@ -267,12 +266,22 @@ public class PlayersState implements Serializable {
         return playerTokens.get(token).getOrElse(0);
     }
 
+    public Player getPlayerWithToken(Token token) {
+        int playersCount = players.length();
+        for (int i = 0; i < playersCount; i++) {
+            if (tokens.get(i).get(token).getOrElse(0) > 0) {
+                return players.get(i);
+            }
+        }
+        return null;
+    }
+
     /**
      * Gets the turn player index.
      *
      * @return the turn player index
      */
-    public int getTurnPlayerIndex() {
+    public Integer getTurnPlayerIndex() {
         return turnPlayerIndex;
     }
 
@@ -317,11 +326,6 @@ public class PlayersState implements Serializable {
      * @return the turn player
      */
     public Player getTurnPlayer() {
-        return getPlayer(turnPlayerIndex);
-    }
-
-    @Override
-    public String toString() {
-        return String.join(",", players.map(Player::getNick));
+        return turnPlayerIndex == null ? null : getPlayer(turnPlayerIndex);
     }
 }

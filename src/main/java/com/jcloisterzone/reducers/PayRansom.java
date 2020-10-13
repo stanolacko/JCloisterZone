@@ -1,18 +1,16 @@
 package com.jcloisterzone.reducers;
 
-import java.util.function.Predicate;
-
 import com.jcloisterzone.Player;
-import com.jcloisterzone.PointCategory;
-import com.jcloisterzone.event.play.PlayEvent;
-import com.jcloisterzone.event.play.RansomPaidEvent;
+import com.jcloisterzone.event.PlayEvent;
+import com.jcloisterzone.event.RansomPaidEvent;
 import com.jcloisterzone.figure.Follower;
 import com.jcloisterzone.game.capability.TowerCapability;
 import com.jcloisterzone.game.state.Flag;
 import com.jcloisterzone.game.state.GameState;
-
 import io.vavr.collection.Array;
 import io.vavr.collection.List;
+
+import java.util.function.Predicate;
 
 public class PayRansom implements Reducer {
 
@@ -46,7 +44,7 @@ public class PayRansom implements Reducer {
             throw new IllegalArgumentException(String.format("No such prisoner %s.", meepleId));
         }
         if (!follower.getPlayer().equals(player)) {
-            new IllegalArgumentException("Cannot pay ransom for opponent's follower.");
+            throw new IllegalArgumentException("Cannot pay ransom for opponent's follower.");
         }
 
         Player _jailer = jailer;
@@ -54,13 +52,13 @@ public class PayRansom implements Reducer {
         state = state.mapCapabilityModel(TowerCapability.class, m ->
             m.update(_jailer.getIndex(), l -> l.remove(_follower))
         );
-        state = (new AddPoints(player, -TowerCapability.RANSOM_POINTS, PointCategory.TOWER_RANSOM)).apply(state);
-        state = (new AddPoints(jailer, TowerCapability.RANSOM_POINTS, PointCategory.TOWER_RANSOM)).apply(state);
+        state = (new AddPoints(player, -TowerCapability.RANSOM_POINTS)).apply(state);
+        state = (new AddPoints(jailer, TowerCapability.RANSOM_POINTS)).apply(state);
         state = state.addFlag(Flag.RANSOM_PAID);
         state = state.appendEvent(
                 new RansomPaidEvent(PlayEvent.PlayEventMeta.createWithActivePlayer(state), follower, jailer)
         );
-        //TODO add PlayEvent
+        //TODO merge PlayEvent
 
         return state;
     }

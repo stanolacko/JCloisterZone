@@ -1,24 +1,24 @@
 package com.jcloisterzone.reducers;
 
 import com.jcloisterzone.Player;
-import com.jcloisterzone.PointCategory;
 import com.jcloisterzone.board.Position;
 import com.jcloisterzone.board.pointer.BoardPointer;
 import com.jcloisterzone.board.pointer.FeaturePointer;
-import com.jcloisterzone.board.pointer.MeeplePointer;
-import com.jcloisterzone.event.play.ScoreEvent;
+import com.jcloisterzone.engine.Game;
+import com.jcloisterzone.event.PointsExpression;
+import com.jcloisterzone.event.ScoreEvent;
+import com.jcloisterzone.event.ScoreEvent.ReceivedPoints;
 import com.jcloisterzone.feature.Scoreable;
 import com.jcloisterzone.figure.Follower;
-import com.jcloisterzone.game.BonusPoints;
 import com.jcloisterzone.game.Capability;
 import com.jcloisterzone.game.ScoreFeatureReducer;
-import com.jcloisterzone.game.capability.FairyCapability;
 import com.jcloisterzone.game.state.GameState;
-
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
-import io.vavr.collection.*;
-
-import java.util.Objects;
+import io.vavr.collection.HashMap;
+import io.vavr.collection.List;
+import io.vavr.collection.Map;
+import io.vavr.collection.Set;
 
 /** Score feature followers */
 public abstract class ScoreFeature implements ScoreFeatureReducer {
@@ -29,78 +29,84 @@ public abstract class ScoreFeature implements ScoreFeatureReducer {
     // "out" variable - computed owners are store to instance
     // to be available to reducer caller
     private Set<Player> owners;
+    private List<ReceivedPoints> bonusPoints = List.empty();
 
     public ScoreFeature(Scoreable feature, boolean isFinal) {
         this.feature = feature;
         this.isFinal = isFinal;
     }
 
-    abstract protected int getFeaturePoints(GameState state, Player player);
+    abstract protected PointsExpression getFeaturePoints(GameState state, Player player);
 
+
+    private List<ReceivedPoints> setSample(List<ReceivedPoints> sources, FeaturePointer sample) {
+        return sources.map(rp -> {
+            if (rp.getSource() == null) {
+                return new ReceivedPoints(rp.getExpression(), rp.getPlayer(), sample);
+            }
+            return rp;
+        });
+    }
+
+
+    private BoardPointer getSampleSource(GameState state, Player player, List<ReceivedPoints> bonusPoints) {
+        List<Tuple2<Follower, FeaturePointer>> followers = feature.getFollowers2(state).filter(t -> t._1.getPlayer().equals(player)).toList();
+        for (ReceivedPoints bonus : bonusPoints) {
+            if (!bonus.getPlayer().equals(player)) {
+                continue;
+            }
+            for (Tuple2<Follower, FeaturePointer> t : followers) {
+                if (t._2.equals(bonus.getSource())) {
+                    return t._2;
+                }
+            }
+        }
+        return followers.get()._2;
+    }
+
+    protected GameState addFiguresBonusPoints(GameState state) {
+        for (ReceivedPoints bonus : bonusPoints) {
+            Player player = bonus.getPlayer();
+            state = (new AddPoints(player, bonus.getPoints())).apply(state);
+        }
+
+        for (Tuple2<String, List<ReceivedPoints>> t : bonusPoints.groupBy(bonus -> bonus.getExpression().getName())) {
+            state = state.appendEvent(new ScoreEvent(t._2, false, isFinal));
+        }
+
+        return state;
+    }
 
     @Override
     public GameState apply(GameState state) {
-        PointCategory pointCategory = feature.getPointCategory();
         owners = feature.getOwners(state);
 
-        List<BonusPoints> bonusPoints = List.empty();
         for (Capability<?> cap : state.getCapabilities().toSeq()) {
-            bonusPoints = cap.appendBonusPoints(state, bonusPoints, feature, isFinal);
+            bonusPoints = cap.appendFiguresBonusPoints(state, bonusPoints, feature, isFinal);
         }
 
-        Map<Player, List<ScoreEventSource>> playerPoints = HashMap.empty();
+        List<ReceivedPoints> receivedPoints = List.empty();
 
         if (owners.isEmpty()) {
             // not owners but still followers can exist - eg. Mayor on city without pennants
             //Stream<Tuple2<Follower, FeaturePointer>> followers = feature.getFollowers2(state);
             for (Player player : feature.getFollowers(state).map(Follower::getPlayer).distinct()) {
-                playerPoints = playerPoints.put(player, List.of(new ScoreEventSource(0, null, null)));
+                PointsExpression expr = new PointsExpression(0, feature.getClass().getSimpleName().toLowerCase() + ".empty");
+                receivedPoints = receivedPoints.append(new ReceivedPoints( expr, player, getSampleSource(state, player, bonusPoints)));
             }
         } else {
             for (Player player : owners) {
-                int points = getFeaturePoints(state, player);
-                state = (new AddPoints(player, points, pointCategory)).apply(state);
-                playerPoints = playerPoints.put(player, List.of(new ScoreEventSource(points, null, null)));
+                PointsExpression expr = getFeaturePoints(state, player);
+                state = (new AddPoints(player, expr.getPoints())).apply(state);
+                receivedPoints = receivedPoints.append(new ReceivedPoints(expr, player, getSampleSource(state, player, bonusPoints)));
             }
         }
 
-        for (BonusPoints bonus : bonusPoints) {
-            Player player = bonus.getPlayer();
-            state = (new AddPoints(player, bonus.getPoints(), bonus.getPointCategory())).apply(state);
-            List<ScoreEventSource> sources = playerPoints.get(player).getOrElse(List.empty());
-            playerPoints = playerPoints.put(player, sources.append(new ScoreEventSource(bonus.getPoints(), bonus.getFollower(), bonus.getSource())));
+        if (!receivedPoints.isEmpty()) {
+            state = state.appendEvent(new ScoreEvent(receivedPoints, true, isFinal));
         }
 
-        for (Tuple2<Player, List<ScoreEventSource>> t: playerPoints) {
-            Player player = t._1;
-            List<ScoreEventSource> sources = t._2;
-            Follower sample = sources.filter(s -> s.getFollower() != null).map(ScoreEventSource::getFollower).getOrNull();
-            if (sample == null) {
-                sample = feature.getSampleFollower(state, player);
-            }
-            for (ScoreEventSource s : sources.filter(s -> s.getFollower() == null)) {
-                s.setFollower(sample);
-            }
-            for (Tuple2<Follower, List<ScoreEventSource>> g : sources.groupBy(ScoreEventSource::getFollower)) {
-                Follower follower = g._1;
-                List<Integer> pointValues = g._2.map(ScoreEventSource::getPoints);
-                int points = pointValues.sum().intValue();
-                String label = String.join(" + ", pointValues.map(Objects::toString));
-                ScoreEvent scoreEvent = new ScoreEvent(points, label, pointCategory, isFinal, follower.getDeployment(state), follower);
-
-                // hack
-                // when ScoreEvent is bound to Follower it means two things
-                // 1. - points are displayed next to follwer on board (that's ok for darmstadt church bonus)
-                // 2. - event panel displays follower's feture on hover (that's not ok) - source overrides this. Anyway implementation of this is bad
-                //      whole ScoreEvent shoul be refactored - TODO do it with new 5.0.0 client
-                List<Position> source = g._2.get().getSource();
-                if (source != null) {
-                    scoreEvent = scoreEvent.setSource(source);
-                }
-                state = state.appendEvent(scoreEvent);
-            }
-        }
-
+        state = addFiguresBonusPoints(state);
         return state;
     }
 
