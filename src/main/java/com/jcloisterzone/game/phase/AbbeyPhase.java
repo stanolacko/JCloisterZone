@@ -1,26 +1,21 @@
 package com.jcloisterzone.game.phase;
 
-import java.util.Arrays;
-
 import com.jcloisterzone.Player;
 import com.jcloisterzone.action.TilePlacementAction;
 import com.jcloisterzone.board.PlacementOption;
 import com.jcloisterzone.board.Rotation;
 import com.jcloisterzone.game.Capability;
 import com.jcloisterzone.game.RandomGenerator;
-import com.jcloisterzone.game.capability.AbbeyCapability;
+import com.jcloisterzone.game.capability.*;
 import com.jcloisterzone.game.capability.AbbeyCapability.AbbeyToken;
-import com.jcloisterzone.game.capability.BazaarCapability;
-import com.jcloisterzone.game.capability.BazaarCapabilityModel;
-import com.jcloisterzone.game.capability.BuilderCapability;
-import com.jcloisterzone.game.capability.BuilderState;
 import com.jcloisterzone.game.state.ActionsState;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.reducers.PlaceTile;
-import com.jcloisterzone.wsio.message.PlaceTileMessage;
-
+import com.jcloisterzone.io.message.PlaceTileMessage;
 import io.vavr.collection.Array;
 import io.vavr.collection.Stream;
+
+import java.util.Arrays;
 
 @RequiredCapability(AbbeyCapability.class)
 public class AbbeyPhase extends Phase {
@@ -33,10 +28,10 @@ public class AbbeyPhase extends Phase {
     public StepResult enter(GameState state) {
         BazaarCapabilityModel bazaarModel = state.getCapabilityModel(BazaarCapability.class);
         BuilderState builderState = state.getCapabilityModel(BuilderCapability.class);
-        boolean baazaarInProgress = bazaarModel != null &&  bazaarModel.getSupply() != null;
+        boolean bazaarInProgress = bazaarModel != null &&  bazaarModel.getSupply() != null;
         boolean builderSecondTurnPart = builderState == BuilderState.SECOND_TURN;
         boolean hasAbbey = state.getPlayers().getPlayerTokenCount(state.getPlayers().getTurnPlayerIndex(), AbbeyToken.ABBEY_TILE) > 0;
-        if (hasAbbey && (builderSecondTurnPart || !baazaarInProgress)) {
+        if (hasAbbey && (builderSecondTurnPart || !bazaarInProgress)) {
             GameState _state = state;
             Stream<PlacementOption> options = state.getHoles()
                 .flatMap(t ->

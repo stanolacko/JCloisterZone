@@ -2,33 +2,21 @@ package com.jcloisterzone.game.phase;
 
 import com.jcloisterzone.Player;
 import com.jcloisterzone.action.TilePlacementAction;
-import com.jcloisterzone.board.Location;
-import com.jcloisterzone.board.PlacementOption;
-import com.jcloisterzone.board.Position;
-import com.jcloisterzone.board.Rotation;
-import com.jcloisterzone.board.Tile;
-import com.jcloisterzone.board.TilePack;
+import com.jcloisterzone.board.*;
 import com.jcloisterzone.board.pointer.FeaturePointer;
-import com.jcloisterzone.event.play.PlayEvent.PlayEventMeta;
-import com.jcloisterzone.event.play.TileDiscardedEvent;
-import com.jcloisterzone.event.play.TokenPlacedEvent;
+import com.jcloisterzone.event.PlayEvent.PlayEventMeta;
+import com.jcloisterzone.event.TileDiscardedEvent;
+import com.jcloisterzone.event.TokenPlacedEvent;
 import com.jcloisterzone.game.RandomGenerator;
-import com.jcloisterzone.game.capability.AbbeyCapability;
-import com.jcloisterzone.game.capability.BazaarCapability;
-import com.jcloisterzone.game.capability.BazaarCapabilityModel;
-import com.jcloisterzone.game.capability.BazaarItem;
-import com.jcloisterzone.game.capability.BridgeCapability;
-import com.jcloisterzone.game.capability.BridgeCapability.BrigeToken;
-import com.jcloisterzone.game.capability.CountCapability;
-import com.jcloisterzone.game.capability.HillCapability;
+import com.jcloisterzone.game.capability.*;
+import com.jcloisterzone.game.capability.BridgeCapability.BridgeToken;
 import com.jcloisterzone.game.state.ActionsState;
 import com.jcloisterzone.game.state.Flag;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.reducers.PlaceBridge;
 import com.jcloisterzone.reducers.PlaceTile;
-import com.jcloisterzone.wsio.message.PassMessage;
-import com.jcloisterzone.wsio.message.PlaceTileMessage;
-
+import com.jcloisterzone.io.message.PassMessage;
+import com.jcloisterzone.io.message.PlaceTileMessage;
 import io.vavr.Tuple2;
 import io.vavr.collection.Queue;
 import io.vavr.collection.Set;
@@ -166,7 +154,7 @@ public class TilePhase extends Phase {
 
         if (mandatoryBridge != null) {
             state = state.mapPlayers(ps ->
-                ps.addTokenCount(player.getIndex(), BrigeToken.BRIDGE, -1)
+                ps.addTokenCount(player.getIndex(), BridgeToken.BRIDGE, -1)
             );
             state = state.mapCapabilityModel(BridgeCapability.class, model -> model.add(mandatoryBridge));
 
@@ -185,7 +173,7 @@ public class TilePhase extends Phase {
 
         if (mandatoryBridge != null) {
             state = state.appendEvent(
-                new TokenPlacedEvent(PlayEventMeta.createWithPlayer(player), BrigeToken.BRIDGE, mandatoryBridge)
+                new TokenPlacedEvent(PlayEventMeta.createWithPlayer(player), BridgeToken.BRIDGE, mandatoryBridge)
             );
         }
 

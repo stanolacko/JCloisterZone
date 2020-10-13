@@ -1,29 +1,17 @@
 package com.jcloisterzone.action;
 
-import java.util.Arrays;
+import com.jcloisterzone.board.pointer.MeeplePointer;
 
-import com.jcloisterzone.ui.annotations.LinkedPanel;
-import com.jcloisterzone.ui.grid.actionpanel.FlockPanel;
-import com.jcloisterzone.wsio.message.FlockMessage;
-import com.jcloisterzone.wsio.message.FlockMessage.FlockOption;
-import com.jcloisterzone.wsio.message.WsInGameMessage;
+public class FlockAction extends AbstractPlayerAction<Void> {
 
-import io.vavr.collection.HashSet;
+	private MeeplePointer shepherdPointer;
 
-@LinkedPanel(FlockPanel.class)
-public class FlockAction extends AbstractPlayerAction<FlockOption> {
-
-	public FlockAction() {
-		 super(HashSet.ofAll(Arrays.asList(FlockOption.values())));
+	public FlockAction(MeeplePointer shepherdPointer) {
+		super(null);
+		this.shepherdPointer = shepherdPointer;
 	}
 
-	@Override
-	public WsInGameMessage select(FlockOption option) {
-		return new FlockMessage(option);
+	public MeeplePointer getShepherdPointer() {
+		return shepherdPointer;
 	}
-
-	@Override
-    public String toString() {
-        return "EXPAND or SCORE";
-    }
 }

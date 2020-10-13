@@ -6,7 +6,6 @@ import com.jcloisterzone.board.Rotation;
 import com.jcloisterzone.board.pointer.FeaturePointer;
 import com.jcloisterzone.figure.Meeple;
 import com.jcloisterzone.game.state.GameState;
-
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Stream;
@@ -47,6 +46,6 @@ public class FlyingMachine implements Structure {
 
     public Location getDirection() {
         return direction;
-    };
+    }
 
 }

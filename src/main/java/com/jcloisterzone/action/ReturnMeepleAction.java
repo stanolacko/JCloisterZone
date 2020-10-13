@@ -1,15 +1,10 @@
 package com.jcloisterzone.action;
 
 import com.jcloisterzone.board.pointer.MeeplePointer;
-import com.jcloisterzone.ui.annotations.LinkedImage;
-import com.jcloisterzone.wsio.message.ReturnMeepleMessage;
-import com.jcloisterzone.wsio.message.ReturnMeepleMessage.ReturnMeepleSource;
-import com.jcloisterzone.wsio.message.WsInGameMessage;
-
+import com.jcloisterzone.io.message.ReturnMeepleMessage.ReturnMeepleSource;
 import io.vavr.collection.Set;
 
-@LinkedImage("actions/undeploy")
-public class ReturnMeepleAction extends SelectFollowerAction {
+public class ReturnMeepleAction extends AbstractPlayerAction<MeeplePointer> {
 
     private final ReturnMeepleSource source;
 
@@ -18,13 +13,7 @@ public class ReturnMeepleAction extends SelectFollowerAction {
         this.source = source;
     }
 
-    @Override
-    public WsInGameMessage select(MeeplePointer ptr) {
-        return new ReturnMeepleMessage(ptr, source);
-    }
-
-    @Override
-    public String toString() {
-        return "return meeple";
+    public ReturnMeepleSource getSource() {
+        return source;
     }
 }

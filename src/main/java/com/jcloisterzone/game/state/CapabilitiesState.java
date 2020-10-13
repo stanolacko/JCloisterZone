@@ -1,15 +1,14 @@
 package com.jcloisterzone.game.state;
 
-import java.io.Serializable;
-import java.util.function.Function;
-
 import com.jcloisterzone.Immutable;
 import com.jcloisterzone.game.Capability;
-
 import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import io.vavr.collection.Seq;
+
+import java.io.Serializable;
+import java.util.function.Function;
 
 @Immutable
 public class CapabilitiesState implements Serializable {
@@ -20,7 +19,7 @@ public class CapabilitiesState implements Serializable {
     private final Map<Class<? extends Capability<?>>, Object> models;
 
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked"})
     public static CapabilitiesState createInitial(Seq<Capability<?>> capabilities) {
         return new CapabilitiesState(
             capabilities.toMap(cap -> new Tuple2(cap.getClass(), cap)),

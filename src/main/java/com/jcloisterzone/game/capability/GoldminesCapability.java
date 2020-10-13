@@ -1,19 +1,15 @@
 package com.jcloisterzone.game.capability;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Map.Entry;
-
-import org.w3c.dom.Element;
-
 import com.jcloisterzone.Player;
-import com.jcloisterzone.PointCategory;
 import com.jcloisterzone.XMLUtils;
 import com.jcloisterzone.board.Position;
 import com.jcloisterzone.board.Tile;
 import com.jcloisterzone.board.TileModifier;
-import com.jcloisterzone.event.play.PlayEvent.PlayEventMeta;
-import com.jcloisterzone.event.play.TokenReceivedEvent;
+import com.jcloisterzone.event.PlayEvent.PlayEventMeta;
+import com.jcloisterzone.event.PointsExpression;
+import com.jcloisterzone.event.ScoreEvent;
+import com.jcloisterzone.event.ScoreEvent.ReceivedPoints;
+import com.jcloisterzone.event.TokenReceivedEvent;
 import com.jcloisterzone.feature.Castle;
 import com.jcloisterzone.feature.CloisterLike;
 import com.jcloisterzone.feature.Scoreable;
@@ -24,21 +20,25 @@ import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.game.state.PlacedTile;
 import com.jcloisterzone.game.state.PlayersState;
 import com.jcloisterzone.reducers.AddPoints;
-
 import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import io.vavr.collection.Set;
 import io.vavr.collection.Vector;
+import org.w3c.dom.Element;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map.Entry;
 
 /**
  * Model is map of placed gold tokens.
  */
 public class GoldminesCapability  extends Capability<Map<Position, Integer>> {
 
-	public static enum GoldToken implements Token {
-		GOLD;
-	}
+	public enum GoldToken implements Token {
+		GOLD
+    }
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,7 +62,7 @@ public class GoldminesCapability  extends Capability<Map<Position, Integer>> {
             Position cloisterPosition = ((CloisterLike) feature).getPosition();
             return state.getAdjacentAndDiagonalTiles(cloisterPosition)
                 .map(PlacedTile::getPosition)
-                .append(cloisterPosition) // and add also central tile
+                .append(cloisterPosition) // and merge also central tile
                 .toSet();
         }
         if (feature instanceof Castle) {
@@ -96,7 +96,6 @@ public class GoldminesCapability  extends Capability<Map<Position, Integer>> {
         }
 
         // award gold pieces
-        java.util.Map<Position, Integer> initialGoldCount = new java.util.HashMap<>();
         java.util.List<Entry<Position, java.util.Set<Player>>> entries = new java.util.ArrayList<>(claimedGold.entrySet());
         java.util.Map<Player, Integer> awardedGold = new java.util.HashMap<>();
         java.util.Map<Player, java.util.Set<Position>> awardedGoldPositions = new java.util.HashMap<>();
@@ -117,7 +116,6 @@ public class GoldminesCapability  extends Capability<Map<Position, Integer>> {
         for (Position pos : claimedGold.keySet()) {
             int count = placedGold.get(pos).getOrElse(0);
             goldPieces += count;
-            initialGoldCount.put(pos, count);
         }
         Player player = state.getTurnPlayer();
         while (goldPieces > 0) {
@@ -168,9 +166,9 @@ public class GoldminesCapability  extends Capability<Map<Position, Integer>> {
             if (pieces == 0) {
                 continue;
             }
-            int points = 0;
+            int points;
             if (pieces < 4) {
-                points = 1 * pieces;
+                points = pieces;
             } else if (pieces < 7) {
                 points = 2 * pieces;
             } else if (pieces < 10) {
@@ -178,7 +176,9 @@ public class GoldminesCapability  extends Capability<Map<Position, Integer>> {
             } else {
                 points = 4 * pieces;
             }
-            state = (new AddPoints(player, points, PointCategory.GOLD)).apply(state);
+            state = (new AddPoints(player, points)).apply(state);
+            PointsExpression expr = new PointsExpression(points, "gold", HashMap.of("pieces", pieces));
+            state = state.appendEvent(new ScoreEvent(new ReceivedPoints(expr, player, null), false, true));
         }
         return state;
     }

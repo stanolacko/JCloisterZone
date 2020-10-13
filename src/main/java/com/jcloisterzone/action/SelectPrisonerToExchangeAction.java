@@ -1,11 +1,6 @@
 package com.jcloisterzone.action;
 
 import com.jcloisterzone.figure.Follower;
-import com.jcloisterzone.ui.annotations.LinkedPanel;
-import com.jcloisterzone.ui.grid.actionpanel.PrisonersExchangePanel;
-import com.jcloisterzone.wsio.message.ExchangeFollowerChoiceMessage;
-import com.jcloisterzone.wsio.message.WsInGameMessage;
-
 import io.vavr.collection.Set;
 
 /**
@@ -16,7 +11,6 @@ import io.vavr.collection.Set;
  * be returned.
  *
  */
-@LinkedPanel(PrisonersExchangePanel.class)
 public class SelectPrisonerToExchangeAction extends AbstractPlayerAction<Follower> {
 
     private final Follower justCapturedFollower;
@@ -24,11 +18,6 @@ public class SelectPrisonerToExchangeAction extends AbstractPlayerAction<Followe
     public SelectPrisonerToExchangeAction(Follower justCapturedFollower, Set<Follower> options) {
         super(options);
         this.justCapturedFollower = justCapturedFollower;
-    }
-
-    @Override
-    public WsInGameMessage select(Follower follower) {
-        return new ExchangeFollowerChoiceMessage(follower.getId());
     }
 
     public Follower getJustCapturedFollower() {

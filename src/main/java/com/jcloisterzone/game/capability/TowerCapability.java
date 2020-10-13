@@ -8,31 +8,22 @@ import com.jcloisterzone.board.Location;
 import com.jcloisterzone.board.pointer.FeaturePointer;
 import com.jcloisterzone.feature.Feature;
 import com.jcloisterzone.feature.Tower;
-import com.jcloisterzone.figure.BigFollower;
-import com.jcloisterzone.figure.Follower;
-import com.jcloisterzone.figure.Meeple;
-import com.jcloisterzone.figure.Phantom;
-import com.jcloisterzone.figure.SmallFollower;
+import com.jcloisterzone.figure.*;
 import com.jcloisterzone.game.Capability;
 import com.jcloisterzone.game.Token;
 import com.jcloisterzone.game.state.ActionsState;
 import com.jcloisterzone.game.state.GameState;
-
 import io.vavr.Tuple2;
-import io.vavr.collection.Array;
-import io.vavr.collection.List;
-import io.vavr.collection.Set;
-import io.vavr.collection.Stream;
-import io.vavr.collection.Vector;
+import io.vavr.collection.*;
 
 /**
  * @model Array<List<String>> - list of captured meeples for each players
  */
 public final class TowerCapability extends Capability<Array<List<Follower>>> {
 
-	public static enum TowerToken implements Token {
-		TOWER_PIECE;
-	}
+	public enum TowerToken implements Token {
+		TOWER_PIECE
+    }
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,8 +37,9 @@ public final class TowerCapability extends Capability<Array<List<Follower>>> {
         case 4: return 7;
         case 5: return 6;
         case 6: return 5;
+        case 7: return 4;
+        default: return 3;
         }
-        throw new IllegalStateException();
     }
 
     @Override

@@ -1,8 +1,5 @@
 package com.jcloisterzone.game.capability;
 
-import com.jcloisterzone.game.Rule;
-import org.w3c.dom.Element;
-
 import com.jcloisterzone.XMLUtils;
 import com.jcloisterzone.board.Tile;
 import com.jcloisterzone.board.TileModifier;
@@ -11,10 +8,11 @@ import com.jcloisterzone.feature.Farm;
 import com.jcloisterzone.feature.Feature;
 import com.jcloisterzone.feature.Road;
 import com.jcloisterzone.game.Capability;
+import com.jcloisterzone.game.Rule;
 import com.jcloisterzone.game.state.GameState;
-import com.jcloisterzone.wsio.message.CornCircleRemoveOrDeployMessage.CornCircleOption;
-
+import com.jcloisterzone.io.message.CornCircleRemoveOrDeployMessage.CornCircleOption;
 import io.vavr.collection.Vector;
+import org.w3c.dom.Element;
 
 public class CornCircleCapability extends Capability<CornCircleOption> {
 
@@ -40,9 +38,11 @@ public class CornCircleCapability extends Capability<CornCircleOption> {
     @Override
     public Tile initTile(GameState state, Tile tile, Vector<Element> tileElements) {
         Vector<Element> circleEl = XMLUtils.getElementStreamByTagName(tileElements, "corn-circle").toVector();
-        assert circleEl.size() <= 1;
-        for (Element el : circleEl) {
-            String type = el.getAttribute("type");
+		if (circleEl.size() == 0) {
+			return tile;
+		}
+		if (circleEl.size() == 1) {
+            String type = circleEl.get().getAttribute("type");
             CornCircleModifier modifier;
             switch (type) {
             case "Road":
@@ -52,16 +52,16 @@ public class CornCircleCapability extends Capability<CornCircleOption> {
             	modifier = CORN_CIRCLE_CITY;
             	break;
             case "Farm":
-            	if (!state.getBooleanValue(Rule.FARMERS)) {
+            	if (!state.getBooleanRule(Rule.FARMERS)) {
             		return tile;
 				}
             	modifier = CORN_CIRCLE_FARM;
             	break;
             default:
-            	throw new IllegalArgumentException("Invalid corn cicle type.");
+            	throw new IllegalArgumentException("Invalid corn circle type.");
             }
             return tile.addTileModifier(modifier);
         }
-        return tile;
+        throw new IllegalStateException("multiple <corn-circle> elements");
     }
 }

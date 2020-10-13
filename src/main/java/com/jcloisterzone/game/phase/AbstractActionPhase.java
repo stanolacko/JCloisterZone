@@ -6,27 +6,23 @@ import com.jcloisterzone.action.PlayerAction;
 import com.jcloisterzone.board.Location;
 import com.jcloisterzone.board.Position;
 import com.jcloisterzone.board.pointer.FeaturePointer;
-import com.jcloisterzone.event.play.FlierRollEvent;
-import com.jcloisterzone.event.play.PlayEvent.PlayEventMeta;
+import com.jcloisterzone.event.FlierRollEvent;
+import com.jcloisterzone.event.PlayEvent.PlayEventMeta;
 import com.jcloisterzone.feature.*;
 import com.jcloisterzone.figure.*;
 import com.jcloisterzone.game.Capability;
 import com.jcloisterzone.game.RandomGenerator;
 import com.jcloisterzone.game.Rule;
 import com.jcloisterzone.game.capability.BarnCapability;
-import com.jcloisterzone.game.capability.LabyrinthCapability;
 import com.jcloisterzone.game.capability.PortalCapability;
-import com.jcloisterzone.game.capability.TowerCapability;
 import com.jcloisterzone.game.state.ActionsState;
 import com.jcloisterzone.game.state.Flag;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.game.state.PlacedTile;
 import com.jcloisterzone.reducers.DeployMeeple;
 import com.jcloisterzone.reducers.PayRansom;
-import com.jcloisterzone.wsio.message.DeployFlierMessage;
-import com.jcloisterzone.wsio.message.DeployMeepleMessage;
-import com.jcloisterzone.wsio.message.PayRansomMessage;
-
+import com.jcloisterzone.io.message.DeployMeepleMessage;
+import com.jcloisterzone.io.message.PayRansomMessage;
 import io.vavr.Tuple2;
 import io.vavr.collection.*;
 
@@ -58,7 +54,7 @@ public abstract class AbstractActionPhase extends Phase {
 
             places = places.filter(t -> !(t._2 instanceof Castle));
 
-            if (!state.getBooleanValue(Rule.FARMERS)) {
+            if (!state.getBooleanRule(Rule.FARMERS)) {
                 places = places.filter(t -> !(t._2 instanceof Farm));
             }
 
@@ -114,7 +110,7 @@ public abstract class AbstractActionPhase extends Phase {
                 if (meeples.find(m -> !(m instanceof Shepherd)).isEmpty()) {
                     // no meeples except Shepherd is on feature
                     return true;
-                };
+                }
                 if (struct instanceof Road && ((Road) struct).isLabyrinth()) {
                     // find if there is empty labyrinth segment
                     Set<FeaturePointer> segment = ((Road) struct).findSegmentBorderedBy(state, t._1,
@@ -172,10 +168,19 @@ public abstract class AbstractActionPhase extends Phase {
     @PhaseMessageHandler
     public StepResult handleDeployMeeple(GameState state, DeployMeepleMessage msg) {
         FeaturePointer fp = msg.getPointer();
-        Meeple m = state.getActivePlayer().getMeepleFromSupply(state, msg.getMeepleId());
+
+        if (fp.getLocation() == Location.FLYING_MACHINE) {
+            return handleDeployFlier(state, msg);
+        }
+
+        Meeple meeple = state.getActivePlayer().getMeepleFromSupply(state, msg.getMeepleId());
         PlacedTile placedTile = state.getLastPlaced();
 
         //TODO validate placement against players actions
+
+        if (fp.getLocation() == Location.FLYING_MACHINE) {
+            throw new IllegalArgumentException("Use DEPLOY_FLIER message instead");
+        }
 
         if (fp.getLocation() != Location.TOWER
             && placedTile.getTile().hasModifier(PortalCapability.MAGIC_PORTAL)
@@ -184,8 +189,8 @@ public abstract class AbstractActionPhase extends Phase {
             state = state.addFlag(Flag.PORTAL_USED);
         }
 
-        state = (new DeployMeeple(m, fp)).apply(state);
-        if (m instanceof Barn) {
+        state = (new DeployMeeple(meeple, fp)).apply(state);
+        if (meeple instanceof Barn) {
             state = state.setCapabilityModel(BarnCapability.class, fp);
         }
 
@@ -200,8 +205,7 @@ public abstract class AbstractActionPhase extends Phase {
         return pos;
     }
 
-    @PhaseMessageHandler
-    public StepResult handleDeployFlier(GameState state, DeployFlierMessage msg) {
+    public StepResult handleDeployFlier(GameState state, DeployMeepleMessage msg) {
         PlacedTile placedTile = state.getLastPlaced();
         FlyingMachine flyingMachine = (FlyingMachine) state.getFeature(msg.getPointer());
         Meeple meeple = state.getActivePlayer().getMeepleFromSupply(state, msg.getMeepleId());
@@ -228,7 +232,7 @@ public abstract class AbstractActionPhase extends Phase {
         }
 
         PlayerAction<?> action = new MeepleAction(meeple, options);
-        state = state.setPlayerActions(new ActionsState(state.getTurnPlayer(), action, true));
+        state = state.setPlayerActions(new ActionsState(state.getTurnPlayer(), action, false));
         return promote(state);
     }
 }
