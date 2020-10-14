@@ -153,7 +153,9 @@ public class Engine implements  Runnable {
         if (setupMsg.getSets().containsKey("russian-promos/2013")) {
             capabilities = capabilities.add(YagaCapability.class);
         }
-
+        if (setupMsg.getSets().containsKey("fan-wells:")) {
+        	capabilities = capabilities.add(FanWellCapability.class);
+        }
         Map<Rule, Object> rules = HashMap.empty();
         if (setupMsg.getElements().containsKey("farmers")) {
             rules = rules.put(Rule.FARMERS,true);
