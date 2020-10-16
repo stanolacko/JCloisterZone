@@ -186,6 +186,7 @@ public class Road extends CompletableFeature<Road> {
         }
         if (wells>0) {
         	points += inn ? wells * 2 : wells;
+        	args = args.put("wells", wells);
         }
         return new PointsExpression(points, completed ? "road" : "road.incomplete", args);
 

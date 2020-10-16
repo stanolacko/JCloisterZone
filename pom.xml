@@ -107,26 +107,6 @@
                     </execution>
                 </executions>
             </plugin>
-<<<<<<< HEAD
-            <plugin>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>dist</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <groupId>com.googlecode.gettext-commons</groupId>
-                <artifactId>gettext-maven-plugin</artifactId>
-                <version>1.2.4</version>
-                <configuration>
-                    <poDirectory>${basedir}/po</poDirectory>
-                    <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                    <targetBundle>Messages</targetBundle>
-                </configuration>
-            </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
@@ -299,8 +279,6 @@
                     </execution-->
                 </executions>
             </plugin>
-=======
->>>>>>> 555b2b8eec4cb175538d04294f6aa96253a70e45
         </plugins>
     </build>
 </project>
