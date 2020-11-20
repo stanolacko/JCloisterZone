@@ -16,9 +16,13 @@ import com.jcloisterzone.reducers.DeployMeeple;
 import com.jcloisterzone.io.message.DeployMeepleMessage;
 import io.vavr.collection.HashSet;
 <<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
 import io.vavr.collection.List;
 =======
 >>>>>>> ead5e0c fix move from market queater before final scoring
+=======
+import io.vavr.collection.List;
+>>>>>>> c6e2bae support C2 rules for move from the City of Carcassonne before final scoring
 
 import java.util.function.Function;
 
@@ -45,6 +49,15 @@ public class CocFinalScoringPhase extends AbstractCocScoringPhase {
             return Location.QUARTERS;
 =======
         return super.enter(state);
+    }
+
+    @Override
+    protected List<Location> getValidQuerters(GameState state) {
+        if (state.getStringRule(Rule.COC_FINAL_SCORING).equals("market-only")) {
+            return List.of(Location.QUARTER_MARKET);
+        } else {
+            return Location.QUARTERS;
+        }
     }
 
     @Override

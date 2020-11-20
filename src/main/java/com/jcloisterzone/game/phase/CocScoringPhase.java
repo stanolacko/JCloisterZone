@@ -101,6 +101,11 @@ public class CocScoringPhase extends AbstractCocScoringPhase {
     }
 
     @Override
+    protected List<Location> getValidQuerters(GameState state) {
+        return Location.QUARTERS;
+    }
+
+    @Override
     protected Function<Feature, Boolean> getAllowedFeaturesFilter(GameState state) {
         PlacedTile lastPlaced = state.getLastPlaced();
         Position lastPlacedPos = lastPlaced.getPosition();
