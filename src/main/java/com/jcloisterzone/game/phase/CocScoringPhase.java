@@ -38,6 +38,7 @@ public class CocScoringPhase extends AbstractCocScoringPhase {
     }
 
     @Override
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
     public StepResult enter(GameState state) {
         return nextPlayer(state, state.getTurnPlayer(), false);
     }
@@ -82,6 +83,21 @@ public class CocScoringPhase extends AbstractCocScoringPhase {
     @Override
     protected List<Location> getValidQuerters(GameState state) {
         return Location.QUARTERS;
+=======
+    protected StepResult nextPlayer(GameState state, Player player, boolean actionUsed) {
+        Player next = player;
+        while (true) {
+            next = next.getNextPlayer(state);
+            if (state.getTurnPlayer().equals(next)) {
+                return endPhase(state);
+            } else {
+                StepResult res = processPlayer(state, next);
+                if (res != null) {
+                    return res;
+                }
+            }
+        }
+>>>>>>> ead5e0c fix move from market queater before final scoring
     }
 
     @Override

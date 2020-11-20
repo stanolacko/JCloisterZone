@@ -15,7 +15,10 @@ import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.reducers.DeployMeeple;
 import com.jcloisterzone.io.message.DeployMeepleMessage;
 import io.vavr.collection.HashSet;
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
 import io.vavr.collection.List;
+=======
+>>>>>>> ead5e0c fix move from market queater before final scoring
 
 import java.util.function.Function;
 
@@ -30,6 +33,7 @@ public class CocFinalScoringPhase extends AbstractCocScoringPhase {
     public StepResult enter(GameState state) {
         CountCapabilityModel model = state.getCapabilityModel(CountCapability.class);
         state = state.setCapabilityModel(CountCapability.class, model.setFinalScoringPass(HashSet.empty()));
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
         return nextPlayer(state, state.getTurnPlayer(), true);
     }
 
@@ -39,7 +43,19 @@ public class CocFinalScoringPhase extends AbstractCocScoringPhase {
             return List.of(Location.QUARTER_MARKET);
         } else {
             return Location.QUARTERS;
+=======
+        return super.enter(state);
+    }
+
+    @Override
+    protected StepResult nextPlayer(GameState state, Player player, boolean actionUsed) {
+        CountCapabilityModel model = state.getCapabilityModel(CountCapability.class);
+        if (!actionUsed) {
+            model = model.setFinalScoringPass(model.getFinalScoringPass().add(player));
+            state = state.setCapabilityModel(CountCapability.class, model);
+>>>>>>> ead5e0c fix move from market queater before final scoring
         }
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
     }
 
     @Override
@@ -49,6 +65,8 @@ public class CocFinalScoringPhase extends AbstractCocScoringPhase {
             model = model.setFinalScoringPass(model.getFinalScoringPass().add(player));
             state = state.setCapabilityModel(CountCapability.class, model);
         }
+=======
+>>>>>>> ead5e0c fix move from market queater before final scoring
 
         Player next = player;
         while (model.getFinalScoringPass().size() != state.getPlayers().length()) {

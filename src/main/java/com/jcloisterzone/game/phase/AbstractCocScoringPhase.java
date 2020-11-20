@@ -30,13 +30,24 @@ public abstract class AbstractCocScoringPhase extends Phase {
 
     protected abstract Function<Feature, Boolean> getAllowedFeaturesFilter(GameState state);
     protected abstract StepResult nextPlayer(GameState state, Player player, boolean actionUsed);
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
     protected abstract List<Location> getValidQuerters(GameState state);
+=======
+>>>>>>> ead5e0c fix move from market queater before final scoring
 
     protected StepResult endPhase(GameState state) {
         state = clearActions(state);
         return next(state);
     }
 
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
+=======
+    @Override
+    public StepResult enter(GameState state) {
+        return nextPlayer(state, state.getTurnPlayer(), true);
+    }
+
+>>>>>>> ead5e0c fix move from market queater before final scoring
     private Class<? extends Scoreable> getFeatureTypeForLocation(Location loc) {
         if (loc == Location.QUARTER_CASTLE) return City.class;
         if (loc == Location.QUARTER_BLACKSMITH) return Road.class;

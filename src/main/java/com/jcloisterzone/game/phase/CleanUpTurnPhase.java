@@ -41,6 +41,11 @@ public class CleanUpTurnPhase extends Phase {
         Queue<BazaarItem> bazaarSupply = bazaarModel == null ? null : bazaarModel.getSupply();
         TilePack tilePack = state.getTilePack();
         if (tilePack.isEmpty() && bazaarSupply == null) {
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
+=======
+            // TODO allow placing Abbey if enabled by custom rule (TODO add it, default is don't allow)
+            // but don't add fairy points during this special turns
+>>>>>>> ead5e0c fix move from market queater before final scoring
             return next(state, state.getEndPhase());
         } else {
             state = (new SetNextPlayer()).apply(state);
