@@ -46,7 +46,7 @@ public class DeployMeeple implements Reducer {
 
         for (Capability cap : state.getCapabilities().toSeq()) {
         	if (cap instanceof VodyanoyCapability) {
-        		for (Tuple2<Position, PlacedTile> t : cap.getVodyanoysPlacedTiles(state)) {
+        	    for (Tuple2<Position, PlacedTile> t : ((VodyanoyCapability) cap).getVodyanoysPlacedTiles(state)) {
 	                state = cap.onTilePlaced(state, t._2);
 	            };
         	}
