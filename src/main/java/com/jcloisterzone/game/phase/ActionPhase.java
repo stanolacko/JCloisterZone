@@ -129,6 +129,11 @@ public class ActionPhase extends AbstractActionPhase {
                 }
                 assignAbbotScore = (CloisterLike) state.getFeature(ptr.asFeaturePointer());
                 break;
+            case RUSSIANTRAP_RETURN:
+                if (meeple.getPlayer() != state.getPlayerActions().getPlayer() || !(meeple instanceof Follower)) {
+                    throw new IllegalArgumentException("Not follower owner");
+                }
+            	break;
             default:
                 throw new IllegalArgumentException("Return meeple is not allowed");
         }
@@ -142,7 +147,7 @@ public class ActionPhase extends AbstractActionPhase {
             state = (new AddPoints(meeple.getPlayer(), points.getPoints())).apply(state);
             state = state.appendEvent(new ScoreEvent(rp, false, false));
         }
-
+        
         return next(state);
     }
 

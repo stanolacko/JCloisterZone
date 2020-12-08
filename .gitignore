@@ -10,3 +10,4 @@ reports
 *.log
 .idea
 *.iml
+/bin/

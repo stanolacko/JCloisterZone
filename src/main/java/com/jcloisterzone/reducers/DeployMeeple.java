@@ -1,13 +1,19 @@
 package com.jcloisterzone.reducers;
 
+import com.jcloisterzone.board.Position;
 import com.jcloisterzone.board.pointer.FeaturePointer;
 import com.jcloisterzone.event.MeepleDeployed;
 import com.jcloisterzone.event.PlayEvent.PlayEventMeta;
 import com.jcloisterzone.feature.Structure;
 import com.jcloisterzone.figure.DeploymentCheckResult;
 import com.jcloisterzone.figure.Meeple;
+import com.jcloisterzone.game.Capability;
+import com.jcloisterzone.game.capability.VodyanoyCapability;
 import com.jcloisterzone.game.state.GameState;
+import com.jcloisterzone.game.state.PlacedTile;
+import io.vavr.Tuple2;
 import io.vavr.collection.LinkedHashMap;
+import io.vavr.collection.Set;
 
 public class DeployMeeple implements Reducer {
 
@@ -37,6 +43,14 @@ public class DeployMeeple implements Reducer {
         state = state.appendEvent(
             new MeepleDeployed(PlayEventMeta.createWithActivePlayer(state), meeple, fp, movedFrom)
         );
+
+        for (Capability cap : state.getCapabilities().toSeq()) {
+        	if (cap instanceof VodyanoyCapability) {
+        		for (Tuple2<Position, PlacedTile> t : cap.getVodyanoysPlacedTiles(state)) {
+	                state = cap.onTilePlaced(state, t._2);
+	            };
+        	}
+        }
         return state;
     }
 

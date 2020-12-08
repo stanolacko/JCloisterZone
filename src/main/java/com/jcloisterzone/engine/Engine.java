@@ -154,6 +154,9 @@ public class Engine implements  Runnable {
         if (setupMsg.getSets().containsKey("russian-promos/2013")) {
             capabilities = capabilities.add(YagaCapability.class);
         }
+        if (setupMsg.getSets().containsKey("russian-promos/2016")) {
+            capabilities = capabilities.add(VodyanoyCapability.class);
+        }
         
         capabilities = addCapabilities(capabilities, setupMsg,"fan-well", FanWellCapability.class);
 

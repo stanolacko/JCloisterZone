@@ -94,7 +94,7 @@
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
-                            <minimizeJar>true</minimizeJar>
+                            <minimizeJar>false</minimizeJar>
                             <filters>
                                 <filter>
                                     <artifact>jcloisterzone:engine</artifact>
@@ -111,9 +111,7 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
                 <executions>
-                    <execution>
-                        <!-- Package plugin resource files in a flat hierarchy. -->
-                        <!-- jar cfM build/plugins/classic.jar -C src/main/resources/plugins/classic . -->
+<!--                      <execution>
                         <id>plugin-classic</id>
                         <phase>package</phase>
                         <goals>
@@ -133,8 +131,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Package plugin resource files in a flat hierarchy. -->
-                        <!-- jar cfM build/plugins/classic.jar -C src/main/resources/plugins/newart . -->
                         <id>plugin-newart</id>
                         <phase>package</phase>
                         <goals>
@@ -154,8 +150,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Package plugin resource files in a flat hierarchy. -->
-                        <!-- jar cfM build/plugins/rgg_siege.jar -C src/main/resources/plugins/rgg_siege . -->
                         <id>plugin-rgg_siege</id>
                         <phase>package</phase>
                         <goals>
@@ -175,8 +169,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Package plugin resource files in a flat hierarchy. -->
-                        <!-- jar cfM build/plugins/winter.jar -C src/main/resources/plugins/winter . -->
                         <id>plugin-winter</id>
                         <phase>package</phase>
                         <goals>
@@ -196,8 +188,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Package plugin resource files in a flat hierarchy. -->
-                        <!-- jar cfM build/plugins/winter.jar -C src/main/resources/plugins/winter . -->
                         <id>plugin-catapult</id>
                         <phase>package</phase>
                         <goals>
@@ -217,8 +207,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Package plugin resource files in a flat hierarchy. -->
-                        <!-- jar cfM build/plugins/winter.jar -C src/main/resources/plugins/netherlands_belgium . -->
                         <id>plugin-netherlands-belgium</id>
                         <phase>package</phase>
                         <goals>
@@ -236,11 +224,11 @@
                                 </exec>
                             </target>
                         </configuration>
-                    </execution>
-                    <execution>
+                    </execution> -->
+<!--                     <execution> -->
                         <!-- Package plugin resource files in a flat hierarchy. -->
                         <!-- jar cfM build/plugins/classic.jar -C src/main/resources/plugins/fanc1 . -->
-                        <id>plugin-fanc1</id>
+<!--                         <id>plugin-fanc1</id>
                         <phase>package</phase>
                         <goals>
                             <goal>run</goal>
@@ -257,7 +245,7 @@
                                 </exec>
                             </target>
                         </configuration>
-                    </execution>
+                    </execution> -->
                     <!--execution>
                         <id>plugin-jcz3d</id>
                         <phase>package</phase>
