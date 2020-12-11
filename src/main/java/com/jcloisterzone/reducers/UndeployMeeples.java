@@ -31,6 +31,7 @@ public class UndeployMeeples implements Reducer {
     public UndeployMeeples(Feature feature, boolean forced) {
         this.feature = feature;
         this.forced = forced;
+
     }
 
     @Override
