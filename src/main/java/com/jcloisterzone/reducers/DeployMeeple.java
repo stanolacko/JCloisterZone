@@ -8,6 +8,7 @@ import com.jcloisterzone.feature.Structure;
 import com.jcloisterzone.figure.DeploymentCheckResult;
 import com.jcloisterzone.figure.Meeple;
 import com.jcloisterzone.game.Capability;
+import com.jcloisterzone.game.capability.SoloveiCapability;
 import com.jcloisterzone.game.capability.VodyanoyCapability;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.game.state.PlacedTile;
@@ -44,12 +45,17 @@ public class DeployMeeple implements Reducer {
             new MeepleDeployed(PlayEventMeta.createWithActivePlayer(state), meeple, fp, movedFrom)
         );
 
-        for (Capability cap : state.getCapabilities().toSeq()) {
-        	if (cap instanceof VodyanoyCapability) {
-        	    for (Tuple2<Position, PlacedTile> t : ((VodyanoyCapability) cap).getVodyanoysPlacedTiles(state)) {
-	                state = cap.onTilePlaced(state, t._2);
-	            };
-        	}
+        if (state.getCapabilities().contains(SoloveiCapability.class)) {
+        	SoloveiCapability soloveiCapability = state.getCapabilities().get(SoloveiCapability.class);
+    	    for (Tuple2<Position, PlacedTile> t : soloveiCapability.getSoloveisPlacedTiles(state)) {
+                state = soloveiCapability.onTilePlaced(state, t._2);
+            };
+        }
+        if (state.getCapabilities().contains(VodyanoyCapability.class)) {
+        	VodyanoyCapability vodyanoyCapability = state.getCapabilities().get(VodyanoyCapability.class);
+    	    for (Tuple2<Position, PlacedTile> t : vodyanoyCapability.getVodyanoysPlacedTiles(state)) {
+                state = vodyanoyCapability.onTilePlaced(state, t._2);
+            };
         }
         return state;
     }
