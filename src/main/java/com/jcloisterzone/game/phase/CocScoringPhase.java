@@ -87,13 +87,16 @@ public class CocScoringPhase extends AbstractCocScoringPhase {
 =======
 =======
     public StepResult enter(GameState state) {
-        return nextPlayer(state, state.getTurnPlayer().getNextPlayer(state), true);
+        return nextPlayer(state, state.getTurnPlayer(), false);
     }
 
     @Override
 >>>>>>> dcd64f4 Fix: possible move from city of carcassonne was sometimes ignored
     protected StepResult nextPlayer(GameState state, Player player, boolean actionUsed) {
         Player p = player;
+        if (!actionUsed) {
+            p = player.getNextPlayer(state);
+        }
         while (true) {
             StepResult res = processPlayer(state, p);
             if (res != null) {
