@@ -46,6 +46,17 @@ public class WagonPhase extends Phase {
             Tuple2<Wagon, FeaturePointer> item = dequeueTuple._1;
             Wagon wagon = item._1;
 
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
+=======
+            if (state.getFlags().contains(Flag.PRINCESS_USED) && wagon.getPlayer().equals(state.getTurnPlayer())) {
+                // The placement of a princess tile with removal of a knight from the city cannot be used as a first
+                // "follower move" and be followed by placement of the phantom (e.g. into the now-vacated city).
+                // As per the rules for the princess, "if a knight is removed from the city, the player may not deploy or
+                // move any other figure." [This combo would be too powerful in allowing city stealing – ed.]
+                continue;
+            }
+
+>>>>>>> 9ededa5 added princess rule:  "if a knight is removed from the city, the player may not deploy or move any other figure."
             Feature feature = state.getFeature(item._2);
             if (feature instanceof Completable) { // skip Castle
                 GameState _state = state;
