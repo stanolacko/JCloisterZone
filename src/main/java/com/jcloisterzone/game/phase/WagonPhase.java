@@ -47,6 +47,7 @@ public class WagonPhase extends Phase {
             Wagon wagon = item._1;
 
 <<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
 =======
             if (state.getFlags().contains(Flag.PRINCESS_USED) && wagon.getPlayer().equals(state.getTurnPlayer())) {
                 // The placement of a princess tile with removal of a knight from the city cannot be used as a first
@@ -57,6 +58,8 @@ public class WagonPhase extends Phase {
             }
 
 >>>>>>> 9ededa5 added princess rule:  "if a knight is removed from the city, the player may not deploy or move any other figure."
+=======
+>>>>>>> f49ee5b partial revert for 9ededa51, wagon phase is unaffected by princess
             Feature feature = state.getFeature(item._2);
             if (feature instanceof Completable) { // skip Castle
                 GameState _state = state;
