@@ -1,6 +1,5 @@
 # Version history
 
-<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
 ## 5.4.1
 *2021-01-18*
 
@@ -48,8 +47,6 @@
 * config.json is watched and read after manual change
 
 
-=======
->>>>>>> ff37d5e update changelog
 ## New app architecture (5.x.x)
 
 * new app architecture - split between game engine (Java) and client (standalone executable app, based on Electron)
