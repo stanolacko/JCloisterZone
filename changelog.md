@@ -1,6 +1,5 @@
 # Version history
 
-<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
 ## 5.4.1
 *2021-01-18*
 
@@ -28,8 +27,6 @@
 * zoom follows mouse pointer. wheel sensitivity decreased
 * fix colors in game setup overview
 
-=======
->>>>>>> 6bfb28d 5.3.2 changelog
 ## 5.3.2
 *2020-12-29*
 
