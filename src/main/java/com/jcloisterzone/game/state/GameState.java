@@ -390,4 +390,14 @@ public class GameState implements ActionsMixin, BoardMixin,
         return pluginManager;
     }
 
+
+    public Class<? extends Phase> getEndPhase () {
+        if (hasCapability(AbbeyCapability.class)) {
+            return AbbeyEndGamePhase.class;
+        }
+        if (hasCapability(CountCapability.class)) {
+            return CocFinalScoringPhase.class;
+        }
+        return GameOverPhase.class;
+    }
 }

@@ -1,13 +1,70 @@
 # Version history
 
-## upcoming 5.0.0
+## 5.4.1
+*2021-01-18*
+
+* hotfix: meeples on bridges are displayed on wrong position
+
+## 5.4.0
+*2021-01-17*
+
+* rules: each player can place abbey after last tile is placed
+* rules: when field with Shepherd is closed player can still choose expand/score
+* fix: skip action by opponent is no longer possible
+* fix: load game with randomized seating order
+* fix: do not allow wagon move on garden (causing game  crash)
+* fix: unable to skip move from City of Carcassonne discrict (impossible in player's turn)
+* fix: when "fairy on tile" rule was selected, 1 point fairy bonus wasn't awarded
+* added confirmation after: wagon move, corn circle actions, move from City of Carcassonne
+* rotating tile skips invalid rotations on selected position (now works same as in legacy application)
+* it's possible rotate tile / select action also from keyboard with Tab key
+* added progress bar to app update (will we active for next update)
+* saved games are not compatible with previous version
+
+## 5.3.3
+*2020-12-30*
+* hide unintentionally displayed experimental section "play online" (not working yet)
+* zoom follows mouse pointer. wheel sensitivity decreased
+* fix colors in game setup overview
+
+## 5.3.2
+*2020-12-29*
+
+* fix: only regular meeples can use magic portal
+* added option to randomize seating order
+* added tiles dialog - shows removed and remaining tiles
+* purist mode - option to disable remaining tiles
+* user can display dialog with current game's setup
+
+## 5.3.1
+*2020-12-18*
+
+* rules: phantom can't be played immediatelly after princess
+* fix: don't clone auctioned tiles (auctioned tiles remained in tile pack)
+* fix: move from City of Carcassonne can be skipped now
+* fix: follower capture is not mandatory after increasing tower
+* auction tiles in history sidebar are wrapped to multiple rows
+* config.json is watched and read after manual change
+
+
+## New app architecture (5.x.x)
 
 * new app architecture - split between game engine (Java) and client (standalone executable app, based on Electron)
 
 Game engine changes:
-* fix flier and magic portal regression - do not allow meeple placement on castle by flier and magic portal
+* added Abbot expansion
+* added Spiel Doch promo
+* added custom rules for Count move
+* support for C2 Wagon move rules
 * Darmstatd church - majority for counting church bonus is evaluated before anything is score
     (in other words before any follower is returned to a supply)
+* fix flier and magic portal regression - do not allow meeple placement on castle by flier and magic portal
+* fix: do not score castle created this turn
+* fix: castle can be created on besiged cities
+* fix: disallow undo for dragon moves
+* fix: trigger double turn even if builder was eaten by dragon
+* fix: Shepherd can co-existent on farm with barn
+* fix: Add Little Buildings bonus also for German Monasterie
 
 ## 4.6.1
 *2020-06-02*
