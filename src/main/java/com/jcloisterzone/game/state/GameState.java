@@ -18,6 +18,8 @@ import io.vavr.collection.*;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import org.pf4j.PluginManager;
+
 @Immutable
 public class GameState implements ActionsMixin, BoardMixin,
         RulesMixin, CapabilitiesMixin, PlayersMixin, EventsMixin,
@@ -49,11 +51,14 @@ public class GameState implements ActionsMixin, BoardMixin,
     private final Class<? extends Phase> phase;
     private final int turnNumber;
 
+    private final PluginManager pluginManager;
+    
     public static GameState createInitial(
             Map<Rule, Object> rules,
             Seq<Capability<?>> capabilities,
             Array<Player> players,
-            int turnPlayerIndex) {
+            int turnPlayerIndex,
+            PluginManager pluginManager) {
         return new GameState(
             rules,
             CapabilitiesState.createInitial(capabilities),
@@ -69,7 +74,8 @@ public class GameState implements ActionsMixin, BoardMixin,
             HashSet.empty(),
             Queue.empty(),
             null,
-            1
+            1,
+            pluginManager
         );
     }
 
@@ -88,7 +94,8 @@ public class GameState implements ActionsMixin, BoardMixin,
             Set<Flag> flags,
             Queue<PlayEvent> events,
             Class<? extends Phase> phase,
-            int turnNumber) {
+            int turnNumber,
+            PluginManager pluginManager) {
         this.rules = rules;
         this.capabilities = capabilities;
         this.players = players;
@@ -104,6 +111,7 @@ public class GameState implements ActionsMixin, BoardMixin,
         this.events = events;
         this.phase = phase;
         this.turnNumber = turnNumber;
+        this.pluginManager = pluginManager;
     }
 
     @Override
@@ -115,7 +123,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -128,7 +136,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -140,7 +148,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -156,7 +164,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -169,7 +177,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -182,7 +190,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -199,7 +207,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -211,7 +219,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -227,7 +235,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -240,7 +248,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -257,7 +265,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -270,7 +278,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -282,7 +290,7 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -294,7 +302,19 @@ public class GameState implements ActionsMixin, BoardMixin,
             featureMap, neutralFigures,
             deployedMeeples, playerActions,
             flags, events,
-            phase, turnNumber
+            phase, turnNumber, pluginManager
+        );
+    }
+
+    public GameState setPluginManager(PluginManager pluginManager) {
+        if (pluginManager == this.pluginManager) return this;
+        return new GameState(
+            rules, capabilities, players,
+            tilePack, drawnTile, placedTiles, discardedTiles,
+            featureMap, neutralFigures,
+            deployedMeeples, playerActions,
+            flags, events,
+            phase, turnNumber, pluginManager
         );
     }
 
@@ -365,4 +385,9 @@ public class GameState implements ActionsMixin, BoardMixin,
     public int getTurnNumber() {
         return turnNumber;
     }
+
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
 }

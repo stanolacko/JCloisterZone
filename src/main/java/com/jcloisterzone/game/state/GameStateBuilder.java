@@ -52,7 +52,7 @@ public class GameStateBuilder {
         createPlayers();
 
         state = GameState.createInitial(
-            setup.getRules(), capabilities, players, 0
+            setup.getRules(), capabilities, players, 0, setup.getPluginManager()
         );
 
         state = state.mapPlayers(ps ->
