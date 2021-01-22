@@ -7,10 +7,7 @@ import com.jcloisterzone.board.ShortEdge;
 import com.jcloisterzone.board.pointer.FeaturePointer;
 import com.jcloisterzone.event.TokenPlacedEvent;
 import com.jcloisterzone.feature.*;
-import com.jcloisterzone.figure.Barn;
-import com.jcloisterzone.figure.Builder;
-import com.jcloisterzone.figure.Meeple;
-import com.jcloisterzone.figure.Wagon;
+import com.jcloisterzone.figure.*;
 import com.jcloisterzone.game.Capability;
 import com.jcloisterzone.game.RandomGenerator;
 import com.jcloisterzone.game.ScoreFeatureReducer;
@@ -38,7 +35,7 @@ public class ScoringPhase extends Phase {
 
     private GameState scoreCompletedOnTile(GameState state, PlacedTile tile) {
         for (Tuple2<Location, Completable> t : state.getTileFeatures2(tile.getPosition(), Completable.class)) {
-            state = scoreCompleted(state, t._2, tile);
+            state = scoreCompleted(state, t._2);
         }
         return state;
     }
@@ -68,7 +65,7 @@ public class ScoringPhase extends Phase {
 
             for (FeaturePointer fp : affected) {
                 Road road = (Road) state.getFeature(fp);
-                state = scoreCompleted(state, road, null);
+                state = scoreCompleted(state, road);
             }
         }
         return state;
@@ -80,7 +77,7 @@ public class ScoringPhase extends Phase {
             FeaturePointer fp = new FeaturePointer(pt.getPosition(), t._1.rev());
             Feature feature = state.getFeaturePartOf(fp);
             if (feature instanceof Completable) {
-                state = scoreCompleted(state, (Completable) feature, null);
+                state = scoreCompleted(state, (Completable) feature);
             }
             if (feature instanceof City) {
                 // also check if second city on multi edge is completed
@@ -89,7 +86,7 @@ public class ScoringPhase extends Phase {
                 Tuple2<ShortEdge, FeaturePointer> multiEdge = city.getMultiEdges().find(me -> me._1.equals(edge)).getOrNull();
                 if (multiEdge != null) {
                     City another = (City) state.getFeature(multiEdge._2);
-                    state = scoreCompleted(state, another, null);
+                    state = scoreCompleted(state, another);
                 }
             }
         }
@@ -146,7 +143,7 @@ public class ScoringPhase extends Phase {
             assert tunnelModified.size() <= 1;
 
             for (Feature road : tunnelModified) {
-                state = scoreCompleted(state, (Completable) road, null);
+                state = scoreCompleted(state, (Completable) road);
             }
         }
 
@@ -156,7 +153,7 @@ public class ScoringPhase extends Phase {
 
         for (CloisterLike cloister : state.getFeatures(CloisterLike.class)) {
             if (neighbourPositions.contains(cloister.getPosition())) {
-                state = scoreCompleted(state, cloister, null);
+                state = scoreCompleted(state, cloister);
             }
         }
 
@@ -201,22 +198,7 @@ public class ScoringPhase extends Phase {
            .mapKeys(m -> (Wagon) m);
     }
 
-    private GameState scoreCompleted(GameState state, Completable completable, PlacedTile triggerBuilderForPlaced) {
-        if (triggerBuilderForPlaced != null && state.getCapabilities().contains(BuilderCapability.class)) {
-            Player player = state.getTurnPlayer();
-            GameState _state = state;
-            Option<Meeple> builder = completable
-                .getMeeples(state)
-                .find(m -> {
-                    return m instanceof Builder
-                        && m.getPlayer().equals(player)
-                        && !m.getPosition(_state).equals(triggerBuilderForPlaced.getPosition());
-                });
-            if (!builder.isEmpty()) {
-                state = state.getCapabilities().get(BuilderCapability.class).useBuilder(state);
-            }
-        }
-
+    private GameState scoreCompleted(GameState state, Completable completable) {
         if (completable.isCompleted(state) && !completedMutable.containsKey(completable)) {
             /*
               When playing with German / Dutch & Belgian Monasteries: Because an abbot scores only at the end of the game,
