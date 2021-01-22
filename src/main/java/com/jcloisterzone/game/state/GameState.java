@@ -386,11 +386,6 @@ public class GameState implements ActionsMixin, BoardMixin,
         return turnNumber;
     }
 
-    public PluginManager getPluginManager() {
-        return pluginManager;
-    }
-
-
     public Class<? extends Phase> getEndPhase () {
         if (hasCapability(AbbeyCapability.class)) {
             return AbbeyEndGamePhase.class;
@@ -400,4 +395,9 @@ public class GameState implements ActionsMixin, BoardMixin,
         }
         return GameOverPhase.class;
     }
+
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
 }
