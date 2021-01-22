@@ -5,17 +5,21 @@ import com.jcloisterzone.board.Position;
 import com.jcloisterzone.board.Rotation;
 import com.jcloisterzone.board.pointer.FeaturePointer;
 import com.jcloisterzone.event.PointsExpression;
+import com.jcloisterzone.feature.scoring.RoadScoring;
 import com.jcloisterzone.game.capability.FerriesCapability;
 import com.jcloisterzone.game.capability.FerriesCapabilityModel;
 import com.jcloisterzone.game.capability.TunnelCapability;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.game.state.PlacedTunnelToken;
+
 import io.vavr.Tuple2;
 import io.vavr.collection.*;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.function.Function;
+
+import org.pf4j.PluginManager;
 
 public class Road extends CompletableFeature<Road> {
 
@@ -184,6 +188,12 @@ public class Road extends CompletableFeature<Road> {
             args = args.put("meeples", meeplesCount);
             points += 2 * meeplesCount;
         }
+        // retrieve all extensions for "RoadScoring" extension point
+//        List<RoadScoring> scorings = new List().asJava();
+        for (RoadScoring scoring : state.getPluginManager().getExtensions(RoadScoring.class)) {
+            System.out.println(">>> " + scoring.getScoring());
+        }
+
         if (wells>0) {
         	points += inn ? wells * 2 : wells;
         	args = args.put("wells", wells);
