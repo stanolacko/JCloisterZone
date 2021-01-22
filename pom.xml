@@ -122,7 +122,33 @@
 			                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             			</manifest>
 			            <manifestEntries>
+<<<<<<< HEAD
+			                <Plugin-Class>com.jcloister.game.capability.scoring.RoadScoringInn</Plugin-Class>
+			                <Plugin-Id>scoring-road-inn</Plugin-Id>
+			                <Plugin-Version>0.0.1</Plugin-Version>
+<!-- 			                <Plugin-Requires>1.0.0</Plugin-Requires> -->
+<!-- 			                <Plugin-Dependencies>x, y?, z</Plugin-Dependencies> -->
+			                <Plugin-Description>Inn Road Scoring</Plugin-Description>
+<!-- 			                <Plugin-Provider>Decebal Suiu</Plugin-Provider> -->
+<!-- 			                <Plugin-License>Apache License 2.0</Plugin-License> -->
+            			</manifestEntries>
+        			</archive>
+			    </configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-jar-plugin</artifactId>
+			    <configuration>
+			        <archive>
+			            <manifest>
+			                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+			                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            			</manifest>
+			            <manifestEntries>
+			                <Plugin-Class>com.jcloister.game.capability.scoring.RoadScoringWells</Plugin-Class>
+=======
 			                <Plugin-Class>com.jcloister.feature.scoring.RoadScoringWells</Plugin-Class>
+>>>>>>> 86469509... Added plugin extension definition to maven
 			                <Plugin-Id>scoring-road-wells</Plugin-Id>
 			                <Plugin-Version>0.0.1</Plugin-Version>
 <!-- 			                <Plugin-Requires>1.0.0</Plugin-Requires> -->

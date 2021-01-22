@@ -391,10 +391,7 @@ public class GameState implements ActionsMixin, BoardMixin,
         return turnNumber;
     }
 
-    public PluginManager getPluginManager() {
-        return pluginManager;
-    }
-
+<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
     public Class<? extends Phase> getEndPhase () {
         if (hasCapability(AbbeyCapability.class)) {
             return AbbeyEndGamePhase.class;
@@ -404,4 +401,14 @@ public class GameState implements ActionsMixin, BoardMixin,
         }
         return GameOverPhase.class;
     }
+
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+=======
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
+>>>>>>> 03035da Engine/GameSetup/GameState - added pluginManager support
 }
