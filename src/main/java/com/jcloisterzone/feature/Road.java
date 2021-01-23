@@ -197,24 +197,10 @@ public class Road extends CompletableFeature<Road> {
         	pe = scoring.setScoring(state, this, completed, pe);
             System.out.println(">>> Back to Road, points " + pe.getPoints());
         }
-<<<<<<< Upstream, based on 16ac62b4f0a1e913a7149de4a33db83ebbe531fa
         System.out.println(">>> End RoadScoring, final points: " + pe.getPoints());
         System.out.println(">>> args.tiles: " + pe.getArg("tiles"));
         System.out.println(">>> args.inn: " + pe.getArg("inn"));
         System.out.println(">>> args.wells: " + pe.getArg("wells"));
-=======
-        // retrieve all extensions for "RoadScoring" extension point
-//        List<RoadScoring> scorings = new List().asJava();
-        for (RoadScoring scoring : state.getPluginManager().getExtensions(RoadScoring.class)) {
-            System.out.println(">>> " + scoring.getScoring());
-        }
-
-        if (wells>0) {
-        	points += inn ? wells * 2 : wells;
-        	args = args.put("wells", wells);
-        }
-        return new PointsExpression(points, completed ? "road" : "road.incomplete", args);
->>>>>>> b83991e RoadScoring - added road scoring, renaming added import java defs
 
 //        if (wells>0) {
 //        	points += inn ? wells * 2 : wells;
