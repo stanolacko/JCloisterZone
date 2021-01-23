@@ -175,31 +175,38 @@ public class Road extends CompletableFeature<Road> {
     @Override
     public PointsExpression getStructurePoints(GameState state, boolean completed) {
         int tileCount = getTilePositions().size();
-        if (inn && !completed) {
-            return new PointsExpression(0, "road.incomplete-inn");
-        }
-        Map<String, Integer> args = HashMap.of("tiles", tileCount);
-        if (inn) {
-            args = args.put("inn", 1);
-        }
-        int points = inn ? tileCount * 2 : tileCount;
+
+        PointsExpression pe = new PointsExpression(tileCount, completed ? "road" : "road.incomplete", HashMap.of(
+        	"tiles", tileCount
+        ));
+
+        System.out.println(">>> args.tiles: " + pe.getArg("tiles"));
+        System.out.println(">>> args.inn: " + pe.getArg("inn"));
+        System.out.println(">>> args.wells: " + pe.getArg("wells"));
+
+/*
         if (labyrinth && completed) {
             int meeplesCount = getMeeples(state).size();
             args = args.put("meeples", meeplesCount);
             points += 2 * meeplesCount;
-        }
+        }*/
+        System.out.println(">>> Run RoadScoring");
+        System.out.println(">>> Current before plugins: " + pe.getPoints());
         // retrieve all extensions for "RoadScoring" extension point
-//        List<RoadScoring> scorings = new List().asJava();
         for (RoadScoring scoring : state.getPluginManager().getExtensions(RoadScoring.class)) {
-            System.out.println(">>> " + scoring.getScoring());
+        	pe = scoring.setScoring(state, this, completed, pe);
+            System.out.println(">>> Back to Road, points " + pe.getPoints());
         }
+        System.out.println(">>> End RoadScoring, final points: " + pe.getPoints());
+        System.out.println(">>> args.tiles: " + pe.getArg("tiles"));
+        System.out.println(">>> args.inn: " + pe.getArg("inn"));
+        System.out.println(">>> args.wells: " + pe.getArg("wells"));
 
-        if (wells>0) {
-        	points += inn ? wells * 2 : wells;
-        	args = args.put("wells", wells);
-        }
-        return new PointsExpression(points, completed ? "road" : "road.incomplete", args);
-
+//        if (wells>0) {
+//        	points += inn ? wells * 2 : wells;
+//        	args = args.put("wells", wells);
+//        }
+        return pe;
     }
 
     @Override

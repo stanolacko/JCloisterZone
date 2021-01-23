@@ -28,11 +28,20 @@ public class PointsExpression {
     public String getName() {
         return name;
     }
+    
+	public int getArg(String key) {
+		return args.get(key).getOrElse(0);
+	}
+
+	public PointsExpression setArg(String key, int value) {
+        Map<String, Integer> args = this.args.merge(HashMap.of(key, value));
+		return new PointsExpression(points, name, args);
+	}
 
     public Map<String, Integer> getArgs() {
         return args;
     }
-
+    
     public PointsExpression merge(PointsExpression expr) {
         if (expr == null || expr.points == 0) {
             return this;
@@ -45,4 +54,16 @@ public class PointsExpression {
         args = this.args.merge(args);
         return new PointsExpression(this.points + points, name, args);
     }
+
+	public PointsExpression setName(String name) {
+		return new PointsExpression(points, name, args);
+	}
+	
+	public PointsExpression addPoints(int points) {
+		return setPoints(this.points + points);
+	}
+	
+	public PointsExpression setPoints(int points) {
+		return new PointsExpression(points, name, args);
+	}
 }
