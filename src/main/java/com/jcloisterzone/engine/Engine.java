@@ -29,6 +29,9 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.jar.Manifest;
 
+import org.pf4j.PluginManager;
+import org.pf4j.JarPluginManager;
+
 public class Engine implements  Runnable {
     private Scanner in;
     private PrintStream out;
@@ -157,6 +160,12 @@ public class Engine implements  Runnable {
             capabilities = capabilities.add(YagaCapability.class);
         }
 
+        PluginManager pluginManager = new JarPluginManager(); // or "new ZipPluginManager() / new DefaultPluginManager()"
+        
+        // start and load all plugins of application
+        pluginManager.loadPlugins();
+        pluginManager.startPlugins();
+
         Map<Rule, Object> rules = HashMap.empty();
         if (setupMsg.getElements().containsKey("farmers")) {
             rules = rules.put(Rule.FARMERS,true);
@@ -174,7 +183,8 @@ public class Engine implements  Runnable {
                 meeples,
                 capabilities,
                 rules,
-                io.vavr.collection.List.ofAll(setupMsg.getStart())
+                io.vavr.collection.List.ofAll(setupMsg.getStart()),
+                pluginManager
         );
         return gameSetup;
     }
@@ -284,6 +294,11 @@ public class Engine implements  Runnable {
                 out.println(gson.toJson(game));
             }
         }
+        
+        // stop and unload all plugins
+//        pluginManager.stopPlugins();
+//        pluginManager.unloadPlugins();
+
     }
 
     private static String readVersion() throws IOException {

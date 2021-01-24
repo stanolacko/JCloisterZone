@@ -11,6 +11,8 @@ import io.vavr.collection.Set;
 import java.io.Serializable;
 import java.util.function.Function;
 
+import org.pf4j.PluginManager;
+
 @Immutable
 public class GameSetup implements Serializable, RulesMixin {
 
@@ -23,12 +25,15 @@ public class GameSetup implements Serializable, RulesMixin {
     private final Set<Class<? extends Capability<?>>> capabilities;
     private final List<PlacedTileItem> start;
 
-    public GameSetup(Map<String, Integer> tileSets, Map<Class<? extends Meeple>, Integer> meeples, Set<Class<? extends Capability<?>>> capabilities, Map<Rule, Object> rules, List<PlacedTileItem> start) {
+    private final PluginManager pluginManager;
+
+    public GameSetup(Map<String, Integer> tileSets, Map<Class<? extends Meeple>, Integer> meeples, Set<Class<? extends Capability<?>>> capabilities, Map<Rule, Object> rules, List<PlacedTileItem> start, PluginManager pluginManager) {
         this.tileSets = tileSets;
         this.meeples = meeples;
         this.capabilities = capabilities;
         this.rules = rules;
         this.start = start;
+        this.pluginManager = pluginManager;
     }
 
 
@@ -38,7 +43,7 @@ public class GameSetup implements Serializable, RulesMixin {
 
     public GameSetup setTileSets(Map<String, Integer> tileSets) {
         if (this.tileSets == tileSets) return this;
-        return new GameSetup(tileSets, meeples, capabilities, rules, start);
+        return new GameSetup(tileSets, meeples, capabilities, rules, start, pluginManager);
     }
 
 
@@ -48,7 +53,7 @@ public class GameSetup implements Serializable, RulesMixin {
 
     public GameSetup setMeeples(Map<Class<? extends Meeple>, Integer> meeples) {
         if (this.meeples == meeples) return this;
-        return new GameSetup(tileSets, meeples, capabilities, rules, start);
+        return new GameSetup(tileSets, meeples, capabilities, rules, start, pluginManager);
     }
 
     @Override
@@ -58,7 +63,7 @@ public class GameSetup implements Serializable, RulesMixin {
 
     public GameSetup setRules(Map<Rule, Object> rules) {
         if (this.rules == rules) return this;
-        return new GameSetup(tileSets, meeples, capabilities, rules, start);
+        return new GameSetup(tileSets, meeples, capabilities, rules, start, pluginManager);
     }
 
     public GameSetup mapRules(Function<Map<Rule, Object>, Map<Rule, Object>> mapper) {
@@ -71,7 +76,7 @@ public class GameSetup implements Serializable, RulesMixin {
 
     public GameSetup setCapabilities(Set<Class<? extends Capability<?>>> capabilities) {
         if (this.capabilities == capabilities) return this;
-        return new GameSetup(tileSets, meeples, capabilities, rules, start);
+        return new GameSetup(tileSets, meeples, capabilities, rules, start, pluginManager);
     }
 
     public GameSetup mapCapabilities(Function<Set<Class<? extends Capability<?>>>, Set<Class<? extends Capability<?>>>> mapper) {
@@ -80,5 +85,14 @@ public class GameSetup implements Serializable, RulesMixin {
 
     public List<PlacedTileItem> getStart() {
         return start;
+    }
+
+    public GameSetup setPluginManager(PluginManager pluginManager) {
+        if (this.pluginManager == pluginManager) return this;
+        return new GameSetup(tileSets, meeples, capabilities, rules, start, pluginManager);
+    }
+
+    public PluginManager getPluginManager() {
+        return pluginManager;
     }
 }
