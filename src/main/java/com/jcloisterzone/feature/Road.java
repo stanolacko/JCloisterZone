@@ -155,17 +155,14 @@ public class Road extends CompletableFeature<Road> {
         	"tiles", tileCount
         ));
 
+        System.out.println(">>> Score road");
         System.out.println(">>> args.tiles: " + pe.getArg("tiles"));
         System.out.println(">>> args.inn: " + pe.getArg("inn"));
+        System.out.println(">>> args.meeples: " + pe.getArg("meeples"));
 
-/*
-        if (labyrinth && completed) {
-            int meeplesCount = getMeeples(state).size();
-            args = args.put("meeples", meeplesCount);
-            points += 2 * meeplesCount;
-        }*/
         System.out.println(">>> Run RoadScoring");
-        System.out.println(">>> Current before plugins: " + pe.getPoints());
+        System.out.println(">>> Current points before run plugins: " + pe.getPoints());
+
         // retrieve all extensions for "RoadScoring" extension point
         for (RoadScoring scoring : state.getPluginManager().getExtensions(RoadScoring.class)) {
         	pe = scoring.setScoring(state, this, completed, pe);
@@ -174,11 +171,8 @@ public class Road extends CompletableFeature<Road> {
         System.out.println(">>> End RoadScoring, final points: " + pe.getPoints());
         System.out.println(">>> args.tiles: " + pe.getArg("tiles"));
         System.out.println(">>> args.inn: " + pe.getArg("inn"));
+        System.out.println(">>> args.meeples: " + pe.getArg("meeples"));
 
-//        if (wells>0) {
-//        	points += inn ? wells * 2 : wells;
-//        	args = args.put("wells", wells);
-//        }
         return pe;
     }
 
