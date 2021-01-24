@@ -404,4 +404,8 @@ public class GameState implements ActionsMixin, BoardMixin,
     public PluginManager getPluginManager() {
         return pluginManager;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'pf4j' of https://github.com/stanolacko/JCloisterZone.git
 }
