@@ -122,8 +122,8 @@
 			                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             			</manifest>
 			            <manifestEntries>
-			                <Plugin-Class>com.jcloister.game.capability.scoring.RoadScoringInn</Plugin-Class>
-			                <Plugin-Id>scoring-road-inn</Plugin-Id>
+			                <Plugin-Class>com.jcloisterzone.game.capability.scoring.RoadScoringInn</Plugin-Class>
+			                <Plugin-Id>roadscoring-inn</Plugin-Id>
 			                <Plugin-Version>0.0.1</Plugin-Version>
 <!-- 			                <Plugin-Requires>1.0.0</Plugin-Requires> -->
 <!-- 			                <Plugin-Dependencies>x, y?, z</Plugin-Dependencies> -->
@@ -144,11 +144,11 @@
 			                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             			</manifest>
 			            <manifestEntries>
-			                <Plugin-Class>com.jcloister.game.capability.scoring.RoadScoringWells</Plugin-Class>
-			                <Plugin-Id>scoring-road-wells</Plugin-Id>
+			                <Plugin-Class>com.jcloisterzone.game.capability.scoring.RoadScoringWells</Plugin-Class>
+			                <Plugin-Id>roadscoring-wells</Plugin-Id>
 			                <Plugin-Version>0.0.1</Plugin-Version>
 <!-- 			                <Plugin-Requires>1.0.0</Plugin-Requires> -->
-<!-- 			                <Plugin-Dependencies>x, y?, z</Plugin-Dependencies> -->
+			                <Plugin-Dependencies>roadscoring-inn?</Plugin-Dependencies>
 			                <Plugin-Description>Wells Road Scoring</Plugin-Description>
 <!-- 			                <Plugin-Provider>Decebal Suiu</Plugin-Provider> -->
 <!-- 			                <Plugin-License>Apache License 2.0</Plugin-License> -->
