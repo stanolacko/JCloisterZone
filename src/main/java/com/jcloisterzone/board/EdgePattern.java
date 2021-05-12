@@ -16,7 +16,13 @@ public class EdgePattern implements Serializable {
 
     /** bit mask, concatenated edges W,S,E,N */
     int mask;
-
+    
+    /** bit size of Edge (2 ^ x) */
+    final int edgeSize = 8;
+    
+    /** hexadecimal to math operation */
+    final int hexa = 0xff;
+    
     /**
      * Instantiates a new {@code EdgePattern} with the given {@code mask}. The {@code mask} is intended to be constructed as a
      * sequence of 4 bits sequences defining the {@link EdgeType}, for the 4 directions West, South, East, and North,
@@ -37,7 +43,7 @@ public class EdgePattern implements Serializable {
      * @param W the {@link EdgeType} for the west face
      */
     public EdgePattern(EdgeType N, EdgeType E, EdgeType S, EdgeType W) {
-        this.mask = N.getMask() + (E.getMask() << 4) + (S.getMask() << 8) + + (W.getMask() << 12);
+        this.mask = N.getMask() + (E.getMask() << edgeSize) + (S.getMask() << (2 * edgeSize)) + (W.getMask() << (3 * edgeSize));
     }
 
     /**
@@ -81,10 +87,10 @@ public class EdgePattern implements Serializable {
      */
     public EdgeType[] getEdges() {
         return new EdgeType[] {
-            EdgeType.forMask(mask & 0xf),
-            EdgeType.forMask((mask >> 4) & 0xf),
-            EdgeType.forMask((mask >> 8) & 0xf),
-            EdgeType.forMask((mask >> 12) & 0xf)
+            EdgeType.forMask(mask & hexa),
+            EdgeType.forMask((mask >> edgeSize) & hexa),
+            EdgeType.forMask((mask >> (2 * edgeSize)) & hexa),
+            EdgeType.forMask((mask >> (3 * edgeSize)) & hexa)
         };
     }
 
@@ -108,10 +114,10 @@ public class EdgePattern implements Serializable {
      * @return the {@link EdgeType} at location {@code loc}
      */
     public EdgeType at(Location loc) {
-        if (loc == Location.N) return EdgeType.forMask(mask & 15);
-        if (loc == Location.E) return EdgeType.forMask((mask >> 4) & 15);
-        if (loc == Location.S) return EdgeType.forMask((mask >> 8) & 15);
-        if (loc == Location.W) return EdgeType.forMask((mask >> 12) & 15);
+        if (loc == Location.N) return EdgeType.forMask(mask & hexa);
+        if (loc == Location.E) return EdgeType.forMask((mask >> edgeSize) & hexa);
+        if (loc == Location.S) return EdgeType.forMask((mask >> (2 * edgeSize)) & hexa);
+        if (loc == Location.W) return EdgeType.forMask((mask >> (3 * edgeSize)) & hexa);
         throw new IllegalArgumentException();
     }
 
@@ -191,10 +197,10 @@ public class EdgePattern implements Serializable {
      */
     public boolean isMatchingExact(EdgePattern ep) {
         int m = mask & ep.mask;
-        return ((m & 0xf) != 0) &&
-                ((m & (0xf << 4)) != 0) &&
-                ((m & (0xf << 8)) != 0) &&
-                ((m & (0xf << 12)) != 0);
+        return ((m & hexa) != 0) &&
+                ((m & (hexa << edgeSize)) != 0) &&
+                ((m & (hexa << (2 * edgeSize))) != 0) &&
+                ((m & (hexa << (3 * edgeSize))) != 0);
 
     }
 
