@@ -1,10 +1,13 @@
 {
   "name": "jcloisterzone-engine",
-  "version": "7.0.0-alpha.1",
+  "version": "7.0.0-alpha.4",
   "description": "TypeScript port of the JCloisterZone (Carcassonne) game engine",
   "type": "module",
   "license": "AGPL-3.0-or-later",
   "sideEffects": false,
+  "main": "./dist/com/jcloisterzone/index.js",
+  "module": "./dist/com/jcloisterzone/index.js",
+  "types": "./dist/com/jcloisterzone/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/com/jcloisterzone/index.d.ts",
@@ -24,7 +27,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "build:bundle": "npm run build && esbuild dist/cli/jcz-engine.js --bundle --platform=node --target=node16 --format=esm --outfile=bundle/jcz-engine.js",
+    "build:bundle": "npm run build && esbuild dist/cli/jcz-engine.js --bundle --platform=node --target=node16 --format=cjs --outfile=bundle/jcz-engine.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "engine": "node dist/cli/jcz-engine.js",
     "capture-golden": "node scripts/capture-golden.mjs",
