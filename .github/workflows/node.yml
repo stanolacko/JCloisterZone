@@ -1,0 +1,43 @@
+# CI for the TypeScript engine (master branch).
+# The test suite replays engine-tests/**/*.jcz against the committed *.golden.jsonl
+# fixtures — no Java jar is needed in CI (goldens are regenerated locally from the 6.x
+# branch when the Java engine changes; see README "Important gotchas").
+
+name: Node CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # Node 16 = the runtime the FanCloisterZone client spawns the engine with.
+        node-version: [ '16.x' ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Build (emit dist/)
+        run: npm run build
+
+      - name: Test (byte-parity replay vs goldens)
+        run: npm test
