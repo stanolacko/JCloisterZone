@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="FARMERS-HEAVEN">
+    <title>Farmers Heaven</title>
+    <minimumVersionForAI>6.1.0-alpha.42</minimumVersionForAI>
+    <sets>
+      <ref tile-set="farmers-heaven" />
+    </sets>
+    <impliesAllowed element="well" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.35 28.35">
+        <path xmlns="http://www.w3.org/2000/svg" d="M27.62,25.96c-0.36-0.26-0.46-0.52-0.4-0.9c0.25-1.64-0.86-2.82-2.91-3c-0.71-0.06-1-0.33-1.31-0.76   c-1.51-2.07-4.73-2.59-7.09-1.1c-0.29,0.18-0.55,0.28-0.82,0.34c-0.07-2.16-0.15-4.32-0.22-6.48c-0.03-0.85,0.27-1.15,1.1-1.19   c0.7-0.03,1.04-0.36,1.04-1.07C17,9.74,17,7.69,16.99,5.64c0-0.33-0.12-0.66-0.19-0.99c-0.07,0-0.14,0-0.21-0.01   c-0.07,0.34-0.2,0.69-0.2,1.03c-0.03,1.12,0,2.23-0.01,3.35c0,0.57-0.34,0.95-0.84,1C14.97,10.1,14.51,9.66,14.5,9   c-0.02-1.08,0.01-2.17-0.01-3.25c-0.01-0.37-0.11-0.73-0.17-1.1c-0.08,0-0.15-0.01-0.23-0.01c-0.07,0.36-0.2,0.71-0.2,1.07   c-0.03,1.1-0.01,2.2-0.01,3.3c0,0.43-0.16,0.75-0.55,0.93c-0.65,0.3-1.31-0.15-1.32-0.93c-0.02-1.08,0.01-2.17-0.01-3.25   c-0.01-0.37-0.11-0.74-0.17-1.11c-0.08,0-0.17,0.01-0.25,0.01c-0.07,0.36-0.18,0.73-0.19,1.09c-0.02,1.93-0.01,3.87-0.01,5.8   c0,0.98,0.25,1.25,1.22,1.3c0.57,0.03,0.93,0.38,0.95,0.95c0.01,0.22-0.02,0.43-0.02,0.65c-0.08,1.97-0.15,3.95-0.22,5.92   c-2.1-0.27-4.17,0.65-5.02,2.27c-0.49,0.93-2.16,1.56-3.44,1.3c-1.21-0.25-2.28,0.04-2.86,0.84c-0.32,0.44-0.69,0.8-1.19,1.12   c-1.08,0.7-0.76,1.87,0.59,2.18c0.52,0.12,1.09,0.13,1.63,0.13c3.7,0.01,7.4,0.01,11.1,0.01c3.7,0,7.4,0,11.1,0   c0.47,0,0.95-0.01,1.41-0.05c0.71-0.07,1.27-0.31,1.53-0.88C28.39,26.74,28.11,26.31,27.62,25.96z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M9.53,2.21c0,0,0,0.01,0.01,0.01C9.68,2.55,9.84,2.9,10.1,3.2c0.02,0.02,0.03,0.05,0.05,0.07   c0.12,0.18,0.32,0.25,0.54,0.19c0.03-0.01,0.06-0.02,0.09-0.03c0.14-0.06,0.24-0.15,0.3-0.29c0.03-0.06,0.05-0.12,0.06-0.18   c0.01-0.03,0.01-0.06,0.01-0.09c-0.03-0.06-0.06-0.13-0.09-0.19c-0.06-0.16-0.13-0.32-0.22-0.46c-0.09-0.17-0.19-0.33-0.32-0.47   c-0.04-0.06-0.09-0.11-0.14-0.16c-0.14-0.15-0.35-0.17-0.54-0.07c0,0,0,0,0,0c0,0,0,0-0.01,0c0,0-0.01,0-0.01,0.01   c0,0-0.01,0-0.01,0.01C9.68,1.57,9.59,1.66,9.54,1.79C9.5,1.87,9.48,1.95,9.49,2.03c0,0.02,0,0.03,0,0.05   c0.01,0.03,0.03,0.06,0.04,0.1C9.53,2.19,9.53,2.2,9.53,2.21z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M20.2,6.05c0.07,0.05,0.15,0.07,0.24,0.07c0.02,0,0.04,0.01,0.06,0.01c0.03-0.01,0.06-0.03,0.09-0.04   c0.44-0.16,0.86-0.39,1.2-0.72c0.16-0.15,0.17-0.37,0.06-0.57c-0.03-0.06-0.06-0.11-0.11-0.15c-0.04-0.05-0.09-0.08-0.16-0.11   c-0.09-0.05-0.19-0.08-0.3-0.06c-0.01,0-0.01,0-0.02,0c-0.01,0-0.01,0.01-0.02,0.01c-0.04,0.01-0.07,0.02-0.11,0.04   c-0.03,0.02-0.06,0.03-0.1,0.05c-0.29,0.12-0.59,0.27-0.85,0.49c-0.04,0.02-0.07,0.05-0.11,0.07c-0.2,0.14-0.27,0.37-0.16,0.62   C19.99,5.9,20.08,6,20.2,6.05z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M6.63,5.43C6.74,5.52,6.85,5.6,6.96,5.68c0,0,0.01,0.01,0.01,0.01c0.24,0.16,0.51,0.3,0.78,0.41   c0.03,0.01,0.07,0.02,0.1,0.03c0,0,0.01,0,0.01,0c0,0,0.01,0,0.01,0c0.06,0.01,0.11,0,0.16-0.01C8.17,6.09,8.29,6,8.38,5.87   c0.11-0.15,0.15-0.31,0.09-0.46C8.45,5.33,8.4,5.26,8.34,5.2c-0.34-0.32-0.76-0.54-1.2-0.7c-0.01,0-0.02,0-0.02-0.01   c0,0-0.01,0-0.01,0c0,0,0,0-0.01,0C7,4.46,6.9,4.47,6.81,4.51c-0.09,0.04-0.17,0.1-0.24,0.19C6.45,4.86,6.39,5.05,6.48,5.22   C6.51,5.3,6.56,5.37,6.63,5.43z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M11.04,15.15C11.04,15.14,11.04,15.14,11.04,15.15c-0.05-0.07-0.1-0.12-0.17-0.17c-0.13-0.09-0.27-0.14-0.41-0.1   c-0.1,0.01-0.19,0.06-0.27,0.14c-0.32,0.34-0.54,0.76-0.7,1.2c-0.06,0.18-0.01,0.35,0.12,0.49c0.03,0.03,0.06,0.06,0.09,0.08   c0.14,0.11,0.31,0.16,0.46,0.11c0.1-0.02,0.2-0.08,0.27-0.17c0.28-0.34,0.5-0.72,0.66-1.12c0.06-0.15,0.04-0.3-0.04-0.42   C11.06,15.17,11.05,15.16,11.04,15.15z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M21.4,12.67c0,0-0.01-0.01-0.01-0.01c-0.24-0.16-0.51-0.3-0.78-0.41c-0.03-0.01-0.07-0.02-0.1-0.03c0,0-0.01,0-0.01,0   c0,0-0.01,0-0.01,0c-0.06-0.01-0.11,0-0.16,0.01c-0.14,0.03-0.26,0.12-0.35,0.24c-0.11,0.15-0.15,0.31-0.09,0.46   c0.02,0.08,0.06,0.15,0.13,0.21c0.34,0.32,0.76,0.54,1.2,0.7c0.01,0,0.02,0,0.02,0.01c0,0,0.01,0,0.01,0c0,0,0,0,0.01,0   c0.1,0.03,0.2,0.02,0.3-0.02c0.09-0.04,0.17-0.1,0.24-0.19c0.12-0.16,0.18-0.35,0.09-0.51c-0.03-0.08-0.08-0.15-0.15-0.22   C21.63,12.83,21.52,12.75,21.4,12.67z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M17.32,3.2C17.32,3.21,17.32,3.21,17.32,3.2c0.05,0.07,0.1,0.12,0.17,0.17c0.13,0.09,0.27,0.14,0.41,0.1   c0.1-0.01,0.19-0.06,0.27-0.14c0.32-0.34,0.54-0.76,0.7-1.2c0.06-0.18,0.01-0.35-0.12-0.49c-0.03-0.03-0.06-0.06-0.09-0.08   c-0.14-0.11-0.31-0.16-0.46-0.11c-0.1,0.02-0.2,0.08-0.27,0.17c-0.28,0.34-0.5,0.72-0.66,1.12c-0.06,0.15-0.04,0.3,0.04,0.42   C17.31,3.18,17.31,3.19,17.32,3.2z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M17.52,16.14c0.09,0.17,0.19,0.33,0.32,0.47c0.04,0.06,0.09,0.11,0.14,0.16c0.14,0.15,0.35,0.17,0.54,0.07c0,0,0,0,0,0   c0,0,0,0,0.01,0c0,0,0.01,0,0.01-0.01c0,0,0.01,0,0.01-0.01c0.12-0.06,0.21-0.15,0.26-0.28c0.04-0.08,0.06-0.16,0.05-0.24   c0-0.02,0-0.03,0-0.05c-0.01-0.03-0.03-0.06-0.04-0.1c0-0.01-0.01-0.02-0.01-0.03c0,0,0-0.01-0.01-0.01   c-0.13-0.33-0.3-0.68-0.56-0.97c-0.02-0.02-0.03-0.05-0.05-0.07c-0.12-0.18-0.32-0.25-0.54-0.19c-0.03,0.01-0.06,0.02-0.09,0.03   c-0.14,0.06-0.24,0.15-0.3,0.29c-0.03,0.06-0.05,0.12-0.06,0.18c-0.01,0.03-0.01,0.06-0.01,0.09c0.03,0.06,0.06,0.13,0.09,0.19   C17.37,15.84,17.44,15.99,17.52,16.14z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M8.17,12.3c-0.07-0.05-0.15-0.07-0.24-0.07c-0.02,0-0.04-0.01-0.06-0.01c-0.03,0.01-0.06,0.03-0.09,0.04   c-0.44,0.16-0.86,0.39-1.2,0.72c-0.16,0.15-0.17,0.37-0.06,0.57c0.03,0.06,0.06,0.11,0.11,0.15c0.04,0.05,0.09,0.08,0.16,0.11   c0.09,0.05,0.19,0.08,0.3,0.06c0.01,0,0.01,0,0.02,0c0.01,0,0.01-0.01,0.02-0.01c0.04-0.01,0.07-0.02,0.11-0.04   c0.03-0.02,0.06-0.03,0.1-0.05c0.29-0.12,0.59-0.27,0.85-0.49c0.04-0.02,0.07-0.05,0.11-0.07c0.2-0.14,0.27-0.37,0.16-0.62   C8.38,12.45,8.28,12.35,8.17,12.3z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M5.65,9.61c0.01,0.01,0.03,0.02,0.04,0.03c0.03,0.01,0.07,0.01,0.1,0.02c0.01,0,0.02,0,0.03,0.01c0,0,0.01,0,0.01,0   c0.35,0.05,0.74,0.09,1.12,0.01c0.03,0,0.06,0,0.08,0c0.22-0.02,0.38-0.15,0.44-0.36C7.49,9.28,7.5,9.24,7.5,9.21   C7.52,9.06,7.49,8.93,7.4,8.8C7.37,8.75,7.32,8.7,7.27,8.66C7.25,8.64,7.22,8.62,7.2,8.6C7.13,8.6,7.06,8.59,6.99,8.58   C6.82,8.55,6.65,8.54,6.48,8.53c-0.19-0.01-0.38,0-0.57,0.04C5.84,8.58,5.77,8.59,5.7,8.61C5.5,8.66,5.38,8.83,5.36,9.04   c0,0,0,0,0,0c0,0,0,0,0,0.01c0,0.01,0,0.01,0,0.02c0,0,0,0.01,0,0.01C5.35,9.22,5.38,9.34,5.46,9.45C5.51,9.52,5.57,9.58,5.65,9.61   z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M13.69,2.04c0.02,0.24,0.18,0.42,0.46,0.46c0.15,0.02,0.28-0.02,0.39-0.09c0.08-0.04,0.14-0.1,0.18-0.17   c0.01-0.02,0.03-0.03,0.04-0.05c0-0.03,0.01-0.07,0.01-0.1c0.09-0.46,0.1-0.94-0.01-1.4c-0.05-0.21-0.23-0.33-0.46-0.34   c-0.06,0-0.12,0-0.18,0.02c-0.06,0.01-0.12,0.04-0.18,0.08c-0.09,0.05-0.17,0.13-0.21,0.23c0,0.01-0.01,0.01-0.01,0.02   c0,0.01,0,0.02,0,0.02c-0.01,0.04-0.02,0.07-0.02,0.11c0,0.04,0,0.07-0.01,0.11c-0.04,0.31-0.07,0.65-0.01,0.98   C13.68,1.96,13.68,2,13.69,2.04z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M21.32,8.69c-0.22,0.02-0.38,0.15-0.44,0.36c-0.01,0.03-0.02,0.06-0.02,0.1c-0.02,0.15,0.01,0.29,0.1,0.41   c0.03,0.06,0.08,0.11,0.13,0.14c0.02,0.02,0.05,0.04,0.07,0.06c0.07,0.01,0.14,0.01,0.21,0.02c0.17,0.03,0.34,0.04,0.51,0.05   c0.19,0.01,0.38,0,0.57-0.04c0.07-0.01,0.14-0.02,0.21-0.04c0.2-0.05,0.32-0.22,0.34-0.43c0,0,0,0,0,0c0,0,0,0,0-0.01   c0-0.01,0-0.01,0-0.02c0,0,0-0.01,0-0.01c0.01-0.14-0.02-0.26-0.1-0.37c-0.05-0.07-0.11-0.13-0.19-0.17   c-0.01-0.01-0.03-0.02-0.04-0.03c-0.03-0.01-0.07-0.01-0.1-0.02c-0.01,0-0.02,0-0.03-0.01c0,0-0.01,0-0.01,0   c-0.35-0.05-0.74-0.09-1.12-0.01C21.38,8.68,21.35,8.68,21.32,8.69z"/>
+      </svg>
+    </icon>
+    <link url="http://www.carcassonnecentral.com/community/index.php?action=downloads;sa=view;down=400" title="Download" type="download" />
+    <link url="https://wikicarpedia.com/index.php/Farmers_Heaven_(1st_edition)" title="Rules" type="wica" />
+    <link url="https://www.carcassonnecentral.com/community/index.php?topic=5400" title="Discussion" type="forum" />
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="farmers-heaven/CcRc">
+      <city>N W E</city>
+      <field>SL SR</field>
+      <road>S</road>
+    </tile>
+    <tile id="farmers-heaven/CFCR">
+      <city>N</city>
+      <city>S</city>
+      <field>EL ER WL WR</field>
+      <road>W</road>
+    </tile>
+    <tile id="farmers-heaven/CFRC">
+      <city>N</city>
+      <city>W</city>
+      <field>EL ER SL SR</field>
+      <road>S</road>
+    </tile>
+    <tile id="farmers-heaven/CFRf">
+      <city>N</city>
+      <field>EL ER SL SR WL WR</field>
+      <road>S</road>
+    </tile>
+    <tile id="farmers-heaven/CFRR">
+      <city>N</city>
+      <field>EL ER SL SR WL WR</field>
+      <road>S</road>
+      <road>W</road>
+    </tile>
+    <tile id="farmers-heaven/CRCR">
+      <city>N</city>
+      <city>S</city>
+      <field>EL ER WL WR</field>
+      <road>W</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/CRFc">
+      <city>N W</city>
+      <field>EL ER SL SR</field>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/CRFR">
+      <city>N</city>
+      <field>EL ER SL SR WL WR</field>
+      <road>W</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/CRRC">
+      <city>N</city>
+      <city>W</city>
+      <field>EL ER SL SR</field>
+      <road>S</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/CRRc.2">
+      <city>N W</city>
+      <field>EL ER SL SR</field>
+      <road>S</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/CRRF">
+      <city>N</city>
+      <field>EL ER SL SR WL WR</field>
+      <road>S</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/CRRR">
+      <city>N</city>
+      <field>EL ER SL SR WL WR</field>
+      <road>S</road>
+      <road>W</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/FCRc">
+      <city>W E</city>
+      <field>NL NR SL SR</field>
+      <road>S</road>
+    </tile>
+    <tile id="farmers-heaven/FffR.w">
+      <road wells="1" well="I">W</road>
+      <field>NL NR EL ER SL SR WL WR</field>
+      <well road="W">I</well>
+    </tile>
+    <tile id="farmers-heaven/FRfR">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <road>W</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/FRRr">
+      <field>SR WL</field>
+      <field>NL NR EL ER SL WR</field>
+      <road shed="1">S W</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/RCRc">
+      <city>W E</city>
+      <field>NL NR SL SR</field>
+      <road>N</road>
+      <road>S</road>
+    </tile>
+    <tile id="farmers-heaven/RFRr">
+      <field>NL NR EL ER SL WR</field>
+      <field>SR WL</field>
+      <road>S W</road>
+      <road>N</road>
+    </tile>
+    <tile id="farmers-heaven/RRFR">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <road>W</road>
+      <road>N</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/RRrF">
+      <field>NL NR EL SR WL WR</field>
+      <field>ER SL</field>
+      <road>S E</road>
+      <road>N</road>
+    </tile>
+    <tile id="farmers-heaven/RRrF.2">
+      <field>NR EL ER SL</field>
+      <field>NL SR WL WR</field>
+      <road>E</road>
+      <road>N S</road>
+    </tile>
+    <tile id="farmers-heaven/RRrRtodo">
+      <field>NR EL ER SL</field>
+      <field>NL SR WL WR</field>
+      <road>W</road>
+      <road>E</road>
+      <road>N S</road>
+    </tile>
+    <tile id="farmers-heaven/RRRR.2">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <road>S</road>
+      <road>W</road>
+      <road>N</road>
+      <road>E</road>
+    </tile>
+    <tile id="farmers-heaven/RRRr.3">
+      <field>NL NR EL ER SL WR</field>
+      <field>SR WL</field>
+      <road>S W</road>
+      <road>N</road>
+      <road>E</road>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="farmers-heaven">
+      <ref count="1" tile="farmers-heaven/CcRc" />
+      <ref count="1" tile="farmers-heaven/CFCR" />
+      <ref count="1" tile="farmers-heaven/CFRC" />
+      <ref count="1" tile="farmers-heaven/CFRf" />
+      <ref count="1" tile="farmers-heaven/CFRR" />
+      <ref count="1" tile="farmers-heaven/CRCR" />
+      <ref count="1" tile="farmers-heaven/CRFc" />
+      <ref count="1" tile="farmers-heaven/CRFR" />
+      <ref count="1" tile="farmers-heaven/CRRC" />
+      <ref count="1" tile="farmers-heaven/CRRc.2" />
+      <ref count="1" tile="farmers-heaven/CRRF" />
+      <ref count="1" tile="farmers-heaven/CRRR" />
+      <ref count="1" tile="farmers-heaven/FCRc" />
+      <ref count="1" tile="farmers-heaven/FffR.w" />
+      <ref count="1" tile="farmers-heaven/FRfR" />
+      <ref count="1" tile="farmers-heaven/FRRr" />
+      <ref count="1" tile="farmers-heaven/RCRc" />
+      <ref count="1" tile="farmers-heaven/RFRr" />
+      <ref count="1" tile="farmers-heaven/RRFR" />
+      <ref count="1" tile="farmers-heaven/RRrF" />
+      <ref count="1" tile="farmers-heaven/RRrF.2" />
+      <ref count="1" tile="farmers-heaven/RRrRtodo" />
+      <ref count="1" tile="farmers-heaven/RRRR.2" />
+      <ref count="1" tile="farmers-heaven/RRRr.3" />
+    </tile-set>
+  </sets>
+</defs>

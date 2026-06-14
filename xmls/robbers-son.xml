@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="ROBBERS-SON">
+    <title>Robber's Son</title>
+    <sets>
+      <ref tile-set="robbers-son" />
+    </sets>
+    <implies element="robbers-son" />
+    <implies element="well" />
+    <impliesAllowed element="abbot" />
+    <impliesAllowed element="garden" />
+    <impliesAllowed element="inn" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.35 28.35">
+        <path xmlns="http://www.w3.org/2000/svg" d="M14.17,28.07c-1.44,0.01-3.66,0.04-5.87-0.13c-1.18-0.09-2.36-0.22-3.46-0.69C4.3,27.02,4,26.65,3.97,26   c-0.11-2.22-0.18-4.43,0.1-6.64c0.29-2.32,0.92-4.53,2.31-6.46c0.8-1.11,1.79-2.02,2.96-2.74c0.25-0.15,0.5-0.3,0.75-0.43   c0.21-0.1,0.2-0.22,0.09-0.38c-0.56-0.75-0.49-1.31,0.23-1.9c0.12-0.1,0.19-0.18,0.02-0.29C9.77,6.7,9.28,6.07,8.8,5.44   c-0.5-0.66-0.9-1.39-1.16-2.18C7.44,2.62,7.63,2.33,8.3,2.32c0.66-0.01,1.31,0.02,1.94,0.24c0.25,0.09,0.46,0.23,0.68,0.36   c0.63,0.39,1.21,0.28,1.76-0.15c0.29-0.22,0.55-0.48,0.82-0.73c0.4-0.38,0.86-0.71,1.36-0.91c0.65-0.26,1.3-0.13,1.85,0.38   c0.24,0.23,0.47,0.47,0.66,0.74c0.1,0.15,0.23,0.28,0.37,0.4c0.33,0.24,0.62,0.07,0.91-0.07c0.56-0.27,0.96-0.72,1.3-1.22   c0.17-0.24,0.28-0.2,0.44-0.01c0.78,0.96,0.84,1.54,0.23,2.73c-0.62,1.22-1.61,2.13-2.66,2.98c-0.08,0.06-0.16,0.11-0.23,0.18   c-0.13,0.12-0.14,0.22,0.03,0.32c0.79,0.48,0.83,1.46,0.05,2c-0.18,0.12-0.18,0.24-0.02,0.38c1.94,1.61,3.49,3.53,4.46,5.86   c0.48,1.15,0.71,2.38,0.96,3.61c0.35,1.71,0.49,3.42,0.42,5.16c-0.03,0.84-0.24,1.63-0.63,2.38c-0.29,0.55-0.75,0.87-1.39,0.91   C19.4,27.97,17.17,28.03,14.17,28.07z M14.64,25.58c2.01,0.06,4.07-0.15,6.14-0.2c0.28-0.01,0.31-0.18,0.32-0.38   c0.13-2.3-0.07-4.58-0.64-6.81c-0.36-1.42-1-2.72-1.89-3.89c-0.74-0.97-1.6-1.82-2.52-2.62c-0.81-0.71-1.08-1.72-0.74-2.72   c0.07-0.2,0.07-0.4-0.01-0.59c-0.38-0.89-0.22-1.71,0.32-2.48c0.21-0.3,0.5-0.5,0.79-0.7c0.28-0.2,0.28-0.27-0.01-0.44   c-0.34-0.2-0.64-0.44-0.82-0.79c-0.11-0.2-0.23-0.24-0.39-0.06c-0.1,0.11-0.21,0.22-0.32,0.32c-0.65,0.54-1.25,1.16-2.15,1.28   c-0.36,0.04-0.36,0.09-0.16,0.39c0.41,0.61,0.68,1.26,0.44,2.02c-0.16,0.51-0.48,1.01-0.14,1.57c0.01,0.02,0.01,0.04,0,0.06   c-0.1,0.84-0.33,1.63-1.1,2.12c-0.44,0.28-0.9,0.54-1.35,0.82c-0.84,0.53-1.55,1.21-2.1,2.03c-0.9,1.36-1.43,2.87-1.69,4.49   c-0.31,1.98-0.31,3.96-0.23,5.96c0.01,0.17,0.01,0.31,0.25,0.34c1.15,0.11,2.29,0.28,3.44,0.31C11.57,25.6,13.08,25.67,14.64,25.58   z"/>
+      </svg>
+    </icon>
+    <link url="http://www.carcassonnecentral.com/community/index.php?action=downloads;sa=view;down=580" title="Download" type="download" />
+    <link url="https://wikicarpedia.com/index.php/Robber%27s_Son_(Fan_Expansion)" title="Rules" type="wica" />
+    <link url="https://www.carcassonnecentral.com/community/index.php?topic=5894" title="Discussion" type="forum" />
+    <link url="https://www.hans-im-glueck.de/en/verlag/autorenleitfaden.html" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="robbers-son/crrc">
+      <city>N</city>
+      <city>W</city>
+      <road robbers-son="true">S E</road>
+      <field city="N W">EL SR</field>
+      <field>ER SL</field>
+    </tile>
+    <tile id="robbers-son/crrr">
+      <city wagon-move="a">N</city>
+      <road robbers-son="true">S W</road>
+      <road wagon-move="a">E</road>
+      <field city="N">EL</field>
+      <field city="N">ER SL WR</field>
+      <field>SR WL</field>
+    </tile>
+    <tile id="robbers-son/crrr.2">
+      <city>N</city>
+      <field city="N">EL ER SL SR WL WR</field>
+      <road>W E</road>
+      <road robbers-son="true">S</road>
+    </tile>
+    <tile id="robbers-son/frrr.g">
+      <road garden="1" robbers-son="true">S W E</road>
+      <field>NL NR EL WR</field>
+      <field>ER SL</field>
+      <field>SR WL</field>
+      <garden>I</garden>
+    </tile>
+    <tile id="robbers-son/frrr.m">
+      <field>ER SL</field>
+      <field>SR WL</field>
+      <field>NL NR EL WR</field>
+      <road robbers-son="true" wagon-move="a b">S</road>
+      <road wagon-move="b c">W</road>
+      <road wagon-move="a c">E</road>
+      <monastery>I</monastery>
+    </tile>
+    <tile id="robbers-son/rfff.i">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <road inn="1" robbers-son="true">N</road>
+    </tile>
+    <tile id="robbers-son/rfrf.m">
+      <road robbers-son="true">N S</road>
+      <field>NL SR WL WR</field>
+      <field>NR EL ER SL</field>
+      <monastery>I</monastery>
+    </tile>
+    <tile id="robbers-son/rrrr.w">
+      <field>NL WR</field>
+      <field>NR EL SR WL</field>
+      <field>ER SL</field>
+      <road wells="1">N W</road>
+      <road robbers-son="true">S E</road>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="robbers-son">
+      <ref count="1" tile="robbers-son/crrc" />
+      <ref count="1" tile="robbers-son/crrr" />
+      <ref count="1" tile="robbers-son/crrr.2" />
+      <ref count="1" tile="robbers-son/frrr.g" />
+      <ref count="1" tile="robbers-son/frrr.m" />
+      <ref count="1" tile="robbers-son/rfff.i" />
+      <ref count="1" tile="robbers-son/rfrf.m" />
+      <ref count="1" tile="robbers-son/rrrr.w" />
+    </tile-set>
+  </sets>
+</defs>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>  
+  <modifier selector="road[wells]" type="+" enabled-by="well">
+    <scoring>
+      const { wells, inn } = this
+      if (wells) {
+        return [{
+          count: wells,
+          name: 'wells',
+          points: inn ? 2 * wells : wells
+        }]
+      }
+    </scoring>
+  </modifier>
+
+  <expansion id="WELLS">
+    <title>Wells</title>
+    <minimumVersionForAI>6.1.0-alpha.42</minimumVersionForAI>
+    <sets>
+      <ref tile-set="wells" />
+    </sets>
+    <implies element="well" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.4 28.4">
+        <path xmlns="http://www.w3.org/2000/svg" d="M14.4,27.6c-0.6,0-1.2,0-1.8,0c-0.1,0-0.1,0-0.2,0c-1.5-0.1-3-0.2-4.5-0.5c-1.1-0.2-2.1-0.5-3-1c-0.5-0.3-1-0.6-1.4-1  c-0.3-0.3-0.4-0.7-0.4-1.2c0-6.5,0-13.1,0-19.6c0-0.1,0-0.1,0-0.2C2.5,4,1.9,4,1.4,4c0-0.4,0-0.7,0-1.1c0.6,0,1.1,0,1.7,0  c0-0.6,0-1.3,0-1.9c0.7,0,1.5,0,2.2,0c0,0.6,0,1.2,0,1.9c0.2,0,0.5,0,0.7,0C6,2.6,6,2.3,6,2c5,0,10.1,0,15.1,0c0,0.3,0,0.6,0,0.9  c0.3,0,0.5,0,0.7,0c0-0.6,0-1.2,0-1.9c0.7,0,1.5,0,2.2,0c0,0.6,0,1.2,0,1.9c0.8,0,1.6,0,2.4,0c0,1,0,2.1,0,3.1c0.5,0,1,0,1.5,0  c0,0.4,0,0.8,0,1.1c-0.9,0-1.8,0-2.7,0c0-1.1,0-2.1,0-3.1c-0.4,0-0.8,0-1.3,0c0,0.1,0,0.1,0,0.2c0,6.5,0,13,0,19.6  c0,0.5-0.1,0.9-0.4,1.2c-0.4,0.5-1,0.8-1.5,1.1c-1,0.5-2.1,0.8-3.2,1c-1.2,0.3-2.5,0.4-3.7,0.5C15,27.6,14.7,27.6,14.4,27.6z   M15.8,12.5c-0.1,0-0.1,0-0.1,0c-1.1-0.1-2.1-0.1-3.2-0.1c-1.4,0.1-2.9,0.2-4.3,0.6c-0.8,0.2-1.6,0.4-2.3,0.8  c-0.1,0-0.1,0.1-0.2,0.1c0.3,0.2,1.1,0.5,1.7,0.7c1.6,0.5,3.2,0.7,4.8,0.8c2.1,0.1,4.2,0,6.3-0.4c0.9-0.2,1.8-0.4,2.7-0.9  c0.1-0.1,0.2-0.1,0.4-0.2c-1-0.5-2-0.8-3-1c0-0.8,0-1.5,0-2.2c1.1,0.2,2.3,0.5,3.3,1c0-2.6,0-5.1,0-7.7c-0.3,0-0.5,0-0.7,0  c0,0.2,0,0.4,0,0.7c-1.1,0-2.3,0-3.4,0c0,3.2,0,6.4,0,9.6c-0.4,0-0.7,0.1-1.1,0.1c0-3.3,0-6.5,0-9.7c-3.6,0-7.1,0-10.7,0  C6,4.5,6,4.3,6,4C5.8,4,5.6,4,5.3,4c0,2.6,0,5.1,0,7.7c0.1,0,0.2-0.1,0.3-0.1c0.1,0,0.2-0.1,0.3-0.1c1.3-0.5,2.7-0.8,4.1-1  c1.7-0.2,3.4-0.3,5.1-0.2c0.3,0,0.5,0,0.7,0.1C15.8,11.1,15.8,11.8,15.8,12.5z"/>
+      </svg>
+    </icon>
+    <link url="http://www.carcassonnecentral.com/community/index.php?action=downloads;sa=view;down=232" title="Download" type="download" />
+    <link url="https://boardgamegeek.com/boardgame/248822/wells-fan-expansion-carcassonne" title="" type="bgg" />
+    <link url="https://wikicarpedia.com/car/The_Wells_(Fan_Expansion)" title="Rules" type="wica" />
+    <link url="https://www.carcassonnecentral.com/community/index.php?topic=5968.0" title="Discussion" type="forum" />
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="wells/CRrR.w">
+      <city wagon-move="a">N</city>
+      <road>W E</road>
+      <road wagon-move="a" wells="1" well="I">S</road>
+      <field city="N">WR</field>
+      <field city="N">EL</field>
+      <field wells="1" well="I">SR WL</field>
+      <field>ER SL</field>
+      <well field="Field/SR.WL" road="S">I</well>
+    </tile>
+    <tile id="wells/CR.w">
+      <city>N</city>
+      <well road="E">I</well>
+      <road wells="1" well="I">E</road>
+      <field city="N">EL ER SL SR WL WR</field>
+    </tile>
+    <tile id="wells/CR.wR">
+      <city wagon-move="a">N</city>
+      <field city="N" wells="1" well="I">SR WL WR</field>
+      <field city="N">EL</field>
+      <field>ER SL</field>
+      <road wells="1" well="I">E</road>
+      <road wagon-move="a">S</road>
+      <well road="E" field="Field/SR.WL.WR">I</well>
+    </tile>
+    <tile id="wells/RFr.w">
+      <well road="WE" field="Field/NL.NR.EL.WR">I</well>
+      <field wells="1" well="I">NL NR EL WR</field>
+      <field>ER SL SR WL</field>
+      <road wells="1" well="I">W E</road>
+    </tile>
+    <tile id="wells/RFr.ww">
+      <field wells="2" well="I II">NL NR EL WR</field>
+      <field>ER SL SR WL</field>
+      <well road="WE" field="Field/NL.NR.EL.WR">I</well>
+      <well road="WE" field="Field/NL.NR.EL.WR">II</well>
+      <road wells="2" well="I II">W E</road>
+    </tile>
+    <tile id="wells/Rrrr.ww">
+      <field>SR WL</field>
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>ER SL</field>
+      <field wells="2" well="I II">I</field>
+      <well road="NWSE" field="Field/I">I</well>
+      <well road="NWSE" field="Field/I">II</well>
+      <road wells="2" well="I II">N W S E</road>
+    </tile>
+    <tile id="wells/Rrr.w">
+      <well road="_S">I</well>
+      <road wells="1" well="I">N W E</road>
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>ER SL SR WL</field>
+    </tile>
+    <tile id="wells/Rr.w">
+      <well road="SW" field="Field/NL.NR.EL.ER.SL.WR">I</well>
+      <field wells="1" well="I">NL NR EL ER SL WR</field>
+      <field>SR WL</field>
+      <road wells="1" well="I">S W</road>
+    </tile>
+    <tile id="wells/Rr.ww">
+      <field wells="2" well="I II">NL NR EL ER SL WR</field>
+      <field>SR WL</field>
+      <well road="SW" field="Field/NL.NR.EL.ER.SL.WR">I</well>
+      <well road="SW" field="Field/NL.NR.EL.ER.SL.WR">II</well>
+      <road wells="2" well="II I">S W</road>
+    </tile>
+    <tile id="wells/R.w">
+      <well road="W">I</well>
+      <field>NL NR EL ER SL SR WL WR</field>
+      <road wells="1" well="I">W</road>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="wells">
+      <ref count="1" tile="wells/CRrR.w" />
+      <ref count="1" tile="wells/CR.w" />
+      <ref count="1" tile="wells/CR.wR" />
+      <ref count="2" tile="wells/RFr.w" />
+      <ref count="1" tile="wells/RFr.ww" />
+      <ref count="1" tile="wells/Rrrr.ww" />
+      <ref count="1" tile="wells/Rrr.w" />
+      <ref count="2" tile="wells/Rr.w" />
+      <ref count="1" tile="wells/Rr.ww" />
+      <ref count="1" tile="wells/R.w" />
+    </tile-set>
+  </sets>
+</defs>

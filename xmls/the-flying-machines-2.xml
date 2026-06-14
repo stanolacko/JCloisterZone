@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="THE-FLYING-MACHINES-2">
+    <title>The Flying Machines 2</title>
+    <sets>
+      <ref tile-set="the-flying-machines-2" />
+    </sets>
+    <enforces element="flier" />
+    <impliesAllowed element="abbot" />
+    <impliesAllowed element="garden" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <path xmlns="http://www.w3.org/2000/svg" d="M135.9,36.2c9.7-2.9,19.8-4.7,29.9-4.2c-0.1,1.8-0.2,3.5-0.3,5.3c-5.1-0.5-10.2,0.2-15.3,0.9c-1,1.8-1.8,3.7-2.5,5.7   c-0.1,0.8-1.1,0.9-1.7,1.3c-9,3.1-17.6,7.2-26.1,11.4c-34.1,15.7-64.8,37.9-92,63.6c-8.6-0.1-17.2,0.3-25.6,2   c7-7.6,14.7-14.5,22.5-21.3C48.1,80.7,74,63.2,102.1,50.2C113,44.7,124.2,39.7,135.9,36.2z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M169.3,46.2c6.5-1.4,13.1-1.9,19.7-1.7c-0.1,1.8-0.2,3.5-0.3,5.3c-5.1-0.5-10.2,0.2-15.3,0.9c-4.2,7.9-5.8,17.2-4.2,26   c2,11.5,8.2,21.9,15.8,30.7c4.2,0.9,8.6,1.1,12.9,2.1c-0.3,1.7-0.7,3.4-1,5.1c-3.9-0.8-7.8-1.4-11.7-1.8c-1.7-0.4-3,1.1-4.3,1.8   c-15.3,9.9-25.3,26.1-31.6,42.9c2.9,2.2,5.9,4.2,8.7,6.5c-1,1.4-2.1,2.7-3.2,4.1c-12.4-9.6-26-17.4-40.6-23.2   c-14.7-5.4-30.1-8.6-45.6-10.4c-8.2-0.8-16.4-2-24.7-1.7c-6.3,0-12.5,0.8-18.7,1.9c10.2-10.8,21.4-20.6,32.9-29.9   C76.7,90,96.5,76.9,117.7,66.4C134.3,58.3,151,49.8,169.3,46.2z"/>
+      </svg>
+    </icon>
+    <link url="https://wikicarpedia.com/index.php/The_Flying_Machines_2_(Fan_Expansion)" title="Rules" type="wica" />
+    <link url="https://www.hans-im-glueck.de/en/verlag/autorenleitfaden.html" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="the-flying-machines-2/ccfc.f">
+      <city>N W E</city>
+      <field city="_S">SL SR</field>
+      <flying-machine direction="NW">I</flying-machine>
+    </tile>
+    <tile id="the-flying-machines-2/cfcf.f">
+      <city>N</city>
+      <city>S</city>
+      <field city="N S">EL ER WL WR</field>
+      <flying-machine direction="W">I</flying-machine>
+    </tile>
+    <tile id="the-flying-machines-2/cffc.f">
+      <city>N</city>
+      <city>W</city>
+      <field city="N W">EL ER SL SR</field>
+      <flying-machine direction="NW">I</flying-machine>
+    </tile>
+    <tile id="the-flying-machines-2/cffc.f.2">
+      <city>N W</city>
+      <flying-machine direction="W">I</flying-machine>
+      <field city="N W">EL ER SL SR</field>
+    </tile>
+    <tile id="the-flying-machines-2/cfff.f">
+      <city>N</city>
+      <field city="N">EL ER SL SR WL WR</field>
+      <flying-machine direction="W">I</flying-machine>
+    </tile>
+    <tile id="the-flying-machines-2/cfff.f.2">
+      <city castle-base="no">N</city>
+      <field city="N">SL SR WL WR</field>
+      <field city="N">EL ER</field>
+      <flying-machine direction="N">I</flying-machine>
+    </tile>
+    <tile id="the-flying-machines-2/cfff.g.f">
+      <city>N</city>
+      <field city="N">EL ER SL SR WL WR</field>
+      <flying-machine direction="SW">I</flying-machine>
+      <garden>I</garden>
+    </tile>
+    <tile id="the-flying-machines-2/fcfc.f">
+      <city>W E</city>
+      <field city="W E">SL SR</field>
+      <field city="W E">NL NR</field>
+      <flying-machine direction="N">I</flying-machine>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="the-flying-machines-2">
+      <ref count="1" tile="the-flying-machines-2/ccfc.f" />
+      <ref count="1" tile="the-flying-machines-2/cfcf.f" />
+      <ref count="1" tile="the-flying-machines-2/cffc.f" />
+      <ref count="1" tile="the-flying-machines-2/cffc.f.2" />
+      <ref count="1" tile="the-flying-machines-2/cfff.f" />
+      <ref count="1" tile="the-flying-machines-2/cfff.f.2" />
+      <ref count="1" tile="the-flying-machines-2/cfff.g.f" />
+      <ref count="1" tile="the-flying-machines-2/fcfc.f" />
+    </tile-set>
+  </sets>
+</defs>

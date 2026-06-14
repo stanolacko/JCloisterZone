@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="GAMBLERS-LUCK">
+    <title>Gambler's Luck</title>
+    <sets>
+      <ref tile-set="gamblers-luck" />
+    </sets>
+    <enforces element="gamblersluck" />
+    <impliesAllowed element="well" />
+    <impliesAllowed element="abbot" />
+    <impliesAllowed element="garden" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.3 28.3">
+        <path xmlns="http://www.w3.org/2000/svg" d="M25,6.9c0-0.1,0-0.1,0-0.2c0,0,0-0.1,0-0.1c0,0,0,0,0,0C25,5,25,3.4,24.9,1.9c0-1.1-0.4-1.6-1.2-1.6c-0.1,0-0.2,0-0.3,0  c-0.3,0-0.7,0.1-1.1,0.3c-2.7,1.1-5.4,1.7-8.2,1.7c-2.7,0-5.5-0.6-8.2-1.7C5.6,0.3,5.2,0.3,4.9,0.3c-0.1,0-0.2,0-0.3,0  c-0.7,0-1.1,0.6-1.2,1.6c0,1.6-0.1,3.1-0.1,4.7c0,0,0,0,0,0c0,0,0,0.1,0,0.1c0,0.1,0,0.1,0,0.2c0,0,0,0,0,0c0,0,0,0,0,0  c0,0,0,0,0,0.1c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.3  c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.4c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0,0.4c0,0.1,0,0.2,0,0.2c0,0.1,0,0.3,0.1,0.4  c0,0.1,0,0.2,0,0.2c0,0.1,0,0.3,0.1,0.4c0,0.1,0,0.2,0,0.2c0,0.1,0,0.2,0.1,0.4c0,0.1,0,0.1,0,0.2c0,0,0,0.1,0,0.1c0,0,0,0.1,0,0.1  c0,0.1,0.1,0.2,0.1,0.3c0.2,1,0.5,2,0.8,2.9c0,0.1,0,0.2,0.1,0.2c0.1,0.2,0.1,0.4,0.2,0.6C5,16.5,5,16.6,5,16.8  c0,0.1,0.1,0.3,0.2,0.4c0.1,0.1,0.1,0.3,0.2,0.4c0.1,0.2,0.2,0.4,0.3,0.6c0,0,0,0,0,0.1c0.2,0.4,0.4,0.9,0.7,1.3  c0,0.1,0.1,0.1,0.1,0.2c0.1,0.1,0.1,0.2,0.2,0.3c0.5,0.9,1.1,1.7,1.7,2.4c0.1,0.1,0.1,0.2,0.2,0.2c0.1,0.1,0.2,0.2,0.2,0.3  c0.6,0.7,1.3,1.4,1.9,2c0.5,0.5,1,1,1.5,1.5c0.3,0.4,0.7,0.7,1,1c0,0,0,0,0.1,0.1c0.2,0.2,0.4,0.4,0.7,0.6c0,0,0.1,0,0.1,0.1  c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0.1,0,0.1-0.1c0.3-0.1,0.5-0.4,0.7-0.6  c0,0,0,0,0.1-0.1c0.4-0.3,0.7-0.7,1-1c0.5-0.5,1-1,1.5-1.5c0.7-0.7,1.3-1.3,1.9-2c0.1-0.1,0.2-0.2,0.2-0.3c0.1-0.1,0.1-0.2,0.2-0.2  c0.6-0.8,1.2-1.6,1.7-2.4c0.1-0.1,0.1-0.2,0.2-0.3c0-0.1,0.1-0.1,0.1-0.2c0.2-0.4,0.5-0.8,0.7-1.3c0,0,0,0,0-0.1  c0.1-0.2,0.2-0.4,0.3-0.6c0.1-0.1,0.1-0.3,0.2-0.4c0.1-0.1,0.1-0.3,0.2-0.4c0-0.1,0.1-0.2,0.1-0.3c0.1-0.2,0.1-0.4,0.2-0.6  c0-0.1,0-0.2,0.1-0.2c0.3-1,0.5-1.9,0.8-2.9c0-0.1,0.1-0.2,0.1-0.3c0,0,0-0.1,0-0.1c0,0,0-0.1,0-0.1c0-0.1,0-0.1,0-0.2  c0-0.1,0-0.2,0.1-0.4c0-0.1,0-0.2,0-0.2c0-0.1,0-0.3,0.1-0.4c0-0.1,0-0.2,0-0.2c0-0.1,0-0.3,0.1-0.4c0-0.1,0-0.2,0-0.2  c0-0.1,0-0.2,0-0.4c0-0.1,0-0.2,0-0.3c0-0.1,0-0.2,0-0.4c0-0.1,0-0.2,0-0.3c0-0.1,0-0.2,0-0.3c0-0.1,0-0.2,0-0.3c0-0.1,0-0.2,0-0.3  c0-0.1,0-0.2,0-0.3c0-0.1,0-0.2,0-0.3C25,7.2,25,7.1,25,6.9C25,7,25,7,25,6.9C25,6.9,25,6.9,25,6.9C25,6.9,25,6.9,25,6.9z   M21.7,10.4c-0.1,0.6-0.2,1.1-0.3,1.7c0,0.1,0,0.2-0.1,0.3c0,0.1,0,0.2,0,0.3c-0.1,0.6-0.2,1.1-0.4,1.7c-0.1,0.4-0.3,0.9-0.5,1.3  c0,0.1-0.1,0.1-0.1,0.2c0,0.1-0.1,0.2-0.1,0.3c-0.2,0.5-0.5,0.9-0.7,1.4c-0.6,1-1.3,1.9-2,2.8c-0.6,0.7-1.2,1.4-1.8,2.1c0,0,0,0,0,0  c-0.2,0.2-0.4,0.5-0.6,0.7c-0.2,0.2-0.3,0.4-0.5,0.5c-0.1,0.1-0.2,0.1-0.3,0.1c-0.1,0-0.2,0-0.3-0.1c-0.2-0.2-0.4-0.3-0.5-0.5  c-0.2-0.2-0.4-0.5-0.6-0.7c0,0,0,0,0,0c-0.6-0.7-1.2-1.4-1.8-2.1c-0.7-0.9-1.4-1.8-2-2.8c-0.3-0.5-0.5-0.9-0.7-1.4  c0-0.1-0.1-0.2-0.1-0.3C8,15.8,8,15.7,8,15.6c-0.2-0.4-0.4-0.9-0.5-1.3c-0.2-0.5-0.3-1.1-0.4-1.7c0-0.1,0-0.2,0-0.3  c0-0.1,0-0.2-0.1-0.3c-0.1-0.6-0.2-1.1-0.3-1.7c0-0.3-0.1-0.5-0.1-0.8c-0.1-1.2-0.1-2.3,0-3.5l0-0.8c0-0.7,0.1-1,0.6-1.1  c0.1,0,0.3,0,0.5,0.1C9.8,5,12,5.3,14.2,5.3c0,0,0,0,0,0s0,0,0,0c2.2,0,4.3-0.3,6.5-0.9c0.2-0.1,0.4-0.1,0.5-0.1  c0.5,0,0.6,0.4,0.6,1.1l0,0.8c0,1.2,0,2.3,0,3.5C21.7,9.9,21.7,10.2,21.7,10.4z"/>
+      </svg>
+    </icon>
+    <link url="https://www.carcassonnecentral.com/community/index.php?action=downloads;sa=view;down=587" title="Download" type="download" />
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="gamblers-luck/cccc">
+      <city>N</city>
+      <city>S</city>
+      <city gamblers-luck-shield="I">W E</city>
+      <gamblersluckshield city="WE">I</gamblersluckshield>
+      <field>I</field>
+      <field>II</field>
+    </tile>
+    <tile id="gamblers-luck/cccc.m">
+      <city gamblers-luck-shield="I">N W S E</city>
+      <gamblersluckshield city="NWSE">I</gamblersluckshield>
+      <monastery>I</monastery>
+    </tile>
+    <tile id="gamblers-luck/ccrc.w">
+      <city gamblers-luck-shield="I" castle-base="no">N W</city>
+      <city wagon-move="a" multi-edge="N" castle-base="no">E</city>
+      <field city="N W E">SR</field>
+      <field city="E">SL</field>
+      <road wagon-move="a" wells="1" well="I">S</road>
+      <gamblersluckshield city="WNL">I</gamblersluckshield>
+      <well road="S">I</well>
+    </tile>
+    <tile id="gamblers-luck/cfcf">
+      <city>S</city>
+      <city gamblers-luck-shield="I" castle-base="no">N</city>
+      <gamblersluckshield city="N">I</gamblersluckshield>
+      <field city="N">WL WR</field>
+      <field city="N">EL ER</field>
+      <field city="S N">I</field>
+    </tile>
+    <tile id="gamblers-luck/cffr.g">
+      <city gamblers-luck-shield="I" wagon-move="a" castle-base="no">N</city>
+      <field city="N">WR</field>
+      <field city="N">EL ER SL SR WL</field>
+      <road wagon-move="a">W</road>
+      <gamblersluckshield city="N">I</gamblersluckshield>
+      <garden>I</garden>
+    </tile>
+    <tile id="gamblers-luck/cfrc.w">
+      <city gamblers-luck-shield="I" wagon-move="a">N W</city>
+      <field city="N W">SR</field>
+      <field city="N W">EL ER SL</field>
+      <road wagon-move="a" wells="1" well="I">S</road>
+      <gamblersluckshield city="NW">I</gamblersluckshield>
+      <well road="S">I</well>
+    </tile>
+    <tile id="gamblers-luck/fcrc">
+      <city gamblers-luck-shield="I" wagon-move="a">W E</city>
+      <road wagon-move="a">S</road>
+      <gamblersluckshield city="WE">I</gamblersluckshield>
+      <field city="W E">NL NR</field>
+      <field city="W E">SR</field>
+      <field city="W E">SL</field>
+    </tile>
+    <tile id="gamblers-luck/rrrc">
+      <city gamblers-luck-shield="I" wagon-move="a b c" castle-base="no">W</city>
+      <field city="W">NL</field>
+      <field city="W">NR EL</field>
+      <field city="W">SR</field>
+      <field>ER SL</field>
+      <road wagon-move="a">S</road>
+      <road wagon-move="c">E</road>
+      <road wagon-move="b">N</road>
+      <gamblersluckshield city="W">I</gamblersluckshield>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="gamblers-luck">
+      <ref count="1" tile="gamblers-luck/cccc" />
+      <ref count="1" tile="gamblers-luck/cccc.m" />
+      <ref count="1" tile="gamblers-luck/ccrc.w" />
+      <ref count="1" tile="gamblers-luck/cfcf" />
+      <ref count="1" tile="gamblers-luck/cffr.g" />
+      <ref count="1" tile="gamblers-luck/cfrc.w" />
+      <ref count="1" tile="gamblers-luck/fcrc" />
+      <ref count="1" tile="gamblers-luck/rrrc" />
+    </tile-set>
+  </sets>
+</defs>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="CLIFFS-AND-WATERFALLS">
+    <title>Cliffs and Waterfalls</title>
+    <sets>
+      <ref tile-set="cliffs-and-waterfalls" />
+    </sets>
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.4 28.4">
+        <path xmlns="http://www.w3.org/2000/svg" d="M17.7,14.8C18,11,18.7,6.4,20.3,4.7c0.4-0.3,2.5-0.7,4.6-0.8l-0.1-1.5c-1.1,0.1-4.6,0.3-5.6,1.3   c-3.3,3.5-3.1,15.1-3.1,15.6l0.8,0.2c1.9,0.3,2.9,0.9,3,1.2C19.8,21,17.7,22,14,22.1v1.5c3.6-0.1,7.4-1,7.4-3   c0-1.3-1.6-2.1-3.7-2.6c0-0.5,0-1.1,0-1.7c4,0.8,6.6,2.6,6.6,4.2c0,2.2-4.4,4.6-10.6,4.6C7.3,25.1,3,22.7,3,20.5   c0-1.4,1.9-3,5.1-3.9c0,0.7,0,1.3,0,1.8c-1.3,0.5-2.1,1.2-2.1,2.1c0,1.3,1.6,2.1,3.7,2.6v-1.5c-1.4-0.3-2.2-0.8-2.2-1   c0-0.2,0.4-0.5,1.2-0.7l1-0.3c0-0.1-0.5-5.3,1.5-9.1c2.1-3.8,4.2-5.8,4.2-5.8l0.9-0.8L15,3.4c-0.1,0-2.6-1-5.4-1c0,0-0.1,0-0.1,0   l0,1.5c1.5,0,2.9,0.3,3.9,0.6c-0.9,1-2.3,2.8-3.7,5.3c-0.9,1.7-1.4,3.6-1.6,5.3c-4,1-6.7,3-6.7,5.5c0,3.4,5.3,6.1,12.1,6.1   s12.1-2.7,12.1-6.1C25.8,17.9,22.5,15.7,17.7,14.8z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M13.8,9.1c-2.4,5.3-2,11.3-2,11.6l1.5-0.1c0-0.1-0.3-6,1.9-10.9L13.8,9.1z"/>
+      </svg>
+    </icon>
+    <link url="http://www.carcassonnecentral.com/community/index.php?topic=2928.60" title="Download" type="download" />
+    <link url="https://www.hans-im-glueck.de/en/verlag/autorenleitfaden.html" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="cliffs-and-waterfalls/cccc">
+      <city pennants="2">N W S E</city>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/cccc2">
+      <city pennants="1">N W S E</city>
+      <cliff>I</cliff>
+      <monastery>I</monastery>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ccrc">
+      <city wagon-move="a">N</city>
+      <city>W E</city>
+      <field city="N">SR</field>
+      <field>SL</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+      <road wagon-move="a">S</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ccrr">
+      <city wagon-move="a" castle-base="no">E</city>
+      <city wagon-move="b">N</city>
+      <field city="N">SR</field>
+      <field city="E">WR</field>
+      <field city="E">WL</field>
+      <field city="E">SL</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+      <road wagon-move="b">S</road>
+      <road wagon-move="a">W</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ccrr.2">
+      <city>N E</city>
+      <field city="N E">WR</field>
+      <field city="N E">SL</field>
+      <field>SR WL</field>
+      <cliff>I</cliff>
+      <road>S W</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ccrr.3">
+      <city>E</city>
+      <city>N</city>
+      <field city="N">WR</field>
+      <field city="E">SL</field>
+      <field>SR WL</field>
+      <cliff>I</cliff>
+      <road>S W</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/cfff">
+      <city>N</city>
+      <field city="N">WL WR</field>
+      <field>EL ER SL SR</field>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/cfff.2">
+      <city>N</city>
+      <field city="N">EL ER</field>
+      <field>SL SR WL WR</field>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/cfrf">
+      <city wagon-move="a" castle-base="no">N</city>
+      <field city="N">SR WL WR</field>
+      <field city="N">EL ER SL</field>
+      <road wagon-move="a">S</road>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/crcr">
+      <city>N</city>
+      <city>S</city>
+      <field city="N">WR</field>
+      <field city="N">EL</field>
+      <field city="S">WL</field>
+      <field city="S">ER</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+      <road>W E</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/crfr">
+      <city>N</city>
+      <field>WR</field>
+      <field>EL</field>
+      <field>ER SL SR WL</field>
+      <cliff>I</cliff>
+      <road>W E</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/crfr.2">
+      <city wagon-move="a b" castle-base="no">N</city>
+      <field city="N">EL</field>
+      <field city="N">WR</field>
+      <field city="N">ER SL SR WL</field>
+      <road wagon-move="a">E</road>
+      <road wagon-move="b">W</road>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/crrc">
+      <city wagon-move="a" castle-base="no">W</city>
+      <city wagon-move="b">N</city>
+      <field>SL</field>
+      <field city="N">SR</field>
+      <field city="W">EL</field>
+      <field city="W">ER</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+      <road wagon-move="b">S</road>
+      <road wagon-move="a">E</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/crrr">
+      <city wagon-move="a" castle-base="no">N</city>
+      <field city="N">WR</field>
+      <field>SR WL</field>
+      <field city="N">ER SL</field>
+      <field city="N">EL</field>
+      <road>S W</road>
+      <road wagon-move="a">E</road>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ffff">
+      <field>NL NR</field>
+      <field>EL ER</field>
+      <field>SL SR WL WR</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ffff.2">
+      <field>NL NR</field>
+      <field>SL SR</field>
+      <field>EL ER WL WR</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ffff.3">
+      <field>NL NR EL ER</field>
+      <field>SL SR WL WR</field>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ffff.4">
+      <field>NL NR</field>
+      <field>EL ER SL SR WL WR</field>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ffrf">
+      <road shed="2">S</road>
+      <field shed="1">EL ER SL</field>
+      <field shed="2">SR WL WR</field>
+      <field>NL NR</field>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/ffrr">
+      <field>WR</field>
+      <field>SR WL</field>
+      <field>SL</field>
+      <field shed="1">NL NR EL ER</field>
+      <road>S W</road>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/frfr">
+      <field>EL WR</field>
+      <field>ER WL</field>
+      <field>NL NR</field>
+      <field>SL SR</field>
+      <road>W E</road>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/frfr.2">
+      <field>WL</field>
+      <field>WR</field>
+      <field>NL NR EL</field>
+      <field shed="1">ER SL SR</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+      <road shed="1">W E</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/frfr.3">
+      <field>ER</field>
+      <field>WR</field>
+      <field>SL SR WL</field>
+      <field shed="1">NL NR EL</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+      <road shed="1">W E</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/frfr.4">
+      <field>EL</field>
+      <field>WR</field>
+      <field>NL NR</field>
+      <field>ER SL SR WL</field>
+      <road>W E</road>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/frrr">
+      <field>EL WR</field>
+      <field>NL NR</field>
+      <field>ER SL</field>
+      <field>SR WL</field>
+      <cliff>I</cliff>
+      <road wagon-move="a b">E</road>
+      <road wagon-move="a c">S</road>
+      <road wagon-move="b c">W</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/rffr">
+      <road>N W</road>
+      <field>NL WR</field>
+      <field>WL</field>
+      <field shed="1">NR EL ER SL SR</field>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="cliffs-and-waterfalls/rffr.2">
+      <field>NL WR</field>
+      <field shed="1">NR EL ER</field>
+      <field>WL</field>
+      <field>SL SR</field>
+      <cliff>I</cliff>
+      <road shed="1">N W</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/rrff">
+      <cliff>I</cliff>
+      <field>ER SL SR</field>
+      <field>NR EL</field>
+      <field shed="1">NL WL WR</field>
+      <road shed="1">N E</road>
+    </tile>
+    <tile id="cliffs-and-waterfalls/rrrr">
+      <field>NL</field>
+      <field>SR</field>
+      <field>WR</field>
+      <field>WL</field>
+      <field>NR EL</field>
+      <field shed="1">ER SL</field>
+      <cliff>I</cliff>
+      <cliff>II</cliff>
+      <road>N W</road>
+      <road shed="1">S E</road>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="cliffs-and-waterfalls">
+      <ref count="1" tile="cliffs-and-waterfalls/cccc" />
+      <ref count="1" tile="cliffs-and-waterfalls/cccc2" />
+      <ref count="1" tile="cliffs-and-waterfalls/ccrc" />
+      <ref count="1" tile="cliffs-and-waterfalls/ccrr" />
+      <ref count="1" tile="cliffs-and-waterfalls/ccrr.2" />
+      <ref count="1" tile="cliffs-and-waterfalls/ccrr.3" />
+      <ref count="1" tile="cliffs-and-waterfalls/cfff" />
+      <ref count="1" tile="cliffs-and-waterfalls/cfff.2" />
+      <ref count="1" tile="cliffs-and-waterfalls/cfrf" />
+      <ref count="1" tile="cliffs-and-waterfalls/crcr" />
+      <ref count="1" tile="cliffs-and-waterfalls/crfr" />
+      <ref count="1" tile="cliffs-and-waterfalls/crfr.2" />
+      <ref count="1" tile="cliffs-and-waterfalls/crrc" />
+      <ref count="1" tile="cliffs-and-waterfalls/crrr" />
+      <ref count="1" tile="cliffs-and-waterfalls/ffff" />
+      <ref count="1" tile="cliffs-and-waterfalls/ffff.2" />
+      <ref count="1" tile="cliffs-and-waterfalls/ffff.3" />
+      <ref count="1" tile="cliffs-and-waterfalls/ffff.4" />
+      <ref count="1" tile="cliffs-and-waterfalls/ffrf" />
+      <ref count="1" tile="cliffs-and-waterfalls/ffrr" />
+      <ref count="1" tile="cliffs-and-waterfalls/frfr" />
+      <ref count="1" tile="cliffs-and-waterfalls/frfr.2" />
+      <ref count="1" tile="cliffs-and-waterfalls/frfr.3" />
+      <ref count="1" tile="cliffs-and-waterfalls/frfr.4" />
+      <ref count="1" tile="cliffs-and-waterfalls/frrr" />
+      <ref count="1" tile="cliffs-and-waterfalls/rffr" />
+      <ref count="1" tile="cliffs-and-waterfalls/rffr.2" />
+      <ref count="1" tile="cliffs-and-waterfalls/rrff" />
+      <ref count="1" tile="cliffs-and-waterfalls/rrrr" />
+    </tile-set>
+  </sets>
+</defs>

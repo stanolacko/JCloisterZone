@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="THE-COURIER">
+    <title>The Courier</title>
+    <minimumVersionForAI>9999.0.0</minimumVersionForAI>
+    <sets>
+      <ref tile-set="the-courier" />
+    </sets>
+    <implies element="courier" />
+    <impliesAllowed element="abbot" />
+    <impliesAllowed element="garden" />
+    <impliesAllowed element="well" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <path xmlns="http://www.w3.org/2000/svg" d="M79,10.5c16.3-2.3,33.3-0.6,48.3,6.3c-7.2,8.3-14.3,16.6-20.8,25.5c-9,10.7-17.4,21.9-25.7,33.2    c-10,14-19.1,28.6-27.5,43.6c-3.1,1.7-6.8,1.1-10,2.2c-8.8,2-15,9.1-19.7,16.4c1.4,1.2,2.5,2.6,3.9,3.8    c4.1-4.6,7.3-10.7,13.6-12.6c5.3-0.7,11.3-0.9,15.8-4.2l0.4-0.1c7.8-14.4,16.3-28.4,25.7-41.8c7.1-10,14.3-19.9,22-29.4    c2.5-3.1,5-6.2,7.5-9.3c25.3,14.8,55.3,18.6,84.1,20c-21.8,42.1-43.4,84.4-66.1,126c-29.9,1.9-59.7-6.4-86.3-19.6    c-14.5-7.3-28.1-16.4-40.8-26.6C27.6,98.9,51.8,53.8,79,10.5z M102.6,142.5c-4.9,1.1-9.8,3.6-12.8,7.8c-2.4,3.2-3.1,7.6-1.4,11.3    c2.1,4.6,6.8,7.3,11.4,8.7c7.4,1.9,15.7,0.9,22.1-3.5c3.4-2.3,6.2-6,6.5-10.2c0.4-4.4-2.4-8.5-6-10.9    C116.6,141.9,109.2,141,102.6,142.5z"/>
+      </svg>
+    </icon>
+    <link url="https://wikicarpedia.com/car/Special:MyLanguage/The_Courier_(Fan_Expansion)" title="Rules" type="wica" />
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="the-courier/cfff.me.g">
+      <city>N</city>
+      <courier-letter>I</courier-letter>
+      <field city="N">EL ER SL SR WL WR</field>
+      <garden>I</garden>
+    </tile>
+    <tile id="the-courier/crrc.m">
+      <city>N W</city>
+      <courier-letter>I</courier-letter>
+      <field city="N W">EL SR</field>
+      <field>ER SL</field>
+      <road>S E</road>
+    </tile>
+    <tile id="the-courier/crrr.m">
+      <city wagon-move="a">N</city>
+      <courier-letter>I</courier-letter>
+      <field city="N">WR</field>
+      <field>EL SR WL</field>
+      <field>ER SL</field>
+      <road>S E</road>
+      <road wagon-move="a">W</road>
+    </tile>
+    <tile id="the-courier/ffff.me.w">
+      <field wells="1" well="I">NR EL</field>
+      <courier-letter>I</courier-letter>
+      <field>NL ER SL WR</field>
+      <field>SR WL</field>
+      <well road="NE" field="Field/NR.EL">I</well>
+      <road wells="1" well="I">N E</road>
+      <road>S W</road>
+    </tile>
+    <tile id="the-courier/ffrr.me.m">
+      <courier-letter>I</courier-letter>
+      <monastery>I</monastery>
+      <field>NL NR EL ER SL WR</field>
+      <field>SR WL</field>
+      <road>S W</road>
+    </tile>
+    <tile id="the-courier/rfrf.m">
+      <courier-letter>I</courier-letter>
+      <field>NL SR WL WR</field>
+      <field>NR EL ER SL</field>
+      <road>N S</road>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="the-courier">
+      <ref count="1" tile="the-courier/cfff.me.g" />
+      <ref count="1" tile="the-courier/crrc.m" />
+      <ref count="1" tile="the-courier/crrr.m" />
+      <ref count="1" tile="the-courier/ffff.me.w" />
+      <ref count="1" tile="the-courier/ffrr.me.m" />
+      <ref count="1" tile="the-courier/rfrf.m" />
+    </tile-set>
+  </sets>
+</defs>

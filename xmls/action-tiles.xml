@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="ACTION-TILES">
+    <title>Action tiles</title>
+    <sets>
+      <ref tile-set="action-tiles" />
+    </sets>
+    <enforces element="flier" />
+    <impliesAllowed element="bazaar" />
+    <impliesAllowed element="hill" />
+    <impliesAllowed element="vineyard" />
+    <impliesAllowed element="dragon" />
+    <impliesAllowed element="inn" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M115.5,57.7h-30.6l-34.1,93.3h29.4l4.5-15.4h31.6l4.5,15.4h29.4l-34.1-93.3h-.6ZM90.6,115.4l5.5-18.5,4.5-14.9,4.5,14.9,5.5,18.5h-19.9Z"/>
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M19.4,66.2l35.8,20.6c3.5,2,8.1.8,10.2-2.7s.8-8.1-2.7-10.2l-35.8-20.6c-3.5-2-8.1-.8-10.2,2.7h0c-2,3.5-.8,8.1,2.7,10.2Z"/>
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M55.9,114.7h0c-1.7-3.7-6.1-5.4-9.8-3.8l-37.7,16.8c-3.7,1.7-5.4,6.1-3.8,9.8h0c1.7,3.7,6.1,5.4,9.8,3.8l37.7-16.8c3.7-1.7,5.4-6.1,3.8-9.8Z"/>
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M135.7,84.1c2,3.5,6.6,4.8,10.2,2.7l35.8-20.6c3.5-2,4.8-6.6,2.7-10.2h0c-2-3.5-6.6-4.8-10.2-2.7l-35.8,20.6c-3.5,2-4.8,6.6-2.7,10.2h0Z"/>
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M192.7,127.7l-37.7-16.8c-3.7-1.7-8.1,0-9.8,3.8h0c-1.7,3.7,0,8.1,3.8,9.8l37.7,16.8c3.7,1.7,8.1,0,9.8-3.8h0c1.7-3.7,0-8.1-3.8-9.8Z"/>
+      </svg>
+    </icon>
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="action-tiles/CCFF">
+      <city>N E</city>
+      <field city="N E">SL SR WL WR</field>
+      <hill>I</hill>
+      <bazaar>I</bazaar>
+      <flying-machine direction="E">I</flying-machine>
+    </tile>
+    <tile id="action-tiles/CFCF">
+      <city>N</city>
+      <city castle-base="no">S</city>
+      <field city="N S">WL WR</field>
+      <field city="N S">EL ER</field>
+      <road>I</road>
+      <hill>I</hill>
+      <portal>I</portal>
+    </tile>
+    <tile id="action-tiles/CFFF">
+      <city>N</city>
+      <field>SL SR</field>
+      <field city="N">EL ER WL WR</field>
+      <mage>I</mage>
+      <vineyard>I</vineyard>
+      <road>S</road>
+      <tower>I</tower>
+    </tile>
+    <tile id="action-tiles/FFFF_1">
+      <mage>I</mage>
+      <flying-machine direction="NW">I</flying-machine>
+      <dragon>I</dragon>
+      <tower>I</tower>
+      <field>NL NR WL WR</field>
+      <field>EL ER SL SR</field>
+    </tile>
+    <tile id="action-tiles/FFFF_2">
+      <portal>I</portal>
+      <flying-machine direction="E">I</flying-machine>
+      <vineyard>I</vineyard>
+      <field>SL SR WL WR</field>
+      <field>NL NR EL ER</field>
+    </tile>
+    <tile id="action-tiles/FFFF_3">
+      <flying-machine direction="NE">I</flying-machine>
+      <road inn="1">W</road>
+      <hill>I</hill>
+      <dragon>I</dragon>
+      <field>EL ER SL SR</field>
+      <field>WL</field>
+      <field>NL NR WR</field>
+    </tile>
+    <tile id="action-tiles/RFFF">
+      <mage>I</mage>
+      <field>SL SR</field>
+      <field>NL NR EL ER WL WR</field>
+      <road>N</road>
+      <portal>I</portal>
+      <tower>I</tower>
+    </tile>
+    <tile id="action-tiles/RRFR">
+      <dragon>I</dragon>
+      <road>W</road>
+      <road>E</road>
+      <road inn="1">N</road>
+      <monastery>I</monastery>
+      <field>SL SR</field>
+      <field>NL NR EL ER WL WR</field>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="action-tiles">
+      <ref count="1" tile="action-tiles/CCFF" />
+      <ref count="1" tile="action-tiles/CFCF" />
+      <ref count="1" tile="action-tiles/CFFF" />
+      <ref count="1" tile="action-tiles/FFFF_1" />
+      <ref count="1" tile="action-tiles/FFFF_2" />
+      <ref count="1" tile="action-tiles/FFFF_3" />
+      <ref count="1" tile="action-tiles/RFFF" />
+      <ref count="1" tile="action-tiles/RRFR" />
+    </tile-set>
+  </sets>
+</defs>

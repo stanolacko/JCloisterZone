@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="FISHHUTS">
+    <title>fishhuts</title>
+    <minimumVersionForAI>6.1.0-alpha.42</minimumVersionForAI>
+    <sets>
+      <ref tile-set="fishhuts/river" />
+    </sets>
+    <impliesAllowed element="fishermen" />
+    <implies element="fishhut" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M49.7,110.3c0-9.5,1.2-19.3,3.6-29-1.9-8.2-2.3-15.1-2.3-19.4s.2-6.3.7-8.7c.5-2.6,1.5-5.7,4.4-6.9,3.4-1.4,6.5,1,8.1,2.2.4.3.9.7,1.3,1.1,3.4-6.3,7-12,10.8-16.8-.9-.5-1.8-1-2.7-1.6h0s0,0,0,0c-10.1-6.6-16.9-16.5-18.9-22.9-11-5.4-21.9-5.3-22.8-3.9-1.1,1.7,4.8,14.5,17.1,22.6,2.7,1.7,5.4,3.1,8,4.2-5.5,5.9-11.9,15.2-17.4,26.8-4.4-4.8-8-7.4-8.9-7-1.9.7-3.5,14.3.5,30.4-2.3,9.1-3.7,18.8-3.7,29,0,47.7,31.1,86.3,39.7,86.3s6.1-2.6,10.5-7.2c-3.8-4.6-7.5-10.1-10.6-15.6-6.5-11.4-17.3-34.8-17.3-63.5Z"/>
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M118.9,6.7h0c1.8,1.3,3.6,2.6,5.3,4,1.7-1.4,3.4-2.8,5.3-4,.2-.1.4-.2.5-.3.2-.7.3-1.2.3-1.6,0-.2,0-.4-.1-.5-.8-1.1-6.7-1.4-14.1.6.9.5,1.9,1.1,2.8,1.7h0Z"/>
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M92.8,166.7c-6.2-12.7-13.6-32.7-13.6-56.4s1.2-19.3,3.6-29c-1.9-8.2-2.3-15.1-2.3-19.4s.2-6.3.7-8.7c.5-2.6,1.5-5.7,4.4-6.9.7-.3,1.5-.4,2.2-.4,2.5,0,4.7,1.7,5.9,2.6.4.3.9.7,1.3,1.1,3.3-6.2,7-11.9,10.7-16.7,0,0,0-.1.1-.2-.2-.1-.4-.2-.5-.3-.7-.4-1.4-.8-2.2-1.3h0s0,0,0,0c-4.1-2.7-7.7-6-10.6-9.3-3.7-4.2-6.3-8.5-7.7-12.1-1.2-.7-2.3-1.3-3.5-1.8-10.7-5-21.2-4.9-22-3.5,0,.1-.1.3-.1.6,0,1.5,1.3,4.8,3.9,8.7,2.9,4.3,7.3,9.4,13.3,13.3,1.6,1,3.2,1.9,4.8,2.7,1.1.5,2.1,1,3.2,1.5-1.2,1.3-2.5,2.8-3.7,4.4-4.5,5.7-9.4,13.4-13.7,22.4-4.4-4.8-8-7.4-8.9-7-1,.4-2,4.6-2,10.9s.7,12.1,2.5,19.5c-2.3,9.1-3.7,18.8-3.7,29,0,32.3,14.3,60.5,26.2,75.2,5.7,7,10.8,11.1,13.5,11.1s6.8-3.1,11.6-8.5c-3.4-4.3-6.7-9.3-9.5-14.3-1.1-2-2.4-4.4-3.7-7.1Z"/>
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M172.6,73.8c0-4.4-.4-7.1-1-7.4-1-.8-7.6,0-15.6,3.1-6.2-16.9-15.1-30.4-22.2-38.2,2.9-1.1,5.9-2.6,8.8-4.4,11.4-7.5,17.2-19.2,17.2-22.1,0-.2,0-.4-.1-.5-1.1-1.7-13.8-1.4-25.6,5.4-.6.4-1.3.7-1.9,1.2-.8.5-1.5,1-2.3,1.6-2.2,1.6-4.1,3.3-5.7,5.1-.1-.2-.3-.3-.5-.5-2.2-2.2-4.7-4.4-7.6-6.3-2.2-1.4-4.4-2.6-6.6-3.6-1.1-.5-2.1-.9-3.2-1.3-1.1-.4-2.3-.8-3.4-1.1,0,0,0,0,0,0,0,0,0,0,0,0-2.5-.7-4.9-1.1-7-1.3-4.1-.4-6.9,0-7.3.6,0,.1-.1.3-.1.6s0,.1,0,.2c0,.3,0,.7.2,1.2.3,1.2,1,2.7,2,4.4,1.1,2,2.6,4.2,4.4,6.5.2.3.4.5.7.8,2.6,3.1,5.9,6.2,9.9,8.9,1.3.8,2.5,1.5,3.7,2.2.9.5,1.8.9,2.7,1.4.5.2,1,.5,1.5.7-1.1,1.1-2.1,2.4-3.3,3.8-.5.7-1.1,1.3-1.6,2-4.2,5.5-8.6,12.7-12.6,21-1.5-1.6-2.9-3-4.1-4.1-2.4-2.1-4.2-3.2-4.8-2.9-1,.4-2,4.6-2,10.9s.7,12.1,2.5,19.5c-2.3,9.1-3.7,18.8-3.7,29,0,18.9,4.9,36.4,11.3,50.6,4.2,9.3,9.1,17.2,13.7,23.2.5.7,1.1,1.4,1.6,2,.6.7,1.1,1.3,1.6,1.9,4.8,5.4,9,8.5,11.4,8.5,8.6,0,35.9-34,39.4-77.7h0c.8-1.9,1.6-3.9,2.3-6,5.5-15.7,7.1-30.5,7.1-39ZM132.5,161.1c-3.9,0-7.1-3.2-7.1-7.1s3.2-7.1,7.1-7.1,7.1,3.2,7.1,7.1-3.2,7.1-7.1,7.1Z"/>
+      </svg>
+    </icon>
+    <link url="https://wikicarpedia.com/car/Special:MyLanguage/Fish_Huts_(Fan_Expansion)" title="Rules" type="wica" />
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="fishhuts/fishhuts-CFIC" group="river-spring">
+      <city>N W</city>
+      <field city="N W">EL ER SL</field>
+      <field city="N W">SR</field>
+      <fishhut>I</fishhut>
+      <river>S</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-FCCI" group="river-lake">
+      <city>E</city>
+      <city>S</city>
+      <field city="E S">NL NR WL WR</field>
+      <fishhut>I</fishhut>
+      <river>W</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-FIFI" group="river">
+      <fishhut>I</fishhut>
+      <field>ER SL SR WL</field>
+      <field>NL NR EL WR</field>
+      <river>W E</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-FIRI" group="river">
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <field>NL NR EL WR</field>
+      <road>S</road>
+      <fishhut>I</fishhut>
+      <river>W E</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-ICIC" group="river">
+      <city>W E</city>
+      <river>N S</river>
+      <field city="W E">NL NR</field>
+      <field city="W E">SR</field>
+      <field city="W E">SL</field>
+      <fishhut>I</fishhut>
+    </tile>
+    <tile id="fishhuts/fishhuts-IFFF" group="river-lake">
+      <fishhut>I</fishhut>
+      <field>NL NR EL ER SL SR WL WR</field>
+      <river>N</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-IFIF" group="river">
+      <fishhut>I</fishhut>
+      <field>NL SR WL WR</field>
+      <field>NR EL ER SL</field>
+      <river>N S</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-IFIF_2" group="river">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <river>N S</river>
+      <fishhut>I</fishhut>
+    </tile>
+    <tile id="fishhuts/fishhuts-IIFF" group="river">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <river>N E</river>
+      <fishhut>I</fishhut>
+    </tile>
+    <tile id="fishhuts/fishhuts-IIFI" group="river-fork">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>ER SL SR WL</field>
+      <fishhut>I</fishhut>
+      <river>N</river>
+      <river>E</river>
+      <river>W</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-IRRF" group="river-spring">
+      <field>NR EL</field>
+      <field>ER SL</field>
+      <field>NL SR WL WR</field>
+      <road>S E</road>
+      <fishhut>I</fishhut>
+      <river>N</river>
+    </tile>
+    <tile id="fishhuts/fishhuts-RIIR" group="river">
+      <field>NL WR</field>
+      <field>NR EL SR WL</field>
+      <field>ER SL</field>
+      <road>N W</road>
+      <fishhut>I</fishhut>
+      <river>S E</river>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="fishhuts/river">
+      <requires group="river" />
+      <ref count="1" tile="fishhuts/fishhuts-CFIC" />
+      <ref count="1" tile="fishhuts/fishhuts-FCCI" />
+      <ref count="1" tile="fishhuts/fishhuts-FIFI" />
+      <ref count="1" tile="fishhuts/fishhuts-FIRI" />
+      <ref count="1" tile="fishhuts/fishhuts-ICIC" />
+      <ref count="1" tile="fishhuts/fishhuts-IFFF" />
+      <ref count="1" tile="fishhuts/fishhuts-IFIF" />
+      <ref count="1" tile="fishhuts/fishhuts-IFIF_2" />
+      <ref count="1" tile="fishhuts/fishhuts-IIFF" />
+      <ref count="1" tile="fishhuts/fishhuts-IIFI" />
+      <ref count="1" tile="fishhuts/fishhuts-IRRF" />
+      <ref count="1" tile="fishhuts/fishhuts-RIIR" />
+    </tile-set>
+  </sets>
+</defs>

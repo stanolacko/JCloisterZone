@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="THE-CITY-GATES">
+    <title>The City Gates</title>
+    <minimumVersionForAI>6.1.0-alpha.42</minimumVersionForAI>
+    <sets>
+      <ref tile-set="the-city-gates" />
+      <ref tile-set="the-city-gates/family-feud" />
+    </sets>
+    <impliesAllowed element="families" />
+    <impliesAllowed element="tunnel" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.35 28.35">
+        <path xmlns="http://www.w3.org/2000/svg" d="M23.83,4l-3.7,8.33h0.35v1.68H8.73v-1.68h0.34L5.36,4l-3.7,8.33h0.34v13.44h8.95v-5.04c0-1.86,1.5-3.36,3.36-3.36   s3.36,1.5,3.36,3.36v5.04h9.53V12.33h0.32L23.83,4z"/>
+      </svg>
+    </icon>
+    <link url="http://www.carcassonnecentral.com/community/index.php?action=downloads;sa=view;down=477" title="Download" type="download" />
+    <link url="https://boardgamegeek.com/boardgame/179919/carcassonne-city-gates" title="" type="bgg" />
+    <link url="https://wikicarpedia.com/index.php/The_City_Gates_(1st_edition)" title="Rules" type="wica" />
+    <link url="https://www.carcassonnecentral.com/community/index.php?topic=5736.0" title="Discussion" type="forum" />
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="the-city-gates/ccfg">
+      <city>E</city>
+      <city city-gate="W" castle-base="no">N</city>
+      <field city="N">WR</field>
+      <field city="E N">SL SR WL</field>
+    </tile>
+    <tile id="the-city-gates/ccgc">
+      <city city-gate="S">N W E</city>
+      <field>SL</field>
+      <field>SR</field>
+    </tile>
+    <tile id="the-city-gates/ccgc.2">
+      <city city-gate="S" castle-base="no">N</city>
+      <city>W E</city>
+      <field city="N W E">SR</field>
+      <field city="N W E">SL</field>
+    </tile>
+    <tile id="the-city-gates/ccgf">
+      <city city-gate="S">N E</city>
+      <field city="N E">SL</field>
+      <field city="N E">SR WL WR</field>
+    </tile>
+    <tile id="the-city-gates/ccgg">
+      <city city-gate="S W">N E</city>
+      <field city="N E">WR</field>
+      <field city="N E">SR WL</field>
+      <field city="N E">SL</field>
+    </tile>
+    <tile id="the-city-gates/ccrg+">
+      <city city-gate="W" castle-base="no">E</city>
+      <city pennants="1" castle-base="no">N</city>
+      <road>S</road>
+      <field city="E N">WR</field>
+      <field city="E N">SL</field>
+      <field city="E N">SR WL</field>
+    </tile>
+    <tile id="the-city-gates/cffg">
+      <city city-gate="W" castle-base="no">N</city>
+      <field city="N">WR</field>
+      <field city="N">EL ER SL SR WL</field>
+    </tile>
+    <tile id="the-city-gates/cffg+">
+      <city city-gate="W" pennants="1" castle-base="no">N</city>
+      <field city="N">EL ER SL SR</field>
+      <field city="N">WR</field>
+      <field city="N">WL</field>
+    </tile>
+    <tile id="the-city-gates/cffg=">
+      <city city-gate="W" pennants="1" family="orange" castle-base="no">N</city>
+      <field city="N">WR</field>
+      <field city="N">EL ER SL SR</field>
+      <field city="N">WL</field>
+    </tile>
+    <tile id="the-city-gates/cfrg">
+      <city city-gate="W" castle-base="no">N</city>
+      <road>S</road>
+      <field city="N">WR</field>
+      <field city="N">SR WL</field>
+      <field city="N" shed="1">EL ER SL</field>
+    </tile>
+    <tile id="the-city-gates/cgfr">
+      <city city-gate="E" wagon-move="a" castle-base="no">N</city>
+      <road wagon-move="a">W</road>
+      <field city="N">EL</field>
+      <field city="N">ER</field>
+      <field city="N" shed="1">SL SR WL</field>
+      <field city="N">WR</field>
+    </tile>
+    <tile id="the-city-gates/cgfr+">
+      <city city-gate="E" pennants="1" wagon-move="a" castle-base="no">N</city>
+      <road wagon-move="a">W</road>
+      <field city="N">EL</field>
+      <field city="N">WR</field>
+      <field city="N">ER SL SR WL</field>
+    </tile>
+    <tile id="the-city-gates/cgfr=">
+      <city city-gate="E" pennants="1" family="orange" castle-base="no">N</city>
+      <road>W</road>
+      <field city="N">EL</field>
+      <field city="N">WR</field>
+      <field city="N">ER SL SR WL</field>
+    </tile>
+    <tile id="the-city-gates/cgrc+">
+      <city city-gate="E" pennants="1" castle-base="no">N</city>
+      <city>W</city>
+      <road>S</road>
+      <field city="N">EL</field>
+      <field city="N W">SR</field>
+      <field city="N">ER SL</field>
+    </tile>
+    <tile id="the-city-gates/cgrr">
+      <city city-gate="E" castle-base="no">N</city>
+      <road>S W</road>
+      <field city="N">EL</field>
+      <field>SR WL</field>
+      <field city="N">ER SL WR</field>
+    </tile>
+    <tile id="the-city-gates/crgc+">
+      <city city-gate="S" wagon-move="a" pennants="1">N W</city>
+      <road wagon-move="a">E</road>
+      <field city="N W">SR</field>
+      <field city="N W">EL</field>
+      <field city="N W">ER SL</field>
+    </tile>
+    <tile id="the-city-gates/crgc=">
+      <city city-gate="S" wagon-move="a" pennants="1" family="orange">N W</city>
+      <road wagon-move="a">E</road>
+      <field city="N W">SR</field>
+      <field city="N W">EL</field>
+      <field city="N W">ER SL</field>
+    </tile>
+    <tile id="the-city-gates/fcfg">
+      <city city-gate="W" castle-base="no">E</city>
+      <field city="E">NL NR WR</field>
+      <field city="E">SL SR WL</field>
+    </tile>
+    <tile id="the-city-gates/fcgc+">
+      <city city-gate="S" pennants="1">W E</city>
+      <field city="W E">SL</field>
+      <field city="W E">SR</field>
+      <field city="W E">NL NR</field>
+    </tile>
+    <tile id="the-city-gates/fcrg">
+      <city city-gate="W" wagon-move="a" castle-base="no">E</city>
+      <road wagon-move="a">S</road>
+      <field city="E">NL NR</field>
+      <field city="E">WR</field>
+      <field city="E">WL</field>
+      <field city="E">SR</field>
+      <field city="E">SL</field>
+    </tile>
+    <tile id="the-city-gates/fgfc+">
+      <city city-gate="E" pennants="1" castle-base="no">W</city>
+      <field city="W">NL NR</field>
+      <field city="W">EL</field>
+      <field city="W">ER</field>
+      <field city="W">SL SR</field>
+    </tile>
+    <tile id="the-city-gates/fgfc=">
+      <city city-gate="E" pennants="1" family="orange" castle-base="no">W</city>
+      <field city="W">NL NR</field>
+      <field city="W">SL SR</field>
+      <field city="W">EL</field>
+      <field city="W">ER</field>
+    </tile>
+    <tile id="the-city-gates/gcgc">
+      <city city-gate="S N">W E</city>
+      <field city="W E">NL</field>
+      <field city="W E">NR</field>
+      <field city="W E">SR</field>
+      <field city="W E">SL</field>
+    </tile>
+    <tile id="the-city-gates/gcgg">
+      <city city-gate="S N W" castle-base="no">E</city>
+      <monastery>I</monastery>
+      <field city="E">NR</field>
+      <field city="E">SL</field>
+      <field city="E">WR</field>
+      <field city="E">NL</field>
+      <field city="E">WL</field>
+      <field city="E">SR</field>
+    </tile>
+    <tile id="the-city-gates/gcrc">
+      <city city-gate="N" wagon-move="a">W E</city>
+      <road wagon-move="a">S</road>
+      <field city="W E">NL</field>
+      <field city="W E">NR</field>
+      <field city="W E">SR</field>
+      <field city="W E">SL</field>
+    </tile>
+    <tile id="the-city-gates/gggg">
+      <city points="4" city-gate="E N W S">I</city>
+      <field city="I">WR</field>
+      <field city="I">NL</field>
+      <field city="I">EL</field>
+      <field city="I">NR</field>
+      <field city="I">SR</field>
+      <field city="I">WL</field>
+      <field city="I">ER</field>
+      <field city="I">SL</field>
+    </tile>
+    <tile id="the-city-gates/rcrg">
+      <city city-gate="W" castle-base="no">E</city>
+      <tunnel>I</tunnel>
+      <road tunnel="true" tunnels="II I">N S</road>
+      <tunnel>II</tunnel>
+      <field city="E">WR</field>
+      <field city="E">WL</field>
+      <field city="E">NL</field>
+      <field city="E">NR</field>
+      <field city="E">SL SR</field>
+    </tile>
+    <tile id="the-city-gates/rgrc+">
+      <city city-gate="E" pennants="1" castle-base="no">W</city>
+      <road>N S</road>
+      <field city="W">NL</field>
+      <field city="W">NR EL</field>
+      <field city="W">SR</field>
+      <field city="W">ER SL</field>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="the-city-gates">
+      <ref count="1" tile="the-city-gates/ccfg" />
+      <ref count="1" tile="the-city-gates/ccgc" />
+      <ref count="1" tile="the-city-gates/ccgc.2" />
+      <ref count="1" tile="the-city-gates/ccgf" />
+      <ref count="1" tile="the-city-gates/ccgg" />
+      <ref count="1" tile="the-city-gates/ccrg+" />
+      <ref count="1" tile="the-city-gates/cffg" />
+      <ref count="1" tile="the-city-gates/cffg+" />
+      <ref count="1" tile="the-city-gates/cfrg" />
+      <ref count="1" tile="the-city-gates/cgfr" />
+      <ref count="1" tile="the-city-gates/cgfr+" />
+      <ref count="1" tile="the-city-gates/cgrc+" />
+      <ref count="1" tile="the-city-gates/cgrr" />
+      <ref count="1" tile="the-city-gates/crgc+" />
+      <ref count="1" tile="the-city-gates/fcfg" />
+      <ref count="1" tile="the-city-gates/fcgc+" />
+      <ref count="1" tile="the-city-gates/fcrg" />
+      <ref count="1" tile="the-city-gates/fgfc+" />
+      <ref count="1" tile="the-city-gates/gcgc" />
+      <ref count="1" tile="the-city-gates/gcgg" />
+      <ref count="1" tile="the-city-gates/gcrc" />
+      <ref count="1" tile="the-city-gates/gggg" />
+      <ref count="1" tile="the-city-gates/rcrg" />
+      <ref count="1" tile="the-city-gates/rgrc+" />
+    </tile-set>
+    <tile-set id="the-city-gates/family-feud">
+      <requires expansion="FAMILY-FEUD" />
+      <ref count="1" tile="the-city-gates/cffg=" />
+      <ref count="1" tile="the-city-gates/cgfr=" />
+      <ref count="1" tile="the-city-gates/crgc=" />
+      <ref count="1" tile="the-city-gates/fgfc=" />
+    </tile-set>
+  </sets>
+</defs>

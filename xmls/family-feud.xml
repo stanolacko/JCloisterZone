@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="FAMILY-FEUD">
+    <title>Family Feud</title>
+    <sets>
+      <ref tile-set="family-feud" />
+    </sets>
+    <implies element="families" />
+    <impliesAllowed element="abbot" />
+    <impliesAllowed element="garden" />
+    <impliesAllowed element="inn" />
+    <impliesAllowed element="tunnel" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <path xmlns="http://www.w3.org/2000/svg" d="M91.7,72.7C91.6,72.7,91.6,72.7,91.7,72.7c-0.1,0-0.2,0-0.2,0c-0.5,0-1.1,0.1-1.6,0.4c-9.6,4.8-24.3,9.1-40.5,9.1    c-16.2,0-30.9-4.3-40.5-9.1c-0.5-0.3-1.1-0.4-1.6-0.4c0,0-0.1,0-0.1,0c0,0-0.1,0-0.1,0c-1.8,0-3.4,1.3-3.6,3.2    c-0.8,5.7-1.3,15.8-1.3,26c0,3,0,6,0.2,8.9c0.2,4.2,0.5,8.3,0.9,11.9c2.5,18.8,17.4,47.9,43.7,69.9c0.7,0.6,1.5,0.8,2.3,0.8    c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0.8,0,1.7-0.3,2.3-0.8c26.3-22,41.2-51.1,43.7-69.9c0.5-3.6,0.8-7.6,0.9-11.9    c0.1-2.9,0.2-5.9,0.2-8.9c0-10.3-0.5-20.3-1.3-26C95.1,74,93.4,72.7,91.7,72.7z M49.2,182.2C31.9,166.4,21,147.3,15.8,133h33.4    V182.2z M87.2,111.6c-0.2,3.4-0.5,6.7-1,9.5c-0.4,2.4-1.1,5.2-2.1,8.3H49.2V91.4c0,0,0.1,0,0.1,0s0.1,0,0.1,0    c16,0,29-3.6,37.3-6.8c0.3,4.5,0.6,9.9,0.7,15.5C87.4,104,87.3,107.9,87.2,111.6z"/>
+        <path xmlns="http://www.w3.org/2000/svg" d="M196.6,9.8c-0.3-1.9-1.9-3.2-3.6-3.2c0,0-0.1,0-0.1,0c0,0-0.1,0-0.1,0c-0.5,0-1.1,0.1-1.6,0.4c-9.6,4.8-24.3,9.1-40.5,9.1    c-16.2,0-30.9-4.3-40.5-9.1c-0.5-0.3-1.1-0.4-1.6-0.4c0,0-0.1,0-0.1,0c0,0-0.1,0-0.1,0c-1.8,0-3.4,1.3-3.6,3.2    c-0.8,5.7-1.3,15.8-1.3,26c0,3,0,6,0.2,8.9c0.2,4.2,0.5,8.3,0.9,11.9c2.5,18.8,17.4,47.9,43.7,69.9c0.7,0.6,1.5,0.8,2.3,0.8    c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0.8,0,1.7-0.3,2.3-0.8c26.3-22,41.2-51.1,43.7-69.9c0.5-3.6,0.8-7.6,0.9-11.9    c0.1-2.9,0.2-5.9,0.2-8.9C198,25.6,197.4,15.5,196.6,9.8z M150.6,116.1c-17.4-15.8-28.2-34.9-33.4-49.2h33.4V116.1z M188.5,45.6    c-0.2,3.4-0.5,6.7-1,9.5c-0.4,2.4-1.1,5.2-2.1,8.3h-34.9V25.3c0,0,0.1,0,0.1,0s0.1,0,0.1,0c16,0,29-3.6,37.3-6.8    c0.3,4.5,0.6,9.9,0.7,15.5C188.7,37.9,188.7,41.8,188.5,45.6z"/>
+      </svg>
+    </icon>
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="family-feud/cccc+=">
+      <city pennants="1">S E</city>
+      <city pennants="1" family="orange">N W</city>
+      <field city="S E N W">I</field>
+    </tile>
+    <tile id="family-feud/cccc.+=">
+      <city pennants="1" family="orange">W E</city>
+      <city pennants="1">N S</city>
+      <field city="W E N S">I</field>
+      <field city="W E N S">II</field>
+    </tile>
+    <tile id="family-feud/cccc.=">
+      <city pennants="1" family="orange">N W S E</city>
+    </tile>
+    <tile id="family-feud/cccc.==">
+      <city pennants="2" family="orange">N W S E</city>
+    </tile>
+    <tile id="family-feud/cccc.2.=">
+      <city pennants="1" family="orange">N S</city>
+      <city>W</city>
+      <city>E</city>
+      <field city="N S W E">I</field>
+    </tile>
+    <tile id="family-feud/cccc.3.=">
+      <city pennants="1" family="orange">W E</city>
+      <city>N S</city>
+      <field city="W E N S">I</field>
+      <field city="W E N S">II</field>
+    </tile>
+    <tile id="family-feud/ccfc.+">
+      <city pennants="1">N W</city>
+      <city>E</city>
+      <field city="N W E">SL SR</field>
+    </tile>
+    <tile id="family-feud/ccfc.=">
+      <city pennants="1" family="orange">N W</city>
+      <city>E</city>
+      <field city="N W E">SL SR</field>
+    </tile>
+    <tile id="family-feud/ccfc.2.=">
+      <city pennants="1" family="orange">N W E</city>
+      <field city="_S">SL SR</field>
+    </tile>
+    <tile id="family-feud/ccfc.3.=">
+      <city>W E</city>
+      <city pennants="1" family="orange" castle-base="no">N</city>
+      <field city="W E N">I</field>
+      <field city="W E N">SL SR</field>
+    </tile>
+    <tile id="family-feud/ccrc.+">
+      <city pennants="1">N W</city>
+      <city wagon-move="a">E</city>
+      <road wagon-move="a">S</road>
+      <field city="N W E">SR</field>
+      <field city="E">SL</field>
+    </tile>
+    <tile id="family-feud/ccrc.=">
+      <city pennants="1" family="orange">N W</city>
+      <city wagon-move="a">E</city>
+      <road wagon-move="a">S</road>
+      <field city="N W E">SR</field>
+      <field city="E">SL</field>
+    </tile>
+    <tile id="family-feud/ccrc.2.=">
+      <city wagon-move="a" pennants="1" family="orange">N W E</city>
+      <road wagon-move="a">S</road>
+      <field city="_S">SR</field>
+      <field city="_S">SL</field>
+    </tile>
+    <tile id="family-feud/ccrc.3.=">
+      <city pennants="1" family="orange" wagon-move="a">N W E</city>
+      <road wagon-move="a">S</road>
+      <field city="_S">SR</field>
+      <field city="_S">SL</field>
+    </tile>
+    <tile id="family-feud/cfcc.=">
+      <city pennants="1" family="orange">N W</city>
+      <city>S</city>
+      <field city="N W S">EL ER</field>
+    </tile>
+    <tile id="family-feud/cffc.=">
+      <city pennants="1" family="orange">N W</city>
+      <field city="N W">EL ER SL SR</field>
+    </tile>
+    <tile id="family-feud/cffc.g=">
+      <city pennants="1" family="orange">N W</city>
+      <field city="N W">EL ER SL SR</field>
+      <garden>I</garden>
+    </tile>
+    <tile id="family-feud/cffc.2.=">
+      <city pennants="1" family="orange">N W</city>
+      <field city="N W">SL SR</field>
+      <field city="N W">EL ER</field>
+    </tile>
+    <tile id="family-feud/cfff.=">
+      <city pennants="1" family="orange" castle-base="no">N</city>
+      <field city="N">WL WR</field>
+      <field city="N">EL ER SL SR</field>
+    </tile>
+    <tile id="family-feud/crfr.=">
+      <city pennants="1" family="orange" castle-base="no">N</city>
+      <road>W E</road>
+      <field city="N">WL</field>
+      <field city="N">ER SL SR</field>
+      <field city="N">WR</field>
+      <field city="N">EL</field>
+    </tile>
+    <tile id="family-feud/crrc.=">
+      <city pennants="1" family="orange">N W</city>
+      <road>S E</road>
+      <field>ER SL</field>
+      <field city="N W">EL SR</field>
+    </tile>
+    <tile id="family-feud/crrc.g=">
+      <city pennants="1" family="orange">N W</city>
+      <road>S E</road>
+      <field>ER SL</field>
+      <field city="N W">EL SR</field>
+      <garden>I</garden>
+    </tile>
+    <tile id="family-feud/crrc.i=">
+      <city pennants="1" family="orange">N W</city>
+      <road inn="1">S E</road>
+      <field city="N W">EL SR</field>
+      <field>ER SL</field>
+    </tile>
+    <tile id="family-feud/crrc.2.=">
+      <city wagon-move="a b" pennants="1" family="orange">N W</city>
+      <road wagon-move="b">S</road>
+      <road wagon-move="a">E</road>
+      <field city="N W">EL</field>
+      <field city="N W">ER</field>
+      <field city="N W">SL</field>
+      <field city="N W">SR</field>
+    </tile>
+    <tile id="family-feud/fcfc.=">
+      <city pennants="1" family="orange">W E</city>
+      <field city="W E">NL NR</field>
+      <field city="W E">SL SR</field>
+    </tile>
+    <tile id="family-feud/fcfc.g=">
+      <city pennants="1" family="orange">W E</city>
+      <field city="W E">NL NR</field>
+      <field city="W E">SL SR</field>
+      <garden>I</garden>
+    </tile>
+    <tile id="family-feud/fffc.=">
+      <city pennants="1" family="orange" castle-base="no">W</city>
+      <field city="W">NL NR</field>
+      <field city="W">SL SR</field>
+      <field city="W">EL ER</field>
+    </tile>
+    <tile id="family-feud/rcrc.=">
+      <city pennants="1" family="orange">W E</city>
+      <tunnel>I</tunnel>
+      <tunnel>II</tunnel>
+      <road tunnel="true" tunnels="Tunnel/II Tunnel/I">N S</road>
+      <field city="W E">NL</field>
+      <field city="W E">NR</field>
+      <field city="W E">SL SR</field>
+    </tile>
+    <tile id="family-feud/rcrc.2.=">
+      <city wagon-move="a b" pennants="1" family="orange">W E</city>
+      <road wagon-move="b">S</road>
+      <road wagon-move="a">N</road>
+      <field city="W E">NR</field>
+      <field city="W E">NL</field>
+      <field city="W E">SL</field>
+      <field city="W E">SR</field>
+    </tile>
+    <tile id="family-feud/rrrc.=">
+      <city wagon-move="a b" pennants="1" family="orange" castle-base="no">W</city>
+      <road wagon-move="a">S</road>
+      <road wagon-move="b">E</road>
+      <road>N</road>
+      <field city="W">NR</field>
+      <field city="W">SL</field>
+      <field city="W">NL</field>
+      <field city="W">SR</field>
+      <field city="W">EL</field>
+      <field city="W">ER</field>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="family-feud">
+      <ref count="1" tile="family-feud/cccc+=" />
+      <ref count="1" tile="family-feud/cccc.+=" />
+      <ref count="1" tile="family-feud/cccc.=" />
+      <ref count="1" tile="family-feud/cccc.==" />
+      <ref count="1" tile="family-feud/cccc.2.=" />
+      <ref count="1" tile="family-feud/cccc.3.=" />
+      <ref count="1" tile="family-feud/ccfc.+" />
+      <ref count="1" tile="family-feud/ccfc.=" />
+      <ref count="1" tile="family-feud/ccfc.2.=" />
+      <ref count="1" tile="family-feud/ccfc.3.=" />
+      <ref count="1" tile="family-feud/ccrc.+" />
+      <ref count="1" tile="family-feud/ccrc.=" />
+      <ref count="1" tile="family-feud/ccrc.2.=" />
+      <ref count="1" tile="family-feud/ccrc.3.=" />
+      <ref count="1" tile="family-feud/cfcc.=" />
+      <ref count="1" tile="family-feud/cffc.=" />
+      <ref count="1" tile="family-feud/cffc.g=" />
+      <ref count="1" tile="family-feud/cffc.2.=" />
+      <ref count="1" tile="family-feud/cfff.=" />
+      <ref count="1" tile="family-feud/crfr.=" />
+      <ref count="1" tile="family-feud/crrc.=" />
+      <ref count="1" tile="family-feud/crrc.g=" />
+      <ref count="1" tile="family-feud/crrc.i=" />
+      <ref count="1" tile="family-feud/crrc.2.=" />
+      <ref count="1" tile="family-feud/fcfc.=" />
+      <ref count="1" tile="family-feud/fcfc.g=" />
+      <ref count="1" tile="family-feud/fffc.=" />
+      <ref count="1" tile="family-feud/rcrc.=" />
+      <ref count="1" tile="family-feud/rcrc.2.=" />
+      <ref count="1" tile="family-feud/rrrc.=" />
+    </tile-set>
+  </sets>
+</defs>

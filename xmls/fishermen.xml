@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="FISHERMEN">
+    <title>Fishermen</title>
+    <minimumVersionForAI>9999.0.0</minimumVersionForAI>
+    <group id="river" />
+    <sets>
+      <ref tile-set="fishermen" />
+    </sets>
+    <implies element="fishermen" />
+    <impliesAllowed element="shrine" />
+    <impliesAllowed element="pig_herd" />
+    <impliesAllowed element="inn" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M119.7,64.8c-2-.8-4-1.6-6.1-2.3-23.8-8.3-45.6-7.7-46.4-6.1-.8,1-.1,7.6,3.1,15.6-16.9,6.2-30.4,15.1-38.2,22.2-1.1-2.9-2.6-5.9-4.4-8.8-8.1-12.3-21.1-18.1-22.6-17.1-1.8,1.2-1.4,15.2,6.6,27.5,2,3.1,4.3,5.8,6.7,8-2.4,2.3-4.7,5-6.8,8.1-8.1,12.3-8.2,26.5-6.6,27.5,1.7,1.1,14.5-4.8,22.6-17.1,1.7-2.7,3.1-5.4,4.2-8,5.9,5.5,15.2,11.9,26.8,17.4-4.8,4.4-7.4,8-7,8.9.7,1.9,14.3,3.5,30.4-.5,9.1,2.3,18.8,3.7,29,3.7,47.7,0,86.3-31.1,86.3-39.7s-34-35.9-77.7-39.4ZM154.7,102.6c-3.9,0-7.1-3.2-7.1-7.1s3.2-7.1,7.1-7.1,7.1,3.2,7.1,7.1-3.2,7.1-7.1,7.1Z"/>
+      </svg>
+    </icon>
+    <link url="https://boardgamegeek.com/boardgame/248797/fisherman-fan-expansion-to-carcassonne" title="" type="bgg" />
+    <link url="https://wikicarpedia.com/car/Special:MyLanguage/Fishermen_(Fan_Expansion)" title="Rules" type="wica" />
+    <link url="https://www.hans-im-glueck.de/en/guide-for-authors/" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="fishermen/ccci.e" group="river-lake">
+      <city>N</city>
+      <city>E</city>
+      <city>S</city>
+      <field city="N">WR</field>
+      <field city="N E S">I</field>
+      <field city="S">WL</field>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/cci.sc" group="river-spring">
+      <city>N W E</city>
+      <field city="_S">SR</field>
+      <field city="_S">SL</field>
+      <river>S</river>
+    </tile>
+    <tile id="fishermen/cfci.e" group="river-lake">
+      <city>N</city>
+      <city>S</city>
+      <field city="N">WR</field>
+      <field city="S">WL</field>
+      <field city="N S">EL ER</field>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/cfic" group="river-spring">
+      <city>N W</city>
+      <field city="N W">SR</field>
+      <field city="N W">EL ER SL</field>
+      <river>S</river>
+    </tile>
+    <tile id="fishermen/cifc" group="river-spring">
+      <city>N W</city>
+      <field city="N W">SL SR</field>
+      <field city="N W">ER</field>
+      <field city="N W">EL</field>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/ciic" group="river">
+      <city>W</city>
+      <city>N</city>
+      <field city="W N">EL SR</field>
+      <field>ER SL</field>
+      <river>S E</river>
+    </tile>
+    <tile id="fishermen/ciif" group="river">
+      <city>N</city>
+      <field city="N">EL SR WL WR</field>
+      <field>ER SL</field>
+      <river>S E</river>
+    </tile>
+    <tile id="fishermen/ciir" group="river">
+      <city wagon-move="a">N</city>
+      <field city="N">WR</field>
+      <field city="N">EL SR WL</field>
+      <field>ER SL</field>
+      <river>S E</river>
+      <road wagon-move="a">W</road>
+    </tile>
+    <tile id="fishermen/circ" group="river-spring">
+      <city wagon-move="a">N W</city>
+      <field city="N W">SR</field>
+      <field city="N W">EL</field>
+      <field city="N W">SL</field>
+      <field city="N W">ER</field>
+      <road wagon-move="a">S</road>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/crci.e" group="river-lake">
+      <city>N</city>
+      <city>S</city>
+      <field city="N">WR</field>
+      <field city="N">EL</field>
+      <field city="S">WL</field>
+      <field city="S">ER</field>
+      <river>W</river>
+      <road>E</road>
+    </tile>
+    <tile id="fishermen/crci.s" group="river-spring">
+      <city>N</city>
+      <city>S</city>
+      <field city="N">WR</field>
+      <field city="S">WL</field>
+      <field city="N">EL</field>
+      <field city="S">ER</field>
+      <river>W</river>
+      <road>E</road>
+    </tile>
+    <tile id="fishermen/crri.e" group="river-lake">
+      <city>N</city>
+      <field city="N">WR</field>
+      <field city="N">EL</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <road>E</road>
+      <road>S</road>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/fccr.s" group="river-spring">
+      <city>S</city>
+      <city>E</city>
+      <field city="S">WL</field>
+      <field city="S E">NL NR WR</field>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/fifi" group="river">
+      <monastery shrine="true">I</monastery>
+      <field>NL NR EL WR</field>
+      <field>ER SL SR WL</field>
+      <river>W E</river>
+    </tile>
+    <tile id="fishermen/fiic" group="river">
+      <city>W</city>
+      <field city="W">NL NR EL SR</field>
+      <field>ER SL</field>
+      <river>S E</river>
+    </tile>
+    <tile id="fishermen/fiif" group="river">
+      <monastery shrine="true">I</monastery>
+      <field>NL NR EL SR WL WR</field>
+      <field>ER SL</field>
+      <river>S E</river>
+    </tile>
+    <tile id="fishermen/fiir" group="river">
+      <river>S E</river>
+      <field>NL NR EL WR</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <road>W</road>
+    </tile>
+    <tile id="fishermen/fi.scc" group="river-spring">
+      <city>S</city>
+      <city>W</city>
+      <field city="W">NL NR EL</field>
+      <field city="S W">ER</field>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/fi.si.sf" group="river">
+      <field>NL NR EL SR WL WR</field>
+      <field>ER SL</field>
+      <river>S</river>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/fi.si.sr" group="river">
+      <field>SR WL</field>
+      <field>NL NR EL WR</field>
+      <field>ER SL</field>
+      <road>W</road>
+      <river>S</river>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/fi.sri.e" group="river">
+      <field>NL NR EL WR</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <road>S</road>
+      <river>W</river>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/icic" group="river">
+      <city wagon-move="a">E</city>
+      <city wagon-move="a">W</city>
+      <field city="W">NL</field>
+      <field city="E">NR</field>
+      <field city="W">SR</field>
+      <field city="E">SL</field>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/icic2" group="river">
+      <city>W E</city>
+      <river>N S</river>
+      <field city="W E">NL NR</field>
+      <field city="W E">SR</field>
+      <field city="W E">SL</field>
+    </tile>
+    <tile id="fishermen/icif" group="river">
+      <city>E</city>
+      <pig_herd>I</pig_herd>
+      <field pig-herd="true">NL SR WL WR</field>
+      <field city="E">NR SL</field>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/i.efrfs" group="river-lake">
+      <field>NL SR WL WR</field>
+      <field>NR EL ER SL</field>
+      <road>S</road>
+      <monastery shrine="true">I</monastery>
+      <river>N</river>
+    </tile>
+    <tile id="fishermen/i.erfr" group="river-lake">
+      <river>N</river>
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>ER SL SR WL</field>
+      <road>W E</road>
+    </tile>
+    <tile id="fishermen/i.errrl" group="river-lake">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <road>S</road>
+      <road>W</road>
+      <road>E</road>
+      <monastery>I</monastery>
+      <river>N</river>
+    </tile>
+    <tile id="fishermen/ifif2" group="river">
+      <river>N S</river>
+      <field>NL NR EL ER SL SR WL WR</field>
+    </tile>
+    <tile id="fishermen/ifif3" group="river">
+      <river>N S</river>
+      <field>NL NR SL SR WL WR</field>
+      <field>EL ER</field>
+      <cliff>I</cliff>
+    </tile>
+    <tile id="fishermen/ifir" group="river">
+      <river>N S</river>
+      <field>NL WR</field>
+      <field>SR WL</field>
+      <field>NR EL ER SL</field>
+      <road>W</road>
+    </tile>
+    <tile id="fishermen/iici" group="river-fork">
+      <city>S</city>
+      <field city="S">WL</field>
+      <field>NL WR</field>
+      <field city="S">ER</field>
+      <field>NR EL</field>
+      <river>E</river>
+      <river>N</river>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/iiff" group="river">
+      <field>NL ER SL SR WL WR</field>
+      <field>NR EL</field>
+      <tower>I</tower>
+      <river>E</river>
+      <river>N</river>
+    </tile>
+    <tile id="fishermen/iifi" group="river-fork">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>ER SL SR WL</field>
+      <river>W</river>
+      <river>N</river>
+      <river>E</river>
+      <monastery>I</monastery>
+    </tile>
+    <tile id="fishermen/iifi2" group="river-fork">
+      <field>ER SL SR WL</field>
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <tower>I</tower>
+      <river>W</river>
+      <river>N</river>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/iiii" group="river-fork">
+      <river>N</river>
+      <river>W</river>
+      <river>E</river>
+      <river>S</river>
+      <field>NR EL</field>
+      <field>NL WR</field>
+      <field>ER SL</field>
+      <field>SR WL</field>
+    </tile>
+    <tile id="fishermen/iiii1" group="river-fork">
+      <field>NL WR</field>
+      <field>NR EL SR WL</field>
+      <field>ER SL</field>
+      <river>S E</river>
+      <river>N W</river>
+    </tile>
+    <tile id="fishermen/iiii3" group="river-fork">
+      <field>NL NR EL WR</field>
+      <field>ER SL SR WL</field>
+      <river>W</river>
+      <river>E</river>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/iiii5" group="river-fork">
+      <field>NL NR EL WR</field>
+      <field>ER SL SR WL</field>
+      <river>W E</river>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/iirc" group="river">
+      <city>W</city>
+      <field city="W">SR</field>
+      <field city="W">NL ER SL</field>
+      <field>NR EL</field>
+      <river>N E</river>
+      <road inn="1">S</road>
+    </tile>
+    <tile id="fishermen/iiri" group="river-fork">
+      <field>NL WR</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <field>NR EL</field>
+      <river>W</river>
+      <river>N</river>
+      <river>E</river>
+      <road>S</road>
+    </tile>
+    <tile id="fishermen/iirr" group="river">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <tower>I</tower>
+      <road>S</road>
+      <road>W</road>
+      <river>N</river>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/iric" group="river">
+      <city>W</city>
+      <field city="W">NL</field>
+      <field city="W">SR</field>
+      <field>NR EL</field>
+      <field>ER SL</field>
+      <road>E</road>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/irif" group="river">
+      <road>E</road>
+      <field>NL SR WL WR</field>
+      <field>NR EL</field>
+      <field>ER SL</field>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/irir" group="river">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <road>E</road>
+      <road>W</road>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/irir2" group="river">
+      <field>NR EL</field>
+      <road wagon-move="a">E</road>
+      <field>ER SL</field>
+      <field>NL WR</field>
+      <field>SR WL</field>
+      <road wagon-move="a">W</road>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/irir3" group="river">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <tower>I</tower>
+      <road>W E</road>
+      <river>N S</river>
+    </tile>
+    <tile id="fishermen/iri4" group="river">
+      <river>N S</river>
+      <field>NL NR EL WR</field>
+      <field>ER SL SR WL</field>
+      <road>W E</road>
+    </tile>
+    <tile id="fishermen/i.siif" group="river-fork">
+      <field>NR EL</field>
+      <field>NL SR WL WR</field>
+      <field>ER SL</field>
+      <river>N</river>
+      <river>S E</river>
+    </tile>
+    <tile id="fishermen/rcci.s" group="river-spring">
+      <city>S</city>
+      <city>E</city>
+      <field>NL WR</field>
+      <field city="S">WL</field>
+      <field city="S E">NR</field>
+      <road>N</road>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/rfi.sr" group="river-spring">
+      <field>NL WR</field>
+      <field>NR EL ER SL</field>
+      <field>SR WL</field>
+      <road>N</road>
+      <road>W</road>
+      <river>S</river>
+    </tile>
+    <tile id="fishermen/rgir" group="river-spring">
+      <road>N W</road>
+      <field>SR WL</field>
+      <field>NL WR</field>
+      <field>NR EL ER SL</field>
+      <river>S</river>
+    </tile>
+    <tile id="fishermen/rifi" group="river">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>ER SL SR WL</field>
+      <monastery wagon-move="a">I</monastery>
+      <road wagon-move="a">N</road>
+      <river>W E</river>
+    </tile>
+    <tile id="fishermen/riic" group="river">
+      <city>W</city>
+      <field city="W">NL</field>
+      <field city="W">NR EL SR</field>
+      <field>ER SL</field>
+      <river>S E</river>
+      <road>N</road>
+    </tile>
+    <tile id="fishermen/riif" group="river">
+      <river>S E</river>
+      <field>NL SR WL WR</field>
+      <field>NR EL</field>
+      <field>ER SL</field>
+      <road>N</road>
+    </tile>
+    <tile id="fishermen/riir" group="river">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <river>S E</river>
+      <road>N</road>
+      <road>W</road>
+    </tile>
+    <tile id="fishermen/ri.scc" group="river-spring">
+      <city>W</city>
+      <city>S</city>
+      <field city="W S">NL ER</field>
+      <field>NR EL</field>
+      <road>N</road>
+      <river>E</river>
+    </tile>
+    <tile id="fishermen/ri.sci.s" group="river">
+      <city>S</city>
+      <field>NR EL</field>
+      <field>NL WR</field>
+      <field city="S">WL</field>
+      <field city="S">ER</field>
+      <road>N</road>
+      <river>E</river>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/ri.sfi.s" group="river">
+      <field>NL WR</field>
+      <field>NR EL</field>
+      <field shed="1">ER SL SR WL</field>
+      <road>N</road>
+      <river>E</river>
+      <river>W</river>
+    </tile>
+    <tile id="fishermen/rri.er" group="river-spring">
+      <field>NL WR</field>
+      <field>SR WL</field>
+      <field>ER SL</field>
+      <field>NR EL</field>
+      <road>W</road>
+      <road>N</road>
+      <road>E</road>
+      <river>S</river>
+    </tile>
+    <tile id="fishermen/rri.sf" group="river-spring">
+      <field>NL SR WL WR</field>
+      <field>NR EL</field>
+      <field>ER SL</field>
+      <road>E</road>
+      <road>N</road>
+      <river>S</river>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="fishermen">
+      <ref count="1" tile="fishermen/ccci.e" />
+      <ref count="1" tile="fishermen/cci.sc" />
+      <ref count="1" tile="fishermen/cfci.e" />
+      <ref count="1" tile="fishermen/cfic" />
+      <ref count="1" tile="fishermen/cifc" />
+      <ref count="1" tile="fishermen/ciic" />
+      <ref count="1" tile="fishermen/ciif" />
+      <ref count="1" tile="fishermen/ciir" />
+      <ref count="1" tile="fishermen/circ" />
+      <ref count="1" tile="fishermen/crci.e" />
+      <ref count="1" tile="fishermen/crci.s" />
+      <ref count="1" tile="fishermen/crri.e" />
+      <ref count="1" tile="fishermen/fccr.s" />
+      <ref count="1" tile="fishermen/fifi" />
+      <ref count="1" tile="fishermen/fiic" />
+      <ref count="1" tile="fishermen/fiif" />
+      <ref count="1" tile="fishermen/fiir" />
+      <ref count="1" tile="fishermen/fi.scc" />
+      <ref count="1" tile="fishermen/fi.si.sf" />
+      <ref count="1" tile="fishermen/fi.si.sr" />
+      <ref count="1" tile="fishermen/fi.sri.e" />
+      <ref count="1" tile="fishermen/icic" />
+      <ref count="1" tile="fishermen/icic2" />
+      <ref count="1" tile="fishermen/icif" />
+      <ref count="1" tile="fishermen/i.efrfs" />
+      <ref count="1" tile="fishermen/i.erfr" />
+      <ref count="1" tile="fishermen/i.errrl" />
+      <ref count="1" tile="fishermen/ifif2" />
+      <ref count="1" tile="fishermen/ifif3" />
+      <ref count="1" tile="fishermen/ifir" />
+      <ref count="1" tile="fishermen/iici" />
+      <ref count="1" tile="fishermen/iiff" />
+      <ref count="1" tile="fishermen/iifi" />
+      <ref count="1" tile="fishermen/iifi2" />
+      <ref count="1" tile="fishermen/iiii" />
+      <ref count="1" tile="fishermen/iiii1" />
+      <ref count="1" tile="fishermen/iiii3" />
+      <ref count="1" tile="fishermen/iiii5" />
+      <ref count="1" tile="fishermen/iirc" />
+      <ref count="1" tile="fishermen/iiri" />
+      <ref count="1" tile="fishermen/iirr" />
+      <ref count="1" tile="fishermen/iric" />
+      <ref count="1" tile="fishermen/irif" />
+      <ref count="1" tile="fishermen/irir" />
+      <ref count="1" tile="fishermen/irir2" />
+      <ref count="1" tile="fishermen/irir3" />
+      <ref count="1" tile="fishermen/iri4" />
+      <ref count="1" tile="fishermen/i.siif" />
+      <ref count="1" tile="fishermen/rcci.s" />
+      <ref count="1" tile="fishermen/rfi.sr" />
+      <ref count="1" tile="fishermen/rgir" />
+      <ref count="1" tile="fishermen/rifi" />
+      <ref count="1" tile="fishermen/riic" />
+      <ref count="1" tile="fishermen/riif" />
+      <ref count="1" tile="fishermen/riir" />
+      <ref count="1" tile="fishermen/ri.scc" />
+      <ref count="1" tile="fishermen/ri.sci.s" />
+      <ref count="1" tile="fishermen/ri.sfi.s" />
+      <ref count="1" tile="fishermen/rri.er" />
+      <ref count="1" tile="fishermen/rri.sf" />
+    </tile-set>
+  </sets>
+</defs>

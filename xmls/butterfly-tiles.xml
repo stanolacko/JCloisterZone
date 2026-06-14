@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defs>
+  <expansion id="BUTTERFLY-TILES">
+    <title>Butterfly tiles</title>
+    <sets>
+      <ref tile-set="butterfly-tiles" />
+    </sets>
+    <impliesAllowed element="inn" />
+    <icon>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.3 28.3">
+        <path xmlns="http://www.w3.org/2000/svg" d="M27.5,13.6c0.9-0.9,0.9-2.2,0-3.1l-4.6-4.6c-0.4-0.4-1-0.7-1.6-0.6c-0.6,0-1.1,0.2-1.6,0.6l-3.8,3.8c0,0,0,0,0,0  c-0.1-0.1-0.1-0.2-0.2-0.3c0,0,0,0,0,0c-0.1-1.2,0.2-2.1,0.7-2.9l0,0c0.3-0.5,0.8-0.9,1.4-1.3c0.2-0.1,0.2-0.3,0.1-0.5  c0,0-0.1-0.1-0.1-0.2c0,0-0.1,0-0.1,0c-0.1,0-0.1,0-0.2,0c0,0-0.1,0-0.2,0c-0.7,0.4-1.2,0.9-1.6,1.5c-0.6,0.8-0.8,1.7-0.9,2.8  c-0.1,0-0.2-0.1-0.3-0.1c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0,0c-0.1,0-0.2,0-0.3,0.1  c-0.1-1-0.3-2-0.9-2.8c-0.5-0.6-1-1.1-1.6-1.5c0,0-0.1,0-0.2,0c-0.1,0-0.1,0-0.2,0c0,0-0.1,0-0.1,0c-0.1,0-0.1,0.1-0.1,0.2  c-0.1,0.2-0.1,0.4,0.1,0.5c0.6,0.4,1.1,0.8,1.4,1.3l0,0c0.5,0.8,0.8,1.7,0.7,2.9c0,0,0,0,0,0c-0.1,0.1-0.2,0.2-0.2,0.3c0,0,0,0,0,0  L8.7,5.9c-0.4-0.4-1-0.7-1.6-0.6C6.6,5.2,6,5.5,5.5,5.9l-4.6,4.6c-0.9,0.9-0.9,2.2,0,3.1l1.7,1.7l0,0l-0.1,0.1  c-0.9,0.9-0.9,2.2,0,3.1l4.6,4.6c0.4,0.4,1,0.7,1.6,0.6c0.6,0,1.1-0.2,1.6-0.6l2.5-2.5c0.1,0.1,0.1,0.1,0.2,0.1c0,0,0.1,0.1,0.1,0.1  c0.1,0,0.1,0.1,0.2,0.1c0,0,0.1,0,0.1,0.1c0.1,0,0.1,0.1,0.2,0.1c0,0,0.1,0,0.1,0c0.1,0,0.2,0,0.2,0c0,0,0,0,0.1,0c0,0,0,0,0,0  c0,0,0,0,0,0c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0.1,0c0.1,0,0.2,0,0.2,0c0,0,0.1,0,0.1,0  c0.1,0,0.1,0,0.2-0.1c0,0,0.1,0,0.1-0.1c0.1,0,0.1-0.1,0.2-0.1c0,0,0.1,0,0.1-0.1c0.1,0,0.1-0.1,0.2-0.1l2.5,2.5  c0.4,0.4,1,0.7,1.6,0.6c0.6,0,1.1-0.2,1.6-0.6l4.6-4.6c0.9-0.9,0.9-2.2,0-3.1l-0.1-0.1l0,0L27.5,13.6z"/>
+      </svg>
+    </icon>
+    <link url="https://www.carcassonnecentral.com/community/index.php?action=downloads;sa=view;down=24" title="Download" type="download" />
+    <link url="https://www.hans-im-glueck.de/en/verlag/autorenleitfaden.html" title="©"  />
+  </expansion>
+  <tiles>
+    <tile id="butterfly-tiles/cccc.c">
+      <city>N W S E</city>
+      <monastery>I</monastery>
+    </tile>
+    <tile id="butterfly-tiles/cfcc.c">
+      <city>W</city>
+      <city>N</city>
+      <city>S</city>
+      <field city="W N S">EL ER</field>
+      <monastery>I</monastery>
+    </tile>
+    <tile id="butterfly-tiles/crcc+">
+      <city pennants="1" wagon-move="a">N W</city>
+      <city>S</city>
+      <field city="N W">EL</field>
+      <field city="N W S">ER</field>
+      <road wagon-move="a">E</road>
+    </tile>
+    <tile id="butterfly-tiles/crcr">
+      <city>N S</city>
+      <field city="N S">ER WL</field>
+      <field city="N S">EL WR</field>
+      <road>W E</road>
+    </tile>
+    <tile id="butterfly-tiles/fcrc">
+      <city wagon-move="a">W</city>
+      <city wagon-move="b">E</city>
+      <field city="E">SL</field>
+      <field city="W">SR</field>
+      <field city="W E">NL NR</field>
+      <road wagon-move="a b">S</road>
+    </tile>
+    <tile id="butterfly-tiles/ffrf.i">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <road shed="1" inn="1">S</road>
+    </tile>
+    <tile id="butterfly-tiles/ffrr">
+      <field farm="1">SR WL</field>
+      <field cows="1" farm="1">NL NR EL ER SL WR</field>
+      <road wagon-move="a">S</road>
+      <road wagon-move="a">W</road>
+    </tile>
+    <tile id="butterfly-tiles/frfr">
+      <field>NL NR EL WR</field>
+      <field>ER SL SR WL</field>
+      <road wagon-move="a">W</road>
+      <road wagon-move="a" cows="1">E</road>
+    </tile>
+    <tile id="butterfly-tiles/rcrc">
+      <city>W</city>
+      <city>E</city>
+      <field city="W">NL SR</field>
+      <field city="E">NR SL</field>
+      <road>N S</road>
+    </tile>
+    <tile id="butterfly-tiles/rcrr">
+      <city wagon-move="a">E</city>
+      <field>NL WR</field>
+      <field city="E">NR SR WL</field>
+      <field city="E">SL</field>
+      <road wagon-move="a">S</road>
+      <road>N W</road>
+    </tile>
+    <tile id="butterfly-tiles/rffc">
+      <city wagon-move="a">W</city>
+      <field city="W">NR EL ER SL SR</field>
+      <field city="W">NL</field>
+      <road wagon-move="a">N</road>
+    </tile>
+    <tile id="butterfly-tiles/rfrc">
+      <city wagon-move="a">W</city>
+      <field cows="1">NR EL ER SL</field>
+      <field city="W">NL</field>
+      <field city="W">SR</field>
+      <road wagon-move="a" cows="1">N S</road>
+    </tile>
+    <tile id="butterfly-tiles/rfrf.i">
+      <field>NL NR EL ER SL SR WL WR</field>
+      <road inn="1">S</road>
+      <road>N</road>
+    </tile>
+    <tile id="butterfly-tiles/rrrc+i">
+      <city pennants="1" wagon-move="a">W</city>
+      <field>ER SL</field>
+      <field>NR EL</field>
+      <field city="W">NL</field>
+      <field city="W">SR</field>
+      <road wagon-move="b c">S</road>
+      <road wagon-move="a b d" inn="1">N</road>
+      <road wagon-move="c d" inn="1">E</road>
+    </tile>
+    <tile id="butterfly-tiles/rrrr">
+      <field>NR EL</field>
+      <field>NL WR</field>
+      <field>SR WL</field>
+      <field cows="1">ER SL</field>
+      <road cows="1">N S</road>
+      <road cows="1">W E</road>
+    </tile>
+  </tiles>
+  <sets>
+    <tile-set id="butterfly-tiles">
+      <ref count="1" tile="butterfly-tiles/cccc.c" />
+      <ref count="1" tile="butterfly-tiles/cfcc.c" />
+      <ref count="1" tile="butterfly-tiles/crcc+" />
+      <ref count="1" tile="butterfly-tiles/crcr" />
+      <ref count="1" tile="butterfly-tiles/fcrc" />
+      <ref count="1" tile="butterfly-tiles/ffrf.i" />
+      <ref count="1" tile="butterfly-tiles/ffrr" />
+      <ref count="1" tile="butterfly-tiles/frfr" />
+      <ref count="1" tile="butterfly-tiles/rcrc" />
+      <ref count="1" tile="butterfly-tiles/rcrr" />
+      <ref count="1" tile="butterfly-tiles/rffc" />
+      <ref count="1" tile="butterfly-tiles/rfrc" />
+      <ref count="1" tile="butterfly-tiles/rfrf.i" />
+      <ref count="1" tile="butterfly-tiles/rrrc+i" />
+      <ref count="2" tile="butterfly-tiles/rrrr" />
+    </tile-set>
+  </sets>
+</defs>
