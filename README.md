@@ -101,7 +101,8 @@ _Fan-expansions:_
 
 The TS engine is a Node project (ESM, `"type": "module"`). The core under
 `src/main/ts/com/jcloisterzone/` has **no Node imports** — it is portable/embeddable; only the
-CLI host (`bin/jcz-engine.mjs`) and the test/golden tooling touch `node:*`.
+CLI host (`src/main/ts/cli/jcz-engine.ts`, compiled to `dist/cli/jcz-engine.js`) and the
+test/golden tooling touch `node:*`.
 
 ### Requirements
 
@@ -115,10 +116,11 @@ CLI host (`bin/jcz-engine.mjs`) and the test/golden tooling touch `node:*`.
 | Command | What it does |
 | ------- | ------------ |
 | `npm run typecheck` | `tsc --noEmit` — type-check only, no output. |
-| `npm run build`     | Compile `src/main/ts` → `dist/` (what the CLI loads). |
+| `npm run build`     | Compile `src/main/ts` → `dist/` (incl. the CLI at `dist/cli/jcz-engine.js`). |
+| `npm run build:bundle` | esbuild the engine into **one self-contained file** `bundle/jcz-engine.js` (the release artifact the client downloads). |
 | `npm test`          | Run the Vitest suite (`vitest run`). |
 | `npm run test:watch`| Vitest in watch mode. |
-| `npm run engine`    | Start the engine CLI (`node bin/jcz-engine.mjs`); add `-p <port>` for socket mode. |
+| `npm run engine`    | Start the engine CLI (`node dist/cli/jcz-engine.js`); add `-p <port>` for socket mode. |
 | `npm run capture-golden` | Replay every `engine-tests/**/*.jcz` through the Java jar and write `*.golden.jsonl`. Requires `JCZ_JAR=<path to Engine.jar>`. |
 
 ### Running as a socket service (dev only)
@@ -128,8 +130,8 @@ protocol as the Java client's `SocketEngine`. Build first, then start it on a po
 
 ```bash
 npm install
-npm run build
-node bin/jcz-engine.mjs -p 9001
+npm run build                       # compiles the CLI to dist/cli/jcz-engine.js
+node dist/cli/jcz-engine.js -p 9001
 ```
 
 It prints `#listening on port 9001` and accepts one JSON message per line per connection,
@@ -138,6 +140,22 @@ out), `-v` (echo the same to stderr, `#`-prefixed so the client ignores it).
 
 > **Note:** this is a plain TCP line socket for local development, **not** a hardened
 > production WebSocket service.
+
+### Release artifact (single-file bundle)
+
+For distribution the engine ships as **one self-contained file** — the drop-in replacement
+for `Engine.jar`:
+
+```bash
+npm run build:bundle        # → bundle/jcz-engine.js  (esbuild: engine + CLI + @xmldom inlined)
+node bundle/jcz-engine.js -p 9001
+```
+
+It needs only a Node runtime — no `node_modules` (everything is inlined). Tile XMLs stay
+external (loaded at runtime via `%load`, exactly like the jar). On a version tag,
+`.github/workflows/release.yml` builds this bundle and attaches `bundle/jcz-engine.js` to the
+GitHub release; the FanCloisterZone client pins a version by tag in its
+`build-scripts/download-game-engine.js` (same mechanism it used for `Engine.jar`).
 
 ### How parity is verified
 
@@ -169,7 +187,7 @@ feature, also do the following:
    ⚠️ A TS golden is only as trustworthy as your review **at capture time** — eyeball the
    emitted states, confirm they're right, *then* commit. From then on `state-parity.test.ts`
    guards the full per-step state against regressions.
-3. **Smoke-test against the real client:** `node bin/jcz-engine.mjs -p 9001` and play the
+3. **Smoke-test against the real client:** `node dist/cli/jcz-engine.js -p 9001` and play the
    feature in FanCloisterZone for visual confirmation.
 
 `capture-golden:ts` (TS engine, no jar) is the post-cutover counterpart of `capture-golden`
@@ -178,8 +196,8 @@ Java-derived goldens untouched so they keep catching regressions.
 
 ### Important gotchas
 
-* **Rebuild `dist/` after engine changes.** Vitest runs the TS *source* directly, but
-  `bin/jcz-engine.mjs` loads the compiled `dist/`. `tsc --noEmit` does **not** emit, so run
+* **Rebuild `dist/` after engine changes.** Vitest runs the TS *source* directly, but the CLI
+  *is* the compiled `dist/` (`dist/cli/jcz-engine.js`). `tsc --noEmit` does **not** emit, so run
   `npm run build` or the CLI will execute stale code.
 * **When the Java engine (`6.x`) changes, re-sync the goldens.** Rebuild the jar
   (`mvn -DskipTests package`), then `JCZ_JAR=build/Engine.jar npm run capture-golden`, then

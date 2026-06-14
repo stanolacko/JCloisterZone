@@ -1,0 +1,39 @@
+# On a version tag, build the single-file engine bundle and attach it to the GitHub
+# release — the artifact the FanCloisterZone client downloads (mirrors the old
+# maven.yml that released Engine.jar). The client pins a version by tag in
+# build-scripts/download-game-engine.js.
+
+name: Release engine bundle
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.x'      # match the client runtime; esbuild 0.21 + --target=node16
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test (byte-parity replay vs goldens)
+        run: npm test
+
+      - name: Build single-file bundle
+        run: npm run build:bundle      # → bundle/jcz-engine.js
+
+      - name: Attach bundle to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: bundle/jcz-engine.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
