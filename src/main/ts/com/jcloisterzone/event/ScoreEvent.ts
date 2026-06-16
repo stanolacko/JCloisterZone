@@ -12,17 +12,28 @@ import type { PointsExpression } from "./PointsExpression.js";
  *  does not carry this; see KNOWN_DIFFS.md. */
 export type ScoredMeeple = Tuple2<Follower, FeaturePointer>;
 
+/** One player's stake in a scored feature's majority race: their power (follower
+ *  strength) and whether they won the majority (an owner). TS-only enrichment. */
+export interface MajorityShare {
+  player: Player;
+  power: number;
+  winner: boolean;
+}
+
 /** Points awarded to a player from a source. */
 export class ReceivedPoints {
   private readonly meeples: List<ScoredMeeple>;
+  private readonly majority: List<MajorityShare>;
 
   constructor(
     private readonly expression: PointsExpression,
     private readonly player: Player,
     private readonly source: BoardPointer | null,
     meeples: List<ScoredMeeple> = List.empty<ScoredMeeple>(),
+    majority: List<MajorityShare> = List.empty<MajorityShare>(),
   ) {
     this.meeples = meeples;
+    this.majority = majority;
   }
 
   getPoints(): number {
@@ -45,6 +56,12 @@ export class ReceivedPoints {
    *  points — used to show the meeples' original positions for the score event. */
   getMeeples(): List<ScoredMeeple> {
     return this.meeples;
+  }
+
+  /** The feature's majority race (winners = owners, losers = other meeple holders) —
+   *  the "2nd expression" explaining who won the feature. Empty for non-feature scores. */
+  getMajority(): List<MajorityShare> {
+    return this.majority;
   }
 
   toString(): string {

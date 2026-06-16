@@ -7,7 +7,7 @@ import type { BoardPointer } from "../board/pointer/BoardPointer.js";
 import type { FeaturePointer } from "../board/pointer/FeaturePointer.js";
 import { ScorePositionsFeaturePointer } from "../board/pointer/ScorePositionsFeaturePointer.js";
 import { PointsExpression } from "../event/PointsExpression.js";
-import { ReceivedPoints } from "../event/ScoreEvent.js";
+import { ReceivedPoints, type MajorityShare } from "../event/ScoreEvent.js";
 import { isInstanceOfRangeFeature } from "../feature/RangeFeature.js";
 import type { Scoreable } from "../feature/Scoreable.js";
 import type { Follower } from "../figure/Follower.js";
@@ -22,6 +22,7 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
   protected readonly isFinal: boolean;
   private owners: Set<Player> = HashSet.empty();
   private bonusPoints: List<ReceivedPoints> = List.empty();
+  private majorityShares: List<MajorityShare> = List.empty();
 
   constructor(feature: Scoreable, isFinal: boolean) {
     this.feature = feature;
@@ -66,7 +67,24 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
       player,
       this.getSampleSource(state, player, this.bonusPoints),
       this.getFeatureMeeples(state),
+      this.majorityShares,
     );
+  }
+
+  /** The feature's majority race: every player with a meeple on it, their power, and
+   *  whether they hold the majority (an owner = winner). The "2nd expression" of the
+   *  score event. TS-only; relies on `this.owners` being set. */
+  private getMajorityShares(state: GameState): List<MajorityShare> {
+    const powers = this.feature.getPowers(state);
+    let result = List.empty<MajorityShare>();
+    for (const player of this.feature
+      .getFollowers(state)
+      .map((f) => f.getPlayer())
+      .distinct()) {
+      const power = powers.get(player).map((t) => t._1).getOrElse(0);
+      result = result.append({ player, power, winner: this.owners.contains(player) }) as List<MajorityShare>;
+    }
+    return result;
   }
 
   private getSampleSource(
@@ -112,6 +130,10 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
       this.bonusPoints = cap.appendFiguresBonusPoints(state, this.bonusPoints, this.feature, this.isFinal);
     }
 
+    // the feature's majority race (winners = owners) — attached to every entry of this
+    // score event as the "2nd expression" explaining who won the feature.
+    this.majorityShares = this.getMajorityShares(state);
+
     let receivedPoints: List<ReceivedPoints> = List.empty<ReceivedPoints>();
 
     if (this.owners.isEmpty()) {
@@ -131,6 +153,7 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
             player,
             this.getSampleSource(state, player, this.bonusPoints),
             this.getFeatureMeeples(state),
+            this.majorityShares,
           ),
         ) as List<ReceivedPoints>;
       }

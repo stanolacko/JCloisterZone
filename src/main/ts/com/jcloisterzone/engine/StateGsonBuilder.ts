@@ -522,6 +522,9 @@ export class StateGsonBuilder {
             })),
             ptr: this.boardPtr(rp.getSource()),
           };
+          // The original positions of the
+          // followers that earned these points, so the UI can show them after the
+          // meeples are returned to supply. Stripped in the parity test.
           const meeples = rp.getMeeples();
           if (!meeples.isEmpty()) {
             entry.meeples = meeples.toArray().map((t) => {
@@ -534,6 +537,15 @@ export class StateGsonBuilder {
                 location: this.loc(t._2.getLocation()),
               };
             });
+          }
+          // The feature's majority race (winners = owners) — the "2nd expression".
+          const majority = rp.getMajority();
+          if (!majority.isEmpty()) {
+            entry.majority = majority.toArray().map((m) => ({
+              player: m.player.getIndex(),
+              power: m.power,
+              winner: m.winner,
+            }));
           }
           return entry;
         });
