@@ -45,6 +45,30 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
     return this.owners;
   }
 
+  /** ALL followers still on the feature (with their feature pointers) at scoring time —
+   *  every player's, including those who do not score for lack of majority — recorded on
+   *  the ScoreEvent so the UI can show their original positions (in each owner's colour)
+   *  after they are returned to supply. */
+  private getFeatureMeeples(state: GameState): List<Tuple2<Follower, FeaturePointer>> {
+    return List.ofAll(this.feature.getFollowers2(state));
+  }
+
+  /** A 0-point entry named `"<feature>.<reason>"` for a player who has a meeple on the
+   *  feature but scores nothing — `reason` is "empty" when nobody owns the feature (Java
+   *  parity) or "no-majority" for a player out-powered by the majority (TS-only). */
+  private zeroReceivedPoints(state: GameState, player: Player, reason: string): ReceivedPoints {
+    const expr = new PointsExpression(
+      simpleName((this.feature as object).constructor).toLowerCase() + "." + reason,
+      List.empty(),
+    );
+    return new ReceivedPoints(
+      expr,
+      player,
+      this.getSampleSource(state, player, this.bonusPoints),
+      this.getFeatureMeeples(state),
+    );
+  }
+
   private getSampleSource(
     state: GameState,
     player: Player,
@@ -96,20 +120,29 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
         .getFollowers(state)
         .map((f) => f.getPlayer())
         .distinct()) {
-        const expr = new PointsExpression(
-          simpleName((this.feature as object).constructor).toLowerCase() + ".empty",
-          List.empty(),
-        );
-        receivedPoints = receivedPoints.append(
-          new ReceivedPoints(expr, player, this.getSampleSource(state, player, this.bonusPoints)),
-        ) as List<ReceivedPoints>;
+        receivedPoints = receivedPoints.append(this.zeroReceivedPoints(state, player, "empty")) as List<ReceivedPoints>;
       }
     } else {
       for (const player of this.owners) {
         const expr = this.computeFeaturePoints(state, player);
         receivedPoints = receivedPoints.append(
-          new ReceivedPoints(expr, player, this.getSampleSource(state, player, this.bonusPoints)),
+          new ReceivedPoints(
+            expr,
+            player,
+            this.getSampleSource(state, player, this.bonusPoints),
+            this.getFeatureMeeples(state),
+          ),
         ) as List<ReceivedPoints>;
+      }
+      // TS-only (Java emits nothing here): players with at least one meeple on the
+      // feature but WITHOUT the majority get a 0-point "no-majority" entry, so the score
+      // history shows the feature was contested (rendered as "<feature> (no majority) = 0").
+      for (const player of this.feature
+        .getFollowers(state)
+        .map((f) => f.getPlayer())
+        .distinct()) {
+        if (this.owners.contains(player)) continue;
+        receivedPoints = receivedPoints.append(this.zeroReceivedPoints(state, player, "no-majority")) as List<ReceivedPoints>;
       }
     }
 

@@ -152,6 +152,46 @@ function kindOf(v: unknown): string {
   return v === null ? "null" : Array.isArray(v) ? "array" : typeof v;
 }
 
+/** Recursively remove the TS-only `meeples` field from "points" event entries (the
+ *  ones carrying a `ptr`), so Java goldens — which never had it — still compare equal. */
+function stripScoredMeeples(v: unknown): void {
+  if (Array.isArray(v)) {
+    v.forEach(stripScoredMeeples);
+    return;
+  }
+  if (v !== null && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    if ("ptr" in o && "meeples" in o) delete o.meeples;
+    for (const k of Object.keys(o)) stripScoredMeeples(o[k]);
+  }
+}
+
+/** Recursively remove the TS-only 0-point `"<feature>.no-majority"` score entries — the TS
+ *  engine adds one for every player who had a meeple on a scored feature but lacked the
+ *  majority (so the history shows contested features); Java emits none. (The genuine
+ *  no-owner `.empty` entries Java DOES produce are left untouched and stay fully compared.) */
+function stripContestedEmpties(v: unknown): void {
+  if (Array.isArray(v)) {
+    for (let i = v.length - 1; i >= 0; i--) {
+      const e = v[i] as Record<string, unknown> | null;
+      if (
+        e !== null && typeof e === "object" && "ptr" in e &&
+        typeof e.name === "string" && e.name.endsWith(".no-majority")
+      ) {
+        v.splice(i, 1);
+      } else {
+        stripContestedEmpties(v[i]);
+      }
+    }
+    return;
+  }
+  if (v !== null && typeof v === "object") {
+    for (const k of Object.keys(v as Record<string, unknown>)) {
+      stripContestedEmpties((v as Record<string, unknown>)[k]);
+    }
+  }
+}
+
 /** An array is UNORDERED when it is a vavr-collection projection — i.e. its key is one
  *  of UNORDERED_KEYS (tuple lists like places/positions), OR its members are objects
  *  (feature lists, point/event lists, deployedMeeples, …). These are emitted in vavr
@@ -312,6 +352,13 @@ describe("GameState JSON parity (TS vs Java golden)", () => {
             if (pl.tokens?.ROBBER) delete pl.tokens.ROBBER.fp;
           }
         }
+        // The TS engine enriches each "points" event entry with `meeples` (the scored
+        // followers' original positions) — Java emits no such field. Strip it before
+        // comparing so the Java-captured goldens stay a valid regression net.
+        stripScoredMeeples(ja);
+        stripScoredMeeples(tb);
+        stripContestedEmpties(ja);
+        stripContestedEmpties(tb);
         collectDiffs(ja, tb, "$", undefined, diffs);
         expect(
           diffs.length,

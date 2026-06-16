@@ -510,17 +510,33 @@ export class StateGsonBuilder {
           turnEvents = [];
           events.push({ finalScoring: true, events: turnEvents });
         }
-        const points = ev.getPoints().toArray().map((rp) => ({
-          player: rp.getPlayer().getIndex(),
-          points: rp.getPoints(),
-          name: rp.getExpression().getName(),
-          items: rp.getExpression().getItems().toArray().map((it) => ({
-            count: it.getCount(),
-            name: it.getName(),
-            points: it.getPoints(),
-          })),
-          ptr: this.boardPtr(rp.getSource()),
-        }));
+        const points = ev.getPoints().toArray().map((rp) => {
+          const entry: Record<string, unknown> = {
+            player: rp.getPlayer().getIndex(),
+            points: rp.getPoints(),
+            name: rp.getExpression().getName(),
+            items: rp.getExpression().getItems().toArray().map((it) => ({
+              count: it.getCount(),
+              name: it.getName(),
+              points: it.getPoints(),
+            })),
+            ptr: this.boardPtr(rp.getSource()),
+          };
+          const meeples = rp.getMeeples();
+          if (!meeples.isEmpty()) {
+            entry.meeples = meeples.toArray().map((t) => {
+              const feat = t._2.getFeature();
+              return {
+                type: simpleName(t._1.constructor as ClassToken),
+                player: t._1.getPlayer().getIndex(),
+                position: this.pos(t._2.getPosition()),
+                feature: feat === null ? null : simpleName(feat),
+                location: this.loc(t._2.getLocation()),
+              };
+            });
+          }
+          return entry;
+        });
         turnEvents.push({ type: "points", points });
       } else if (ev instanceof MeepleDeployed) {
         const data: Record<string, unknown> = {
