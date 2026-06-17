@@ -21,7 +21,9 @@ import { KingCapability } from "../game/capability/KingCapability.js";
 import { LittleBuildingsCapability } from "../game/capability/LittleBuildingsCapability.js";
 import { RobberCapability } from "../game/capability/RobberCapability.js";
 import { SheepCapability } from "../game/capability/SheepCapability.js";
+import { HillCapability } from "../game/capability/HillCapability.js";
 import { TowerCapability } from "../game/capability/TowerCapability.js";
+import { Rule } from "../game/Rule.js";
 import type { Arr, List, Vector } from "../../../io/vavr/SeqTypes.js";
 import type { Follower } from "../figure/Follower.js";
 import type { Location } from "../board/Location.js";
@@ -483,6 +485,15 @@ export class StateGsonBuilder {
     let volcanoTile = false;
     let dragonPath: Array<[number, number]> | null = null;
 
+    // Hills & Sheep majority tie-break mode (game-wide, constant): how a player's `hills`
+    // count is to be read — "number-of-followers" counts hill meeples toward the majority,
+    // "at-least-one-follower" only breaks ties. null when Hills is not in the game.
+    const hillMode: string | null = state.hasCapability(HillCapability)
+      ? state.getStringRule(Rule.HILL_TIEBREAKER) === "number-of-followers"
+        ? "number-of-followers"
+        : "at-least-one-follower"
+      : null;
+
     for (const ev of state.getEvents()) {
       if (ev instanceof PlayerTurnEvent) playerIdx = ev.getPlayer().getIndex();
       if (ev instanceof PlayerTurnEvent || ev instanceof DoubleTurnEvent) {
@@ -522,7 +533,7 @@ export class StateGsonBuilder {
             })),
             ptr: this.boardPtr(rp.getSource()),
           };
-          // The original positions of the
+          // TS-only enrichment (not emitted by Java): the original positions of the
           // followers that earned these points, so the UI can show them after the
           // meeples are returned to supply. Stripped in the parity test.
           const meeples = rp.getMeeples();
@@ -538,14 +549,16 @@ export class StateGsonBuilder {
               };
             });
           }
-          // The feature's majority race (winners = owners) — the "2nd expression".
+          // TS-only: the feature's majority race (winners = owners) — the "2nd expression".
           const majority = rp.getMajority();
           if (!majority.isEmpty()) {
             entry.majority = majority.toArray().map((m) => ({
               player: m.player.getIndex(),
               power: m.power,
+              hills: m.hills,
               winner: m.winner,
             }));
+            if (hillMode !== null) entry.hillMode = hillMode;
           }
           return entry;
         });

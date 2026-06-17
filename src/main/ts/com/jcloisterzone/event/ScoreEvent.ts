@@ -13,10 +13,13 @@ import type { PointsExpression } from "./PointsExpression.js";
 export type ScoredMeeple = Tuple2<Follower, FeaturePointer>;
 
 /** One player's stake in a scored feature's majority race: their power (follower
- *  strength) and whether they won the majority (an owner). TS-only enrichment. */
+ *  strength), how many of their meeples sit on hills (the Hills & Sheep tie metric —
+ *  count of hill followers in the `number-of-followers` variant, else 0/1), and whether
+ *  they won the majority (an owner). TS-only enrichment. */
 export interface MajorityShare {
   player: Player;
   power: number;
+  hills: number;
   winner: boolean;
 }
 

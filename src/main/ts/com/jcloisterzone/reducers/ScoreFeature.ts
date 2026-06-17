@@ -10,6 +10,7 @@ import { PointsExpression } from "../event/PointsExpression.js";
 import { ReceivedPoints, type MajorityShare } from "../event/ScoreEvent.js";
 import { isInstanceOfRangeFeature } from "../feature/RangeFeature.js";
 import type { Scoreable } from "../feature/Scoreable.js";
+import { HillCapability } from "../game/capability/HillCapability.js";
 import type { Follower } from "../figure/Follower.js";
 import type { ScoreFeatureReducer } from "../game/ScoreFeatureReducer.js";
 import type { GameState } from "../game/state/GameState.js";
@@ -81,8 +82,10 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
       .getFollowers(state)
       .map((f) => f.getPlayer())
       .distinct()) {
-      const power = powers.get(player).map((t) => t._1).getOrElse(0);
-      result = result.append({ player, power, winner: this.owners.contains(player) }) as List<MajorityShare>;
+      const t = powers.get(player);
+      const power = t.map((x) => x._1).getOrElse(0);
+      const hills = t.map((x) => x._2).getOrElse(0);
+      result = result.append({ player, power, hills, winner: this.owners.contains(player) }) as List<MajorityShare>;
     }
     return result;
   }
@@ -105,7 +108,18 @@ export abstract class ScoreFeature implements ScoreFeatureReducer {
       }
     }
     if (returnSource === null) {
-      returnSource = followers.head()._2;
+      // With Hills & Sheep, show the scoring bullet on the
+      // meeple that matters for the majority — the one standing on a hill — instead of the
+      // first-placed follower.
+      if (state.hasCapability(HillCapability)) {
+        const onHill = followers
+          .find((t) => state.getPlacedTile(t._2.getPosition())!.getTile().hasModifier(HillCapability.HILL))
+          .getOrNull();
+        if (onHill !== null) returnSource = onHill._2;
+      }
+      if (returnSource === null) {
+        returnSource = followers.head()._2;
+      }
     }
     if (isInstanceOfRangeFeature(this.feature)) {
       const positions = HashSet.ofAll(
