@@ -15,6 +15,8 @@ import type { FerriesCapabilityModel } from "../game/capability/FerriesCapabilit
 import { DragonCapability } from "../game/capability/DragonCapability.js";
 import { DragonMovePhase } from "../game/phase/DragonMovePhase.js";
 import { RussianPromosTrapPhase } from "../game/phase/RussianPromosTrapPhase.js";
+import { GameOverPhase } from "../game/phase/GameOverPhase.js";
+import { FinalScoring } from "../reducers/FinalScoring.js";
 import { MoveDragonAction } from "../action/MoveDragonAction.js";
 import { Dragon } from "../figure/neutral/Dragon.js";
 import { KingCapability } from "../game/capability/KingCapability.js";
@@ -339,6 +341,16 @@ export class StateGsonBuilder {
         )
       : null;
 
+    // TS-only: potential final score — what each player would have if the game ended right
+    // now. Final scoring is a pure reducer over the immutable state, so we run it on a
+    // throwaway copy and read the resulting scores without affecting the real game. Once the
+    // game is actually over, final scoring has already been applied, so reuse the real score
+    // (re-running would double-apply capability bonuses like King/Robber/gold).
+    const finalScore =
+      state.getPhase() instanceof GameOverPhase
+        ? score
+        : new FinalScoring().apply(state).getPlayers().getScore();
+
     const out: unknown[] = [];
     for (let i = 0; i < count; i++) {
       const meeples: Record<string, [number, string]> = {};
@@ -346,6 +358,7 @@ export class StateGsonBuilder {
       this.groupSupply(state, specials.get(i), meeples);
       const player: Record<string, unknown> = {
         points: score.get(i),
+        finalPoints: finalScore.get(i),
         tokens: this.playerTokens(state, tokenArr.get(i)),
         meeples,
       };
