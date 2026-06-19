@@ -62,6 +62,12 @@
       "clock": 10062
     }
   ],
+  "gameAnnotations": {
+    "drawOrder": [
+      "RI.2/III",
+      "RI.2/RrII"
+    ]
+  },
   "test": {
     "description": "River II Curve Placement",
     "assertions": [

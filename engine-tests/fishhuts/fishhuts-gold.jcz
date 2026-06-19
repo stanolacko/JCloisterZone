@@ -1,5 +1,5 @@
 {
-  "appVersion": "6.2.0-beta.2",
+  "appVersion": "6.2.0",
   "gameId": "1",
   "name": "",
   "initialRandom": 0.1868165053328792,
@@ -703,6 +703,33 @@
       "Available action TilePlacement for BA/RrC",
       "TilePlacement BA/RrC options: [1,2] - [180,270]; [4,4] - [180]; [1,4] - [180,270]; [-1,-7] - [90]; [1,-6] - [90]; [-2,-6] - [0]; [-2,-5] - [90]; [-1,-4] - [0]; [3,-2] - [0,90]; [3,0] - [0,90]; [3,1] - [0,90]; [-1,0] - [0]; [5,4] - [90]; [6,4] - [90]; [7,4] - [90]; [0,-4] - [270]; [1,3] - [0]; [2,-3] - [270]; [-1,-2] - [180,270]; [4,6] - [0]; [7,6] - [0]; [0,1] - [270]; [1,1] - [270]; [3,2] - [270]; [8,5] - [270]; [2,-5] - [180]; [3,6] - [270]; [5,6] - [270]; [6,6] - [270]; [2,-4] - [180]",
       "Undo is not allowed"
+    ]
+  },
+  "gameAnnotations": {
+    "drawOrder": [
+      "fishhuts/fishhuts-IIFI",
+      "fishhuts/fishhuts-FIFI",
+      "fishhuts/fishhuts-FIRI",
+      "fishhuts/fishhuts-RIIR",
+      "RI.1/RIrI",
+      "RI.1/CIRI",
+      "fishhuts/fishhuts-ICIC",
+      "fishhuts/fishhuts-IFIF",
+      "RI.1/LIRI",
+      "RI.1/II",
+      "RI.1/RrII",
+      "RI.1/II",
+      "fishhuts/fishhuts-IIFF",
+      "RI.1/CICI",
+      "fishhuts/fishhuts-IFIF_2",
+      "RI.1/IFI",
+      "RI.1/IFI",
+      "RI.1/CcII",
+      "fishhuts/fishhuts-IFFF",
+      "fishhuts/fishhuts-FCCI",
+      "GO/CRcr",
+      "BA/Rr",
+      "BA/RrC"
     ]
   }
 }

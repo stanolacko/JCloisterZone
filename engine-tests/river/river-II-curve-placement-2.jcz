@@ -152,5 +152,14 @@
       "Available action TilePlacement for RI.2/CcII+",
       "TilePlacement RI.2/CcII+ options: [1,2] - [180,270]; [3,-1] - [180]"
     ]
+  },
+  "gameAnnotations": {
+    "drawOrder": [
+      "RI.2/III",
+      "RI.2/RrII",
+      "RI.2/II",
+      "RI.2/CIRI",
+      "RI.2/CcII+"
+    ]
   }
 }
