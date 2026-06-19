@@ -25,11 +25,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Set package version from the tag
+        # tag v7.0.0-alpha.4 → package.json version 7.0.0-alpha.4, which the bundle step
+        # injects as the engine's --version. Keeps tag / version / reported version in sync.
+        run: npm version --no-git-tag-version --allow-same-version "${GITHUB_REF_NAME#v}"
+
       - name: Test (byte-parity replay vs goldens)
         run: npm test
 
       - name: Build single-file bundle
-        run: npm run build:bundle      # → bundle/jcz-engine.js
+        run: npm run build:bundle      # → bundle/jcz-engine.js (version baked in from package.json)
 
       - name: Attach bundle to the release
         uses: softprops/action-gh-release@v2
