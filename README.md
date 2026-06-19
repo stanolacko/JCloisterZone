@@ -122,6 +122,7 @@ test/golden tooling touch `node:*`.
 | `npm run test:watch`| Vitest in watch mode. |
 | `npm run engine`    | Start the engine CLI (`node dist/cli/jcz-engine.js`); add `-p <port>` for socket mode. |
 | `npm run capture-golden` | Replay every `engine-tests/**/*.jcz` through the Java jar and write `*.golden.jsonl`. Requires `JCZ_JAR=<path to Engine.jar>`. |
+| `npm run set-draw-order` | Pin a test's forced tile draw order — see [Forcing a test's tile draw order](#forcing-a-tests-tile-draw-order). |
 
 ### Running as a socket service (dev only)
 
@@ -156,6 +157,40 @@ external (loaded at runtime via `%load`, exactly like the jar). On a version tag
 `.github/workflows/release.yml` builds this bundle and attaches `bundle/jcz-engine.js` to the
 GitHub release; the FanCloisterZone client pins a version by tag in its
 `build-scripts/download-game-engine.js` (same mechanism it used for `Engine.jar`).
+
+### Forcing a test's tile draw order
+
+A `.jcz` can pin the order tiles are drawn from the pack via a `gameAnnotations.drawOrder` array
+(consumed by `ForcedDrawTilePack`), so a replay is deterministic regardless of RNG or tile-pack
+changes. `set-draw-order` writes that annotation for you straight from the `.jcz` (no golden, no
+RNG): it takes the replay's `PLACE_TILE` tiles (in order), then appends the tiles named by any
+`Available action TilePlacement for <tile>` assertions in the `test` block. Those assertions capture
+a tile that is *drawn and offered but never placed* (e.g. `river-II-curve-placement` ends by
+inspecting `RI.2/RrII`'s legal placements without placing it), which the `PLACE_TILE` messages alone
+would miss.
+
+```bash
+# one test file (note the `--`, which forwards args to the script)
+npm run set-draw-order -- engine-tests/fishhuts/fishhuts-gold.jcz
+
+# every .jcz in a folder
+npm run set-draw-order -- engine-tests/fishhuts
+
+# multiple paths at once
+npm run set-draw-order -- engine-tests/river/river-II-curve-placement-2.jcz engine-tests/abbey-and-mayor/abbey-to-river-edge.jcz
+```
+
+Run it from the `EngineTS` directory (paths are relative to it). To skip npm, call it directly —
+no `--` then: `node scripts/set-draw-order.mjs <path>`.
+
+It (re)writes only `drawOrder` (other `gameAnnotations` keys like `endTurn` are preserved), excludes
+the abbey tile `AM/A` (placed from the abbey supply, not drawn from the pack), and skips files with
+no tiles found. **After running it, regenerate the affected golden(s)** so they match the forced
+order:
+
+```bash
+JCZ_JAR=build/Engine.jar npm run capture-golden -- --only <dir>
+```
 
 ### How parity is verified
 

@@ -152,8 +152,9 @@ function kindOf(v: unknown): string {
   return v === null ? "null" : Array.isArray(v) ? "array" : typeof v;
 }
 
-/** Recursively remove the TS-only `meeples` field from "points" event entries (the
- *  ones carrying a `ptr`), so Java goldens — which never had it — still compare equal. */
+/** Recursively remove the TS-only `meeples` / `majority` fields from "points" event
+ *  entries (the ones carrying a `ptr`), so Java goldens — which never had them — still
+ *  compare equal. */
 function stripScoredMeeples(v: unknown): void {
   if (Array.isArray(v)) {
     v.forEach(stripScoredMeeples);
@@ -161,7 +162,11 @@ function stripScoredMeeples(v: unknown): void {
   }
   if (v !== null && typeof v === "object") {
     const o = v as Record<string, unknown>;
-    if ("ptr" in o && "meeples" in o) delete o.meeples;
+    if ("ptr" in o) {
+      delete o.meeples;
+      delete o.majority;
+      delete o.hillMode;
+    }
     for (const k of Object.keys(o)) stripScoredMeeples(o[k]);
   }
 }
@@ -347,9 +352,11 @@ describe("GameState JSON parity (TS vs Java golden)", () => {
         // hash-iteration order (irreproducible). Both engines agree on the feature; drop the
         // representative pointer (same policy as other vavr hash artifacts).
         for (const st of [ja, tb]) {
-          for (const pl of (st as { players?: Array<{ tokens?: Record<string, { fp?: unknown }> }> }).players ?? []) {
+          for (const pl of (st as { players?: Array<{ tokens?: Record<string, { fp?: unknown }>; finalPoints?: unknown }> }).players ?? []) {
             if (pl.tokens?.KING) delete pl.tokens.KING.fp;
             if (pl.tokens?.ROBBER) delete pl.tokens.ROBBER.fp;
+            // TS-only "potential final score" — Java emits no such field.
+            delete pl.finalPoints;
           }
         }
         // The TS engine enriches each "points" event entry with `meeples` (the scored
