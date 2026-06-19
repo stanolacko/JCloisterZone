@@ -41,12 +41,32 @@ export class DragonCapability extends Capability<Vector<Position>> {
   }
 
   override onTilePlaced(state: GameState, pt: PlacedTile): GameState {
+    // A volcano summons the dragon onto the placed tile immediately (this is always correct,
+    // even for the River II volcano lake tile RI.2/I.v).
     if (pt.getTile().hasModifier(DragonCapability.VOLCANO)) {
-      state = state.mapTilePack((pack) => pack.activateGroup(DragonCapability.TILE_GROUP_DRAGON));
       state = new MoveNeutralFigure(
         state.getNeutralFigures().getDragon() as unknown as NeutralFigure<BoardPointer>,
         pt.getPosition() as unknown as BoardPointer,
       ).apply(state);
+    }
+    // Shuffle the dragon deck into the pack once the dragon is out — but NOT while the River is
+    // still being built. The river enforces its order solely by keeping "default" deactivated until
+    // the river→river-lake→default chain drains; activating the dragon group mid-river leaks the
+    // whole P&D deck into the forced river draw. So defer until "default" is active (river finished).
+    // In a non-river game "default" is active from the start, so this fires on the volcano tile
+    // exactly as before. The next placement after the river finishes activates the held-back deck.
+    const pack = state.getTilePack()!;
+    const dragonGroup = pack.getGroup(DragonCapability.TILE_GROUP_DRAGON);
+    if (
+      dragonGroup !== null &&
+      !dragonGroup.isActive() &&
+      state.getNeutralFigures().getDragonDeployment() !== null
+    ) {
+      const def = pack.getGroup("default");
+      const riverFinished = def === null || def.isActive();
+      if (riverFinished) {
+        state = state.mapTilePack((p) => p.activateGroup(DragonCapability.TILE_GROUP_DRAGON));
+      }
     }
     return state;
   }

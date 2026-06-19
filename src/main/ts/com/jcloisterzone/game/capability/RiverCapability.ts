@@ -6,13 +6,20 @@ import { Position } from "../../board/Position.js";
 import type { PlacementOption } from "../../board/PlacementOption.js";
 import { Rotation } from "../../board/Rotation.js";
 import type { Tile } from "../../board/Tile.js";
+import { TileGroup } from "../../board/TileGroup.js";
 import type { TilePack } from "../../board/TilePack.js";
 import { River } from "../../feature/River.js";
 import type { RandomGenerator } from "../../random/RandomGenerator.js";
 import { PlaceTile } from "../../reducers/PlaceTile.js";
 import { Capability } from "../Capability.js";
+import { Flag } from "../state/Flag.js";
 import type { GameState } from "../state/GameState.js";
 import type { PlacedTile } from "../state/PlacedTile.js";
+import { DragonCapability } from "./DragonCapability.js";
+
+/** Name of the group holding the single volcano (or, lacking one, random) lake forced to be the
+ *  last river tile drawn — so the dragon is summoned exactly when the river finishes. */
+const RIVER_LAKE_VOLCANO = "river-lake-volcano";
 
 /** The River — a separate tile group drawn first, with placement rules that forbid
  *  U-turns and same-direction river junctions. Port of RiverCapability. */
@@ -35,7 +42,9 @@ export class RiverCapability extends Capability<void> {
         pack = pack.mapGroup("river-fork", (g) => g.setSuccessiveGroup("river"));
         pack = pack.deactivateGroup("river");
 
-        const branches = riverForksLocationsCount - riverForks.getTiles().size() * 2 + 1;
+        // lakes needed = 1 initial open branch + each fork's (ends - 2):
+        // a fork uses 1 existing open end to connect and adds (ends - 1) new ones, net (ends - 2).
+        const branches = 1 + (riverForksLocationsCount - 2 * riverForks.getTiles().size());
         const ends = pack.getGroupSize("river-lake");
         if (branches !== ends) {
           const riverLakes = pack.getGroup("river-lake")!.getTiles();
@@ -43,17 +52,50 @@ export class RiverCapability extends Capability<void> {
           pack = pack.mapGroup("river-lake", (g) => g.setTiles(trimmed));
         }
       }
+      // Pull ONE lake — a volcano lake if any (so the dragon is summoned exactly when the river
+      // finishes), otherwise any lake — into its own group drawn LAST. The remaining lakes stay in
+      // the river-lake group, drawn (via the successive chain) AFTER all river tiles and before the
+      // final lake. Chain: river → river-lake → river-lake-volcano → default.
+      if (pack.hasGroup("river-lake") && pack.getGroupSize("river-lake") > 0) {
+        const lakes = pack.getGroup("river-lake")!.getTiles();
+        const volcanoLakes = lakes.filter((t) => this.isVolcanoTile(t)) as Vector<Tile>;
+        const candidates = (volcanoLakes.isEmpty() ? lakes : volcanoLakes) as Vector<Tile>;
+        const chosen = candidates.get(random.getNextInt(candidates.size()));
+        const remaining = lakes.removeFirst((t) => t === chosen) as Vector<Tile>;
+        if (remaining.isEmpty()) {
+          // the chosen lake was the only one — river flows straight into the volcano-lake group
+          // (an empty river-lake group would never trigger its successive).
+          pack = pack.removeGroup("river-lake");
+          pack = pack.mapGroup("river", (g) => g.setSuccessiveGroup(RIVER_LAKE_VOLCANO));
+        } else {
+          // the other lakes stay in river-lake (chain-activated when river drains), flowing into
+          // the volcano-lake group instead of straight to default.
+          pack = pack.mapGroup("river-lake", (g) =>
+            g.setTiles(remaining).setSuccessiveGroup(RIVER_LAKE_VOLCANO),
+          );
+        }
+        pack = pack.updateGroup(new TileGroup(RIVER_LAKE_VOLCANO, Vector.of(chosen) as Vector<Tile>, false, "default"));
+      }
       pack = pack.removeGroup("river-spring"); // remove unused springs
       return pack;
     });
   }
 
-  override onTilePlaced(state: GameState, _placedTile: PlacedTile): GameState {
+  override onTilePlaced(state: GameState, placedTile: PlacedTile): GameState {
     if (state.getPlacedTiles().size() > 1) {
       // first tile already placed (the river-fork if any) → mix other forks in
       state = state.mapTilePack((pack) => pack.activateGroup("river"));
     }
+    // The volcano lake is forced to be the last river tile; whoever places it takes another turn
+    // (so they play the first tile of the now-active main deck the dragon just joined).
+    if (placedTile.getTile().hasModifier(DragonCapability.VOLCANO)) {
+      state = state.addFlag(Flag.RIVER_VOLCANO_DOUBLE_TURN);
+    }
     return state;
+  }
+
+  private isVolcanoTile(tile: Tile): boolean {
+    return tile.hasModifier(DragonCapability.VOLCANO);
   }
 
   override isTilePlacementAllowed(state: GameState, tile: Tile, placement: PlacementOption): boolean {
@@ -170,7 +212,6 @@ export class RiverCapability extends Capability<void> {
   }
 
   private adjustRandomTiles(tiles: Vector<Tile>, count: number, random: RandomGenerator): Vector<Tile> {
-    const protectedIds = HashSet.of("RI.2/I.v"); // River II Lake with Volcano
     if (count > 0) {
       // Add `count` extra lake ends by duplicating random lake tiles. Java does NOT
       // exclude the protected volcano here (the duplicate is only a draw-pile entry,
@@ -180,8 +221,9 @@ export class RiverCapability extends Capability<void> {
         Vector.range(0, count).map(() => tiles.get(random.getNextInt(tiles.size()))),
       ) as Vector<Tile>;
     }
+    // Never remove a volcano lake (detected by modifier, not by tile id).
     let pool = Vector.range(0, tiles.size()).filter(
-      (idx) => !protectedIds.contains(tiles.get(idx).getId()),
+      (idx) => !this.isVolcanoTile(tiles.get(idx)),
     ) as Vector<number>;
     const toRemove = Math.min(-count, pool.size());
     let removeIdx: Set<number> = HashSet.empty<number>();

@@ -18,6 +18,10 @@ export class Flag extends JavaEnum {
   static readonly POST_WOOD_ACTION_STARTED = new Flag("POST_WOOD_ACTION_STARTED", 8);
   static readonly WOOD_ACTION_CONFIRMED = new Flag("WOOD_ACTION_CONFIRMED", 9);
 
+  // Set when the river's volcano lake (the forced-last river tile) is placed; consumed at the
+  // turn end to grant the placing player another turn. Cleared at the turn end.
+  static readonly RIVER_VOLCANO_DOUBLE_TURN = new Flag("RIVER_VOLCANO_DOUBLE_TURN", 10);
+
   private static readonly VALUES: readonly Flag[] = [
     Flag.RANSOM_PAID,
     Flag.BAZAAR_AUCTION,
@@ -29,6 +33,7 @@ export class Flag extends JavaEnum {
     Flag.PHANTOM_PHASE_DONE,
     Flag.POST_WOOD_ACTION_STARTED,
     Flag.WOOD_ACTION_CONFIRMED,
+    Flag.RIVER_VOLCANO_DOUBLE_TURN,
   ];
 
   static values(): readonly Flag[] {

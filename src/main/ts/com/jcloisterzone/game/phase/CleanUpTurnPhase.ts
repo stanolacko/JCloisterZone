@@ -4,6 +4,7 @@ import type { RandomGenerator } from "../../random/RandomGenerator.js";
 import { SetNextPlayer } from "../../reducers/SetNextPlayer.js";
 import type { Capability } from "../Capability.js";
 import { AbbeyCapability } from "../capability/AbbeyCapability.js";
+import { Flag } from "../state/Flag.js";
 import type { GameState } from "../state/GameState.js";
 import { Phase } from "./Phase.js";
 import type { StepResult } from "./StepResult.js";
@@ -33,6 +34,8 @@ export class CleanUpTurnPhase extends Phase {
     for (const cap of state.getCapabilities().toSeq()) {
       state = cap.onTurnCleanUp(state);
     }
+    // The river's volcano lake grants its placer another turn — capture before flags are wiped.
+    const riverVolcanoDoubleTurn = state.getFlags().contains(Flag.RIVER_VOLCANO_DOUBLE_TURN);
     if (!state.getFlags().isEmpty()) {
       state = state.setFlags(HashSet.empty());
     }
@@ -50,7 +53,10 @@ export class CleanUpTurnPhase extends Phase {
     if (tilePack.isEmpty()) {
       return this.next(state, this.endPhase!);
     }
-    state = new SetNextPlayer().apply(state);
+    // Skip advancing the player when the volcano lake was just placed — the same player goes again.
+    if (!riverVolcanoDoubleTurn) {
+      state = new SetNextPlayer().apply(state);
+    }
     return this.next(state);
   }
 }
