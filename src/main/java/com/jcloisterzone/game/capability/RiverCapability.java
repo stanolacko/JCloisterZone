@@ -3,6 +3,7 @@ package com.jcloisterzone.game.capability;
 import com.jcloisterzone.board.*;
 import com.jcloisterzone.feature.River;
 import com.jcloisterzone.game.Capability;
+import com.jcloisterzone.game.state.Flag;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.game.state.PlacedTile;
 import com.jcloisterzone.random.RandomGenerator;
@@ -19,7 +20,11 @@ import io.vavr.collection.Vector;
 public class RiverCapability extends Capability<Void> {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	/** Group holding the single volcano (or, lacking one, random) lake forced to be the last
+	 *  river tile drawn — so the dragon is summoned exactly when the river finishes. */
+	private static final String RIVER_LAKE_VOLCANO = "river-lake-volcano";
+
     @Override
     public GameState onStartGame(GameState state, RandomGenerator random) {
         state = state.mapTilePack(pack -> {
@@ -35,13 +40,39 @@ public class RiverCapability extends Capability<Void> {
                 pack = pack.mapGroup("river-fork", g -> g.setSuccessiveGroup("river"));
                 pack = pack.deactivateGroup("river");
 
-                int branches = riverForksLocationsCount - riverForks.getTiles().size() * 2 + 1;
+                // lakes needed = 1 initial open branch + each fork's (ends - 2):
+                // a fork uses 1 existing open end to connect and adds (ends - 1) new ones, net (ends - 2).
+                int branches = 1 + (riverForksLocationsCount - 2 * riverForks.getTiles().size());
                 int ends = pack.getGroupSize("river-lake");
                 if (branches != ends) {
                     Vector<Tile> riverLakes = pack.getGroup("river-lake").getTiles();
                     final Vector<Tile> trimmed = adjustRandomTiles(riverLakes, branches - ends, random);
                     pack = pack.mapGroup("river-lake", g -> g.setTiles(trimmed));
                 }
+            }
+            // Pull ONE lake — a volcano lake if any (so the dragon is summoned exactly when the
+            // river finishes), otherwise any lake — into its own group drawn LAST. The remaining
+            // lakes stay in the river-lake group, drawn (via the successive chain) AFTER all river
+            // tiles and before the final lake. Chain: river -> river-lake -> river-lake-volcano -> default.
+            if (pack.hasGroup("river-lake") && pack.getGroupSize("river-lake") > 0) {
+                Vector<Tile> lakes = pack.getGroup("river-lake").getTiles();
+                Vector<Tile> volcanoLakes = lakes.filter(this::isVolcanoTile);
+                Vector<Tile> candidates = volcanoLakes.isEmpty() ? lakes : volcanoLakes;
+                final Tile chosen = candidates.get(random.getNextInt(candidates.size()));
+                Vector<Tile> remaining = lakes.removeFirst(t -> t == chosen);
+                if (remaining.isEmpty()) {
+                    // the chosen lake was the only one — river flows straight into the volcano-lake
+                    // group (an empty river-lake group would never trigger its successive).
+                    pack = pack.removeGroup("river-lake");
+                    pack = pack.mapGroup("river", g -> g.setSuccessiveGroup(RIVER_LAKE_VOLCANO));
+                } else {
+                    // the other lakes stay in river-lake (chain-activated when river drains),
+                    // flowing into the volcano-lake group instead of straight to default.
+                    pack = pack.mapGroup("river-lake", g ->
+                        g.setTiles(remaining).setSuccessiveGroup(RIVER_LAKE_VOLCANO));
+                }
+                pack = pack.setGroups(pack.getGroups().put(RIVER_LAKE_VOLCANO,
+                    new TileGroup(RIVER_LAKE_VOLCANO, Vector.of(chosen), false, "default")));
             }
             pack = pack.removeGroup("river-spring"); // remove unused springs
             return pack;
@@ -56,7 +87,16 @@ public class RiverCapability extends Capability<Void> {
             // mix other forks between other river tiles (this is applied when multiple rivers are enabled
             state = state.mapTilePack(pack -> pack.activateGroup("river"));
         }
+        // The volcano lake is forced to be the last river tile; whoever places it takes another
+        // turn (so they play the first tile of the now-active main deck the dragon just joined).
+        if (placedTile.getTile().hasModifier(DragonCapability.VOLCANO)) {
+            state = state.setFlags(state.getFlags().add(Flag.RIVER_VOLCANO_DOUBLE_TURN));
+        }
         return state;
+    }
+
+    private boolean isVolcanoTile(Tile tile) {
+        return tile.hasModifier(DragonCapability.VOLCANO);
     }
 
     private boolean isConnectedToPlacedRiver(GameState state, Position pos, Location side) {
@@ -221,17 +261,13 @@ public class RiverCapability extends Capability<Void> {
     }
     
     private Vector<Tile> adjustRandomTiles(Vector<Tile> tiles, int count, RandomGenerator random) {
-    	
-    	Set<String> protectedIds = HashSet.of(
-    	    "RI.2/I.v" // River II Lake with Volcano
-    	);
-    	
         if (count > 0) {
             return tiles.appendAll(Vector.range(0, count)
                 .map(i -> tiles.get(random.getNextInt(tiles.size()))));
         } else {
+        	// Never remove a volcano lake (detected by modifier, not by tile id).
         	Vector<Integer> pool = Vector.range(0, tiles.size())
-                .filter(idx -> !protectedIds.contains(tiles.get(idx).getId()));
+                .filter(idx -> !isVolcanoTile(tiles.get(idx)));
             int toRemove = Math.min(-count, pool.size());
 
             Set<Integer> removeIdx = HashSet.empty();

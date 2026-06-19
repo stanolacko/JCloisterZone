@@ -6,6 +6,7 @@ import com.jcloisterzone.game.capability.AbbeyCapability;
 import com.jcloisterzone.game.capability.BazaarCapability;
 import com.jcloisterzone.game.capability.BazaarCapabilityModel;
 import com.jcloisterzone.game.capability.BazaarItem;
+import com.jcloisterzone.game.state.Flag;
 import com.jcloisterzone.game.state.GameState;
 import com.jcloisterzone.random.RandomGenerator;
 import com.jcloisterzone.reducers.SetNextPlayer;
@@ -38,6 +39,9 @@ public class CleanUpTurnPhase extends Phase {
             state = cap.onTurnCleanUp(state);
         }
 
+        // The river's volcano lake grants its placer another turn — capture before flags are wiped.
+        boolean riverVolcanoDoubleTurn = state.getFlags().contains(Flag.RIVER_VOLCANO_DOUBLE_TURN);
+
         if (!state.getFlags().isEmpty()) {
             state = state.setFlags(HashSet.empty());
         }
@@ -54,7 +58,10 @@ public class CleanUpTurnPhase extends Phase {
         if (tilePack.isEmpty() && bazaarSupply == null) {
             return next(state, endPhase);
         } else {
-            state = (new SetNextPlayer()).apply(state);
+            // Skip advancing the player when the volcano lake was just placed — same player again.
+            if (!riverVolcanoDoubleTurn) {
+                state = (new SetNextPlayer()).apply(state);
+            }
             return next(state);
         }
     }
