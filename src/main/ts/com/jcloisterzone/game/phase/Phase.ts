@@ -131,7 +131,7 @@ export abstract class Phase {
   }
 
   /** Whether a PASS sets the NO_PHANTOM flag. (Java checked the phase was not
-   *  TowerCapturePhase/AbbeyPhase; those override this to return false.) */
+   *  TowerCapturePhase/TileFromSupplyPhase; those override this to return false.) */
   protected addNoPhantomFlagOnPass(state: GameState): boolean {
     return true;
   }

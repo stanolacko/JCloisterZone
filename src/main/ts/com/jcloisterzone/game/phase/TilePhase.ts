@@ -60,30 +60,10 @@ export class TilePhase extends Phase {
 
   enter(state: GameState): StepResult {
     for (;;) {
-      let bazaarModel = state.getCapabilityModel<BazaarCapabilityModel>(BAZAAR_CAP_CLS as never);
-      let bazaarSupply = bazaarModel === null || bazaarModel === undefined ? null : bazaarModel.getSupply();
-
-      if (bazaarSupply !== null && !bazaarSupply.isEmpty()) {
-        // can be empty when re-invoked after discard/pass
-        const [item, rest] = bazaarSupply.dequeue();
-        if (item.getOwner() !== null && item.getOwner()!.equals(state.getTurnPlayer())) {
-          bazaarSupply = rest;
-          bazaarModel = bazaarModel!.setSupply(bazaarSupply);
-          state = state.setCapabilityModel(BAZAAR_CAP_CLS as never, bazaarModel as never);
-          state = state.setDrawnTile(item.getTile());
-        }
-        // else: rare case — no legal placement was found for the previous bazaar
-        // tile (or its placement was passed); draw a random tile instead
-      }
-
+      // Bazaar-won tiles are placed from the player's supply in TileFromSupplyPhase, not drawn here.
       if (state.getDrawnTile() === null) {
         const tilePack = state.getTilePack()!;
-        const packIsEmpty = tilePack.isEmpty();
-        if (packIsEmpty && bazaarSupply !== null) {
-          // very edge case: no match for the bazaar tile + empty pack — skip the turn
-          return this.next(state, this.cleanUpTurnPhase!);
-        }
-        if (packIsEmpty) {
+        if (tilePack.isEmpty()) {
           return this.next(state, this.endPhase!);
         }
         state = this.drawTile(state);

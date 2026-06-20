@@ -2,7 +2,7 @@ import type { Message } from "../io/message/Message.js";
 import { RandomGenerator } from "../random/RandomGenerator.js";
 import type { GameSetup } from "./GameSetup.js";
 import { AbbeyEndGamePhase } from "./phase/AbbeyEndGamePhase.js";
-import { AbbeyPhase } from "./phase/AbbeyPhase.js";
+import { TileFromSupplyPhase } from "./phase/TileFromSupplyPhase.js";
 import { ActionPhase } from "./phase/ActionPhase.js";
 import { CastlePhase } from "./phase/CastlePhase.js";
 import { CleanUpTurnPartPhase } from "./phase/CleanUpTurnPartPhase.js";
@@ -175,13 +175,13 @@ export class GameStatePhaseReducer {
     }
     const tilePhase = new TilePhase(rng, next);
     next = tilePhase;
-    let abbeyPhase: AbbeyPhase | null = null;
     if (setup.contains(AbbeyCapability as never)) {
       // if abbey is passed, a commit follows (to advance RNG salt) before the tile draw
       next = new CommitAbbeyPassPhase(rng, next);
-      abbeyPhase = new AbbeyPhase(rng, next);
-      next = abbeyPhase;
     }
+    // Always present: lets the player place a tile from supply (abbey/bazaar) before drawing.
+    const tileFromSupplyPhase = new TileFromSupplyPhase(rng, next);
+    next = tileFromSupplyPhase;
     if (setup.contains(FairyCapability as never)) {
       next = new FairyPhase(rng, next);
     }
@@ -189,12 +189,10 @@ export class GameStatePhaseReducer {
     cleanUpTurnPhase.setDefaultNext(next); // after last phase, the first is default
     cleanUpTurnPhase.setAbbeyEndGamePhase(abbeyEndGamePhase);
     cleanUpTurnPhase.setEndPhase(endChain);
-    cleanUpTurnPartPhase.setSecondPartStartPhase(abbeyPhase !== null ? abbeyPhase : tilePhase);
+    cleanUpTurnPartPhase.setSecondPartStartPhase(tileFromSupplyPhase);
     if (abbeyEndGamePhase !== null) abbeyEndGamePhase.setActionPhase(actionPhase);
-    if (abbeyPhase !== null) {
-      abbeyPhase.setTilePhase(tilePhase);
-      abbeyPhase.setActionPhase(actionPhase);
-    }
+    tileFromSupplyPhase.setTilePhase(tilePhase);
+    tileFromSupplyPhase.setActionPhase(actionPhase);
     tilePhase.setEndPhase(endChain);
     tilePhase.setCleanUpTurnPhase(cleanUpTurnPhase);
 

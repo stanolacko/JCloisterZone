@@ -32,6 +32,8 @@ import { type Structure, isInstanceOfStructure } from "../../feature/Structure.j
 import type { Meeple } from "../../figure/Meeple.js";
 import type { Capability } from "../Capability.js";
 import { BridgeCapability } from "../capability/BridgeCapability.js";
+import { BazaarCapability } from "../capability/BazaarCapability.js";
+import type { BazaarCapabilityModel } from "../capability/BazaarCapabilityModel.js";
 import type { Rule } from "../Rule.js";
 import type { Phase } from "../phase/Phase.js";
 import type { PlayerAction } from "../../action/PlayerAction.js";
@@ -262,6 +264,23 @@ export class GameState {
   }
   mapPlayers(fn: (p: PlayersState) => PlayersState): GameState {
     return this.setPlayers(fn(this.players));
+  }
+
+  /** Tiles a player holds in their personal supply (placeable via TileFromSupplyPhase):
+   *  the bazaar items they won and have not yet placed. */
+  getTilesInPlayerSupply(player: Player): List<Tile> {
+    if (!this.hasCapability(BazaarCapability as never)) return List.empty() as List<Tile>;
+    const model = this.getCapabilityModel<BazaarCapabilityModel>(BazaarCapability as never);
+    const supply = model === null || model === undefined ? null : model.getSupply();
+    if (supply === null) return List.empty() as List<Tile>;
+    let result: List<Tile> = List.empty();
+    for (const bi of supply) {
+      const owner = bi.getOwner();
+      if (owner !== null && player.equals(owner)) {
+        result = result.append(bi.getTile()) as List<Tile>;
+      }
+    }
+    return result;
   }
 
   // === CapabilitiesMixin ===
