@@ -1,0 +1,127 @@
+{
+  "appVersion": "6.2.1",
+  "gameId": "1",
+  "name": "",
+  "initialRandom": 0.43139870994047413,
+  "created": "2026-06-20T12:46:10.484Z",
+  "clock": 36039,
+  "setup": {
+    "options": {},
+    "sets": {
+      "basic:1": 1,
+      "bridges-castles-and-bazaars:1": 1
+    },
+    "elements": {
+      "small-follower": 7,
+      "farmers": true,
+      "bridge": 1,
+      "castle": 1,
+      "bazaar": true
+    },
+    "rules": {},
+    "timer": null,
+    "start": [
+      {
+        "tile": "BA/RCr",
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      }
+    ],
+    "ai": false
+  },
+  "players": [
+    {
+      "name": "Betty",
+      "slot": 2,
+      "ai": false
+    },
+    {
+      "name": "John",
+      "slot": 1,
+      "ai": false
+    }
+  ],
+  "chat": [],
+  "replay": [
+    {
+      "type": "PLACE_TILE",
+      "payload": { "tileId": "BB/CFc.b", "rotation": "R90", "position": [0, -1] },
+      "player": 0,
+      "clock": 2243
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 2855
+    },
+    {
+      "type": "COMMIT",
+      "payload": { "random": 0.6152782359126487 },
+      "player": 0,
+      "clock": 2870
+    },
+    {
+      "type": "BAZAAR_BID",
+      "payload": { "supplyIndex": 0, "price": 0 },
+      "player": 1,
+      "clock": 3100
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 3200
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": { "tileId": "BA/RFr", "rotation": "R0", "position": [1, 0] },
+      "player": 1,
+      "clock": 3500
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 1,
+      "clock": 3600
+    },
+    {
+      "type": "COMMIT",
+      "payload": { "random": 0.5 },
+      "player": 1,
+      "clock": 3700
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": { "tileId": "BA/Cc.1", "rotation": "R180", "position": [0, 1] },
+      "player": 0,
+      "clock": 4000
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 4100
+    },
+    {
+      "type": "COMMIT",
+      "payload": { "random": 0.5 },
+      "player": 0,
+      "clock": 4200
+    }
+  ],
+  "gameAnnotations": {
+    "drawOrder": [
+      "BB/CFc.b"
+    ]
+  },
+  "test": {
+    "description": "Bazaar-won tiles are placed from the player's supply via TileFromSupplyPhase (mandatory: place it, don't draw), not drawn in TilePhase. John then Betty each place their won tile; once the supply is empty, normal drawing resumes.",
+    "assertions": [
+      "Betty has 0 points.",
+      "John has 0 points.",
+      "Phase is TilePhase"
+    ]
+  }
+}

@@ -18,6 +18,8 @@ import type { GameState } from "../state/GameState.js";
  *  player index during the final abbey-placement turn. */
 export class AbbeyCapability extends Capability<number> {
   static readonly ABBEY_TILE_ID = "AM/A";
+  /** Max abbey tiles a player may start with (the `abbey` element is an integer count). */
+  static readonly MAX_ABBEY_TILES = 9;
 
   /** The (unplaced) abbey tile: a monastery surrounded by abbey edges. */
   static readonly ABBEY_TILE: Tile = (() => {
@@ -33,8 +35,14 @@ export class AbbeyCapability extends Capability<number> {
   })();
 
   override onStartGame(state: GameState, _random: RandomGenerator): GameState {
+    // The `abbey` element is an integer count (1..9) of abbey tiles each player gets.
+    // A legacy boolean `true` (or any non-positive/invalid value) means a single tile.
+    const raw = state.getElements().get("abbey").getOrNull();
+    let count = typeof raw === "number" ? raw : Number(raw);
+    if (!Number.isInteger(count) || count < 1) count = 1;
+    if (count > AbbeyCapability.MAX_ABBEY_TILES) count = AbbeyCapability.MAX_ABBEY_TILES;
     return state.mapPlayers((ps) =>
-      ps.setTokenCountForAllPlayers(AbbeyCapability.AbbeyToken.ABBEY_TILE, 1),
+      ps.setTokenCountForAllPlayers(AbbeyCapability.AbbeyToken.ABBEY_TILE, count),
     );
   }
 
