@@ -70,6 +70,7 @@ import { FishermenCapability } from "../game/capability/FishermenCapability.js";
 import { FishHutsCapability } from "../game/capability/FishHutsCapability.js";
 import { FlowersCapability } from "../game/capability/FlowersCapability.js";
 import { BazaarCapability } from "../game/capability/BazaarCapability.js";
+import { PreDrawCapability } from "../game/capability/PreDrawCapability.js";
 import { BuilderCapability } from "../game/capability/BuilderCapability.js";
 import { FamiliesCapability } from "../game/capability/FamiliesCapability.js";
 import { TowerCapability } from "../game/capability/TowerCapability.js";
@@ -157,6 +158,7 @@ const CAPABILITIES: Array<[string, CapClass]> = [
   ["fishhut", FishHutsCapability as unknown as CapClass],
   ["flowers", FlowersCapability as unknown as CapClass],
   ["bazaar", BazaarCapability as unknown as CapClass],
+  ["pre-draw", PreDrawCapability as unknown as CapClass],
   ["builder", BuilderCapability as unknown as CapClass],
   ["families", FamiliesCapability as unknown as CapClass],
   // TODO(capabilities): the many unported expansion capabilities.

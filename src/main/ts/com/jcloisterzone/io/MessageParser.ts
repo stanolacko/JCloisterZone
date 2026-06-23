@@ -38,6 +38,7 @@ import { CaptureFollowerMessage } from "./message/CaptureFollowerMessage.js";
 import { PayRansomMessage } from "./message/PayRansomMessage.js";
 import { ExchangeFollowerChoiceMessage } from "./message/ExchangeFollowerChoiceMessage.js";
 import { CommitMessage } from "./message/CommitMessage.js";
+import { PlacePreDrawnMessage } from "./message/PlacePreDrawnMessage.js";
 import { BazaarBidMessage } from "./message/BazaarBidMessage.js";
 import { BazaarBuyOrSellMessage } from "./message/BazaarBuyOrSellMessage.js";
 import { CornCircleRemoveOrDeployMessage } from "./message/CornCircleRemoveOrDeployMessage.js";
@@ -131,6 +132,14 @@ export class MessageParser {
           p.tileId as string,
           Rotation.valueOf(p.rotation as string),
           new Position(position[0], position[1]),
+        );
+      }
+      case "PLACE_PREDRAWN": {
+        const ppos = p.position as [number, number];
+        return new PlacePreDrawnMessage(
+          p.tileId as string,
+          Rotation.valueOf(p.rotation as string),
+          new Position(ppos[0], ppos[1]),
         );
       }
       case "DEPLOY_MEEPLE": {

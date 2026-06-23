@@ -61,6 +61,7 @@ import { Field } from "../feature/Field.js";
 import { Tower } from "../feature/Tower.js";
 import { isInstanceOfScoreable } from "../feature/Scoreable.js";
 import { ConfirmAction } from "../action/ConfirmAction.js";
+import { PreDrawPlaceAction } from "../action/PreDrawPlaceAction.js";
 import { BazaarSelectTileAction } from "../action/BazaarSelectTileAction.js";
 import { BazaarBidAction } from "../action/BazaarBidAction.js";
 import { BazaarSelectBuyOrSellAction } from "../action/BazaarSelectBuyOrSellAction.js";
@@ -876,6 +877,10 @@ export class StateGsonBuilder {
     }
     if (action instanceof ConfirmAction) {
       return { type: "Confirm" };
+    }
+    if (action instanceof PreDrawPlaceAction) {
+      // opaque "place a tile from your pre-draw hand"; the client lists its own held tiles
+      return { type: "PreDrawPlace" };
     }
     if (action instanceof ShepherdPlacementConfirmAction) {
       // Java's Gson reflects this field-less action to an empty object.

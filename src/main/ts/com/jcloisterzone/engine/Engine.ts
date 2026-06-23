@@ -1,4 +1,5 @@
 import type { List } from "../../../io/vavr/SeqTypes.js";
+import { HashSet } from "../../../io/vavr/Set.js";
 import { GameStatePhaseReducer } from "../game/GameStatePhaseReducer.js";
 import { GameOverPhase } from "../game/phase/GameOverPhase.js";
 import { GameStateBuilder } from "../game/state/GameStateBuilder.js";
@@ -71,9 +72,44 @@ export class Engine {
       case "%compat":
         // version-compat flag — no behavioural difference ported yet
         return null;
+      case "%placements":
+        // NON-MUTATING query: legal placements for a tile id in the CURRENT state. Used by the
+        // pre-draw UI to pick position+rotation for a secret hand tile (the tile is in the public
+        // pack, so this leaks nothing and never advances/changes state). Output mirrors a
+        // TilePlacementAction's `options`: [{ position:[x,y], rotations:[0,90,...] }].
+        return this.serializePlacements(value);
       default:
         // unknown directive: Java logs to stderr; host may surface this
         return null;
+    }
+  }
+
+  /** Legal placements for `tileId` in the current state, without mutating it (the tile is peeked
+   *  from the pack and the new pack is discarded). Returns `{type:"PLACEMENTS",tileId,options}`. */
+  private serializePlacements(tileId: string | null): string {
+    const empty = JSON.stringify({ type: "PLACEMENTS", tileId, options: [] });
+    if (this.state === null || tileId === null) return empty;
+    try {
+      const tile = this.state.getTilePack()!.drawTile(tileId)._1; // peek only — pack not replaced
+      const placements = HashSet.ofAll(this.state.getTilePlacements(tile));
+      const byPos = new Map<string, { x: number; y: number; rots: number[] }>();
+      for (const opt of placements) {
+        const p = opt.getPosition();
+        const key = `${p.x},${p.y}`;
+        let g = byPos.get(key);
+        if (!g) {
+          g = { x: p.x, y: p.y, rots: [] };
+          byPos.set(key, g);
+        }
+        g.rots.push(opt.getRotation().ordinal() * 90);
+      }
+      const options = [...byPos.values()].map((g) => ({
+        position: [g.x, g.y],
+        rotations: g.rots.slice().sort((a, b) => a - b),
+      }));
+      return JSON.stringify({ type: "PLACEMENTS", tileId, options });
+    } catch {
+      return empty;
     }
   }
 
@@ -159,6 +195,9 @@ export class Engine {
     // Undo is offered while the SAME player is still active and the move didn't
     // consume a (client-supplied) random — i.e. it can be replayed deterministically.
     // A dragon move is never undoable (Java's undoAllowed). (Port of Engine.java.)
+    // NOTE: a pre-draw PLACEMENT (PLACE_PREDRAWN) IS undoable — the player may take the tile back
+    // and place a different one; the server restores it to the hand. (Only the DRAW is final, and
+    // that is a server-side deal that never reaches the engine replay.)
     const newActivePlayer = this.state.getActivePlayer();
     const isDragonMove =
       msg instanceof MoveNeutralFigureMessage && (msg.getFigureId() ?? "").includes("dragon");

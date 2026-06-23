@@ -5,9 +5,11 @@ import type { PlacementOption } from "../../board/PlacementOption.js";
 import type { Tile } from "../../board/Tile.js";
 import type { Player } from "../../Player.js";
 import { TilePlacementAction } from "../../action/TilePlacementAction.js";
+import { PreDrawPlaceAction } from "../../action/PreDrawPlaceAction.js";
 import type { PlayerAction } from "../../action/PlayerAction.js";
 import type { PlaceTileMessage } from "../../io/message/PlaceTileMessage.js";
 import { PlaceTileMessage as PlaceTileMessageClass } from "../../io/message/PlaceTileMessage.js";
+import { PlacePreDrawnMessage } from "../../io/message/PlacePreDrawnMessage.js";
 import type { RandomGenerator } from "../../random/RandomGenerator.js";
 import { PlaceTile } from "../../reducers/PlaceTile.js";
 import { AbbeyCapability } from "../capability/AbbeyCapability.js";
@@ -15,6 +17,7 @@ import { BazaarCapability } from "../capability/BazaarCapability.js";
 import type { BazaarCapabilityModel } from "../capability/BazaarCapabilityModel.js";
 import { BuilderCapability } from "../capability/BuilderCapability.js";
 import { BuilderState } from "../capability/BuilderState.js";
+import { PreDrawCapability } from "../capability/PreDrawCapability.js";
 import { ActionsState } from "../state/ActionsState.js";
 import type { GameState } from "../state/GameState.js";
 import { AbstractAbbeyPhase } from "./AbstractAbbeyPhase.js";
@@ -25,6 +28,7 @@ import type { TilePhase } from "./TilePhase.js";
 
 const BAZAAR_CAP_CLS = BazaarCapability as unknown as ClassToken<BazaarCapabilityModel>;
 const BUILDER_CLS = BuilderCapability as unknown as ClassToken<BuilderState>;
+const PREDRAW_CLS = PreDrawCapability as unknown as ClassToken<number>;
 
 /** Start-of-turn-part phase: the active player may place a tile from their supply
  *  — the abbey tile today (and, once wired, bazaar-won tiles) — instead of drawing.
@@ -73,18 +77,43 @@ export class TileFromSupplyPhase extends AbstractAbbeyPhase {
       }
     }
 
+    // Pre-draw game: tiles come from the player's secret hand, not a public draw. The engine can't
+    // enumerate the hand (it's server-side), so it offers an opaque "place from hand" action and
+    // waits for a PLACE_PREDRAWN reveal — it never falls through to the public TilePhase draw.
+    const hasPreDraw = state.hasCapability(PREDRAW_CLS as never);
+    if (hasPreDraw) {
+      actions = actions.append(new PreDrawPlaceAction() as unknown as PlayerAction<unknown>) as Vector<PlayerAction<unknown>>;
+    }
+
     if (actions.length() > 0) {
       state = state.setPlayerActions(
         new ActionsState(
           state.getTurnPlayer()!,
           actions,
-          // Can pass (to draw) only if the abbey is the sole offered action
-          abbeyIncluded && actions.length() === 1,
+          // Can pass (to draw) only if the abbey is the sole offered action (never in a pre-draw game)
+          !hasPreDraw && abbeyIncluded && actions.length() === 1,
         ),
       );
       return this.promote(state);
     }
     return this.next(state, this.tilePhase!);
+  }
+
+  /** Place a tile revealed from the player's pre-draw hand: draw it from the pack by id, validate the
+   *  placement is legal, place it, and proceed to the action phase. */
+  handlePlacePreDrawn(state: GameState, msg: PlacePreDrawnMessage): StepResult {
+    const pos = msg.getPosition();
+    const rot = msg.getRotation();
+    const t = state.getTilePack()!.drawTile(msg.getTileId());
+    const tile = t._1;
+    state = state.setTilePack(t._2);
+    const placements: Set<PlacementOption> = HashSet.ofAll(state.getTilePlacements(tile));
+    const ok = placements.find((p) => p.getPosition().equals(pos) && p.getRotation() === rot);
+    if (ok.isEmpty()) throw new Error(`Invalid placement ${pos},${rot}`);
+    state = new PlaceTile(tile, pos, rot).apply(state);
+    state = this.clearActions(state);
+    state = state.setDrawnTile(null);
+    return this.next(state, this.actionPhase!);
   }
 
   handlePlaceTile(state: GameState, msg: PlaceTileMessage): StepResult {
@@ -166,6 +195,7 @@ export class TileFromSupplyPhase extends AbstractAbbeyPhase {
   protected override messageHandlers(): Map<Function, PhaseHandler> {
     const m = super.messageHandlers();
     m.set(PlaceTileMessageClass, this.handlePlaceTile);
+    m.set(PlacePreDrawnMessage, this.handlePlacePreDrawn);
     return m;
   }
 }
