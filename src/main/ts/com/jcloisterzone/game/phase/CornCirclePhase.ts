@@ -25,10 +25,12 @@ import { CommitMessage } from "../../io/message/CommitMessage.js";
 import { CornCircleRemoveOrDeployMessage } from "../../io/message/CornCircleRemoveOrDeployMessage.js";
 import { DeployMeepleMessage } from "../../io/message/DeployMeepleMessage.js";
 import type { PassMessage } from "../../io/message/PassMessage.js";
+import { ReturnMeepleMessage } from "../../io/message/ReturnMeepleMessage.js";
 import { ReturnMeepleSource } from "../ReturnMeepleSource.js";
 import type { Capability } from "../Capability.js";
 import { CornCircleCapability, CornCircleModifier } from "../capability/CornCircleCapability.js";
 import { DeployMeeple } from "../../reducers/DeployMeeple.js";
+import { UndeployMeeple } from "../../reducers/UndeployMeeple.js";
 import { ActionsState } from "../state/ActionsState.js";
 import type { GameState } from "../state/GameState.js";
 import { Phase, type PhaseHandler } from "./Phase.js";
@@ -131,6 +133,26 @@ export class CornCirclePhase extends Phase {
     );
   }
 
+  handleReturnMeeple(state: GameState, msg: ReturnMeepleMessage): StepResult {
+    const option = state.getCapabilityModel<Opt>(CC_CLS);
+    if (option !== "REMOVE") throw new Error("IllegalState: Crop Circle option is not REMOVE");
+    if (msg.getReturnMeepleSource() !== ReturnMeepleSource.CORN_CIRCLE) {
+      throw new Error("IllegalState: unexpected return meeple source");
+    }
+    const ptr = msg.getPointer()!;
+    const player = state.getActivePlayer()!;
+    const meeple = state
+      .getDeployedMeeples()
+      .find((m) => ptr.match(m._1))
+      .map((t) => t._1)
+      .getOrNull();
+    if (meeple === null) throw new Error("Pointer doesn't match any meeple");
+    state = new UndeployMeeple(meeple, true, ReturnMeepleSource.CORN_CIRCLE).apply(state);
+    return this.promote(
+      state.setPlayerActions(new ActionsState(player, new ConfirmAction() as unknown as PlayerAction<unknown>, false)),
+    );
+  }
+
   handleCommit(state: GameState, _msg: CommitMessage): StepResult {
     return this.nextCornPlayer(state, state.getActivePlayer()!);
   }
@@ -143,6 +165,7 @@ export class CornCirclePhase extends Phase {
     const m = super.messageHandlers();
     m.set(CornCircleRemoveOrDeployMessage, this.handleCornCircleRemoveOrDeploy);
     m.set(DeployMeepleMessage, this.handleDeployMeeple);
+    m.set(ReturnMeepleMessage, this.handleReturnMeeple);
     m.set(CommitMessage, this.handleCommit);
     return m;
   }
