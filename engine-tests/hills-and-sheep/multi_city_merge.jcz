@@ -1,6 +1,6 @@
 {
   "gameId": "1",
-  "appVersion": "6.2.0",
+  "appVersion": "6.2.1",
   "initialRandom": 0.0,
   "test": {
     "description": "Multi-edge merge test",
