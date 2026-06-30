@@ -6,6 +6,7 @@ import { PlayEventMeta } from "../../event/PlayEvent.js";
 import { PointsExpression } from "../../event/PointsExpression.js";
 import { ReceivedPoints } from "../../event/ScoreEvent.js";
 import { TokenReceivedEvent } from "../../event/TokenReceivedEvent.js";
+import type { Completable } from "../../feature/Completable.js";
 import { Road } from "../../feature/Road.js";
 import type { Scoreable } from "../../feature/Scoreable.js";
 import type { RandomGenerator } from "../../random/RandomGenerator.js";
@@ -15,6 +16,7 @@ import { Capability } from "../Capability.js";
 import { Rule } from "../Rule.js";
 import type { ScoreFeatureReducer } from "../ScoreFeatureReducer.js";
 import type { GameState } from "../state/GameState.js";
+import { MemoizedValue } from "../state/MemoizedValue.js";
 
 type Model = Tuple2<FeaturePointer | null, number>;
 
@@ -108,6 +110,22 @@ export class RobberCapability extends Capability<Model> {
 
   countCompletedRoads(state: GameState): number {
     return state.getFeatures(Road).filter((c) => c.isCompleted(state)).size();
+  }
+
+  private getMaxSize<T extends Completable>(state: GameState, cls: abstract new (...args: any[]) => T): number {
+    let max = 0;
+    for (const f of state.getFeatures(cls)) {
+      if (!f.isCompleted(state)) continue;
+      const size = f.getTilePositions().size();
+      if (size > max) max = size;
+    }
+    return max;
+  }
+
+  private readonly _getLongestRoadSize = new MemoizedValue<number>((state) => this.getMaxSize(state, Road));
+
+  getLongestRoadSize(state: GameState): number {
+    return this._getLongestRoadSize.apply(state);
   }
 }
 
