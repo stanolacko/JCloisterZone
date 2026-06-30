@@ -5,14 +5,18 @@ import { Tuple2 } from "../../../../io/vavr/Tuple.js";
 import type { ClassToken } from "../../../../lang/Class.js";
 import { Location } from "../../board/Location.js";
 import type { Position } from "../../board/Position.js";
-import type { FeaturePointer } from "../../board/pointer/FeaturePointer.js";
+import { FeaturePointer } from "../../board/pointer/FeaturePointer.js";
 import { ShortEdge } from "../../board/ShortEdge.js";
+import { TokenPlacedEvent } from "../../event/TokenPlacedEvent.js";
 import { Barn } from "../../figure/Barn.js";
 import { Wagon } from "../../figure/Wagon.js";
 import type { Capability } from "../Capability.js";
 import { BarnCapability } from "../capability/BarnCapability.js";
 import { CastleCapability } from "../capability/CastleCapability.js";
+import { FerriesCapability } from "../capability/FerriesCapability.js";
+import { FerriesCapabilityModel } from "../capability/FerriesCapabilityModel.js";
 import { MarketplaceCapability } from "../capability/MarketplaceCapability.js";
+import { TunnelCapability } from "../capability/TunnelCapability.js";
 import { WagonCapability, type WagonModel } from "../capability/WagonCapability.js";
 import { City } from "../../feature/City.js";
 import { Marketplace } from "../../feature/Marketplace.js";
@@ -61,6 +65,26 @@ export class ScoringPhase extends Phase {
     }
   }
 
+  private collectClosedByFerries(state: GameState): void {
+    const model = state.getCapabilityModel<FerriesCapabilityModel>(
+      FerriesCapability as unknown as ClassToken<Capability<FerriesCapabilityModel>>,
+    )!;
+    for (const t of model.getMovedFerries()) {
+      const pos = t._1;
+      const from = t._2._1;
+      const to = t._2._2;
+      // disconnected sides: the road segment on the "from" side that is no longer connected
+      for (const loc of from.subtract(to).splitToSides()) {
+        const road = state.getFeature(new FeaturePointer(pos, Road, loc));
+        if (road !== null) this.collectCompleted(state, road as unknown as Completable);
+      }
+      // connected side: the road segment that is now merged (first side is enough — both ends belong to the same road)
+      const connectedLoc = to.subtract(from).splitToSides().get(0);
+      const road = state.getFeature(new FeaturePointer(pos, Road, connectedLoc));
+      if (road !== null) this.collectCompleted(state, road as unknown as Completable);
+    }
+  }
+
   private collectCompletedOnTile(state: GameState, tile: PlacedTile): void {
     for (const t of state.getTileFeatures2(tile.getPosition())) {
       if (isInstanceOfCompletable(t._2)) this.collectCompleted(state, t._2);
@@ -104,7 +128,19 @@ export class ScoringPhase extends Phase {
 
     this.collectCompletedOnTile(state, lastPlaced);
     this.collectCompletedOnAdjacentEdges(state, pos);
-    // TODO(ferries / tunnel): additional completions.
+
+    if (state.hasCapability(FerriesCapability as unknown as ClassToken<never>)) {
+      this.collectClosedByFerries(state);
+    }
+
+    if (state.hasCapability(TunnelCapability as unknown as ClassToken<never>)) {
+      for (const ev of state.getCurrentTurnEvents()) {
+        if (!(ev instanceof TokenPlacedEvent)) continue;
+        if (!(ev.getToken() instanceof TunnelCapability.Tunnel)) continue;
+        const road = state.getFeature(ev.getPointer() as FeaturePointer);
+        if (road !== null) this.collectCompleted(state, road as unknown as Completable);
+      }
+    }
 
     if (state.hasCapability(MarketplaceCapability as unknown as ClassToken<never>)) {
       // roads on the placed tile adjoin a marketplace → the marketplace may have just
