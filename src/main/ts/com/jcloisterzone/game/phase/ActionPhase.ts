@@ -36,6 +36,8 @@ import { ScoreAcrobatsMessage } from "../../io/message/ScoreAcrobatsMessage.js";
 import { ScoreAcrobatsAction } from "../../action/ScoreAcrobatsAction.js";
 import { ReturnMeepleMessage } from "../../io/message/ReturnMeepleMessage.js";
 import { ReturnMeepleAction } from "../../action/ReturnMeepleAction.js";
+import { MeepleAction } from "../../action/MeepleAction.js";
+import { PassMessage } from "../../io/message/PassMessage.js";
 import { ReturnMeepleSource } from "../ReturnMeepleSource.js";
 import { Acrobats } from "../../feature/Acrobats.js";
 import { AcrobatsCapability } from "../capability/AcrobatsCapability.js";
@@ -292,6 +294,30 @@ export class ActionPhase extends AbstractActionPhase {
     const acrobatsCap = state.getCapabilities().get(ACROBATS_CLS) as AcrobatsCapability;
     state = acrobatsCap.scoreAcrobats(state, state.getFeature(fp) as Acrobats, true);
     state = this.clearActions(state);
+    return this.next(state);
+  }
+
+  /** Passing the main action also declines a phantom that was on offer: record it via
+   *  NO_PHANTOM so PhantomPhase doesn't re-offer it. Only set the flag when a Phantom deploy
+   *  was actually among the offered actions — otherwise the phantom must not be blocked.
+   *  (NO_PHANTOM is otherwise reserved for Princess / Robber's Son returns.) */
+  override handlePass(state: GameState, msg: PassMessage): StepResult {
+    if (!state.getPlayerActions()!.isPassAllowed()) {
+      throw new Error("Pass is not allowed");
+    }
+    const phantomOffered = state
+      .getPlayerActions()!
+      .getActions()
+      .find(
+        (a) =>
+          a instanceof MeepleAction &&
+          (a as MeepleAction).getMeepleType() === (Phantom as unknown as ClassToken<Meeple>),
+      )
+      .isDefined();
+    state = this.clearActions(state);
+    if (phantomOffered) {
+      state = state.addFlag(Flag.NO_PHANTOM);
+    }
     return this.next(state);
   }
 
