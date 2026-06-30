@@ -8,6 +8,7 @@ import { PlaceTokenMessage as PlaceTokenMessageClass } from "../../io/message/Pl
 import type { RandomGenerator } from "../../random/RandomGenerator.js";
 import { PlaceFerry } from "../../reducers/PlaceFerry.js";
 import { FerriesCapability } from "../capability/FerriesCapability.js";
+import { RussianPromosTrapCapability } from "../capability/RussianPromosTrapCapability.js";
 import { ActionsState } from "../state/ActionsState.js";
 import { Flag } from "../state/Flag.js";
 import type { GameState } from "../state/GameState.js";
@@ -66,6 +67,8 @@ export class PlaceFerryPhase extends Phase {
     const ferry = msg.getPointer() as FeaturePointer;
     state = new PlaceFerry(ferry).apply(state);
     state = this.clearActions(state);
+    const russianPromos = state.getCapabilities().get(RussianPromosTrapCapability as never) as RussianPromosTrapCapability | null;
+    if (russianPromos !== null) state = russianPromos.trapFollowers(state);
     return this.next(state);
   }
 
