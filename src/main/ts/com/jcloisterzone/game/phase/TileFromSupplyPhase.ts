@@ -3,6 +3,7 @@ import { Queue, Vector } from "../../../../io/vavr/SeqTypes.js";
 import type { ClassToken } from "../../../../lang/Class.js";
 import type { PlacementOption } from "../../board/PlacementOption.js";
 import type { Tile } from "../../board/Tile.js";
+import type { FeaturePointer } from "../../board/pointer/FeaturePointer.js";
 import type { Player } from "../../Player.js";
 import { TilePlacementAction } from "../../action/TilePlacementAction.js";
 import { PreDrawPlaceAction } from "../../action/PreDrawPlaceAction.js";
@@ -12,6 +13,11 @@ import { PlaceTileMessage as PlaceTileMessageClass } from "../../io/message/Plac
 import { PlacePreDrawnMessage } from "../../io/message/PlacePreDrawnMessage.js";
 import type { RandomGenerator } from "../../random/RandomGenerator.js";
 import { PlaceTile } from "../../reducers/PlaceTile.js";
+import { PlaceBridge } from "../../reducers/PlaceBridge.js";
+import { TokenPlacedEvent } from "../../event/TokenPlacedEvent.js";
+import { PlayEventMeta } from "../../event/PlayEvent.js";
+import type { Capability } from "../Capability.js";
+import { BridgeCapability } from "../capability/BridgeCapability.js";
 import { AbbeyCapability } from "../capability/AbbeyCapability.js";
 import { BazaarCapability } from "../capability/BazaarCapability.js";
 import type { BazaarCapabilityModel } from "../capability/BazaarCapabilityModel.js";
@@ -29,6 +35,7 @@ import type { TilePhase } from "./TilePhase.js";
 const BAZAAR_CAP_CLS = BazaarCapability as unknown as ClassToken<BazaarCapabilityModel>;
 const BUILDER_CLS = BuilderCapability as unknown as ClassToken<BuilderState>;
 const PREDRAW_CLS = PreDrawCapability as unknown as ClassToken<number>;
+const BRIDGE_CLS = BridgeCapability as unknown as ClassToken<Capability<Set<FeaturePointer>>>;
 
 /** Start-of-turn-part phase: the active player may place a tile from their supply
  *  — the abbey tile today (and, once wired, bazaar-won tiles) — instead of drawing.
@@ -166,8 +173,44 @@ export class TileFromSupplyPhase extends AbstractAbbeyPhase {
           throw new Error("Only tile from player supply can be placed.");
         }
         const tile = supplyTiles.find((t) => t.getId() === msg.getTileId()).get();
+        const pos = msg.getPosition()!;
+        const rot = msg.getRotation()!;
+        // Validate against the legal placements and recover the matching option, which
+        // carries any mandatory bridge (e.g. bridging over an adjacent bazaar tile).
+        const placement = HashSet.ofAll(state.getTilePlacements(tile))
+          .find((p) => p.getPosition().equals(pos) && p.getRotation() === rot)
+          .getOrElseThrow(() => new Error(`Invalid placement ${pos},${rot}`));
+
         state = this.removeFromBazaarSupply(state, player, msg.getTileId()!);
-        state = new PlaceTile(tile, msg.getPosition()!, msg.getRotation()!).apply(state);
+
+        let placedTileDef = tile;
+        const mandatoryBridge = placement.getMandatoryBridge();
+        if (mandatoryBridge !== null) {
+          state = state.mapPlayers((ps) =>
+            ps.addTokenCount(player.getIndex(), BridgeCapability.BridgeToken.BRIDGE, -1),
+          );
+          state = state.mapCapabilityModel<Set<FeaturePointer>>(BRIDGE_CLS, (m) => m.add(mandatoryBridge));
+          const bridgePos = mandatoryBridge.getPosition();
+          const bridgeLoc = mandatoryBridge.getLocation()!;
+          if (bridgePos.equals(pos)) {
+            // bridge on the just-placed tile → just extend the tile definition
+            placedTileDef = placedTileDef.addBridge(bridgeLoc.rotateCCW(rot));
+          } else {
+            state = new PlaceBridge(mandatoryBridge, true).apply(state);
+          }
+        }
+
+        state = new PlaceTile(placedTileDef, pos, rot).apply(state);
+
+        if (mandatoryBridge !== null) {
+          state = state.appendEvent(
+            new TokenPlacedEvent(
+              PlayEventMeta.createWithPlayer(player),
+              BridgeCapability.BridgeToken.BRIDGE,
+              mandatoryBridge,
+            ),
+          );
+        }
       }
     }
     state = this.clearActions(state);
