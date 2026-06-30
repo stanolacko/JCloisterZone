@@ -1,6 +1,6 @@
 {
   "name": "jcloisterzone-engine",
-  "version": "7.0.0-alpha.7",
+  "version": "7.0.0-alpha.9",
   "description": "TypeScript port of the JCloisterZone (Carcassonne) game engine",
   "type": "module",
   "license": "AGPL-3.0-or-later",
