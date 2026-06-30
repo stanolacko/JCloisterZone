@@ -62,12 +62,8 @@ export abstract class MonasticFeature extends NeighbouringTileFeature implements
     if (buildings === null) {
       return List.empty<ExprItem>();
     }
-    const cloisterPos = this.getPosition();
-    const buildingsSeq = buildings
-      .filterKeys(
-        (pos) => Math.abs(pos.x - cloisterPos.x) <= 1 && Math.abs(pos.y - cloisterPos.y) <= 1,
-      )
-      .values();
+    const tilePositions = HashSet.ofAll(this.getRangeTiles(state).map((pt) => pt.getPosition()));
+    const buildingsSeq = buildings.filterKeys((pos) => tilePositions.contains(pos)).values();
     return LittleBuildingsCapability.getBuildingsPoints(state, buildingsSeq);
   }
 
