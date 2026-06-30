@@ -187,11 +187,6 @@ export class TileFromSupplyPhase extends AbstractAbbeyPhase {
     });
   }
 
-  /** Passing the supply tile must NOT set the NO_PHANTOM flag (Java excludes this phase). */
-  protected override addNoPhantomFlagOnPass(_state: GameState): boolean {
-    return false;
-  }
-
   protected override messageHandlers(): Map<Function, PhaseHandler> {
     const m = super.messageHandlers();
     m.set(PlaceTileMessageClass, this.handlePlaceTile);

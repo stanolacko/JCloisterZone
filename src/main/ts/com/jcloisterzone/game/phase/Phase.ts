@@ -20,7 +20,6 @@ export type PhaseHandler = (state: GameState, message: any) => StepResult;
  * reflection; here each phase declares an explicit handler registry in
  * {@link messageHandlers} (keyed by message constructor, exact-match). The
  * cross-phase {@code instanceof} check in handlePass is replaced by the
- * overridable {@link addNoPhantomFlagOnPass}.
  */
 export abstract class Phase {
   private readonly random: RandomGenerator;
@@ -124,15 +123,7 @@ export abstract class Phase {
       throw new Error("Pass is not allowed");
     }
     state = this.clearActions(state);
-    if (this.addNoPhantomFlagOnPass(state)) {
-      state = state.addFlag(Flag.NO_PHANTOM);
-    }
     return this.next(state);
   }
 
-  /** Whether a PASS sets the NO_PHANTOM flag. (Java checked the phase was not
-   *  TowerCapturePhase/TileFromSupplyPhase; those override this to return false.) */
-  protected addNoPhantomFlagOnPass(state: GameState): boolean {
-    return true;
-  }
 }
