@@ -62,7 +62,18 @@ export class GameStateBuilder {
 
     this.createTilePack();
     for (const pt of this.setup.getStart()) {
-      const draw = this.state.getTilePack()!.drawTile(pt.getTile());
+      let draw;
+      try {
+        draw = this.state.getTilePack()!.drawTile(pt.getTile());
+      } catch {
+        // Degenerate setup (e.g. a "start"-only tile set whose tile definitions weren't
+        // loaded): the preplaced start tile isn't in the pack, so there is nothing to draw
+        // or place. Skip it instead of throwing — the resulting empty pack then routes
+        // straight to GameOverPhase / final scoring rather than crashing the game window.
+        // eslint-disable-next-line no-console
+        console.error(`#start tile '${pt.getTile()}' is not in the tile pack — skipping preplacement`);
+        continue;
+      }
       const rot = Rotation.valueOf("R" + pt.getRotation());
       this.state = this.state.setTilePack(draw._2);
       this.state = new PlaceTile(draw._1, new Position(pt.getX(), pt.getY()), rot).apply(this.state);
