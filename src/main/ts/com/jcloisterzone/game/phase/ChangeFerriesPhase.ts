@@ -14,6 +14,7 @@ import { ChangeFerry } from "../../reducers/ChangeFerry.js";
 import type { Capability } from "../Capability.js";
 import { FerriesCapability } from "../capability/FerriesCapability.js";
 import { FerriesCapabilityModel } from "../capability/FerriesCapabilityModel.js";
+import { RussianPromosTrapCapability } from "../capability/RussianPromosTrapCapability.js";
 import { ActionsState } from "../state/ActionsState.js";
 import { Flag } from "../state/Flag.js";
 import type { GameState } from "../state/GameState.js";
@@ -158,6 +159,8 @@ export class ChangeFerriesPhase extends Phase {
     );
     state = new ChangeFerry(oldFerry, newFerry).apply(state);
     state = this.clearActions(state);
+    const russianPromos = state.getCapabilities().get(RussianPromosTrapCapability as never) as RussianPromosTrapCapability | null;
+    if (russianPromos !== null) state = russianPromos.trapFollowers(state);
     return this.enter(state);
   }
 
