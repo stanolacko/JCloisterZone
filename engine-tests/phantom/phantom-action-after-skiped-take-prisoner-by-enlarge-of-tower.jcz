@@ -1,0 +1,153 @@
+{
+  "appVersion": "6.2.2",
+  "gameId": "1",
+  "name": "",
+  "initialRandom": 0.6263375127158561,
+  "created": "2026-06-29T20:06:30.215Z",
+  "clock": 23933,
+  "setup": {
+    "sets": {
+      "basic:1": 1,
+      "tower:1": 1
+    },
+    "elements": {
+      "small-follower": 7,
+      "farmers": true,
+      "tower": 1,
+      "phantom": 1
+    },
+    "rules": {},
+    "timer": null,
+    "start": [
+      {
+        "tile": "BA/RCr",
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      }
+    ],
+    "ai": false,
+    "options": {}
+  },
+  "players": [
+    {
+      "name": "Betty",
+      "slot": 2,
+      "ai": false
+    },
+    {
+      "name": "John",
+      "slot": 1,
+      "ai": false
+    }
+  ],
+  "chat": [],
+  "replay": [
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "TO/F",
+        "rotation": "R0",
+        "position": [
+          0,
+          1
+        ]
+      },
+      "player": 0,
+      "clock": 2449
+    },
+    {
+      "type": "PLACE_TOKEN",
+      "payload": {
+        "token": "TOWER_PIECE",
+        "pointer": {
+          "position": [
+            0,
+            1
+          ],
+          "feature": "Tower",
+          "location": "I"
+        }
+      },
+      "player": 0,
+      "clock": 5210
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            0,
+            1
+          ],
+          "location": "I",
+          "feature": "Tower"
+        },
+        "meepleId": "0.phantom.1"
+      },
+      "player": 0,
+      "clock": 6165
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.895364322640398
+      },
+      "player": 0,
+      "clock": 6861
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "TO/L",
+        "rotation": "R0",
+        "position": [
+          -1,
+          1
+        ]
+      },
+      "player": 1,
+      "clock": 8168
+    },
+    {
+      "type": "PLACE_TOKEN",
+      "payload": {
+        "token": "TOWER_PIECE",
+        "pointer": {
+          "position": [
+            -1,
+            1
+          ],
+          "feature": "Tower",
+          "location": "I"
+        }
+      },
+      "player": 1,
+      "clock": 9944
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 1,
+      "clock": 11806
+    }
+  ],
+  "gameAnnotations": {
+    "drawOrder": [
+      "TO/F",
+      "TO/L"
+    ]
+  },
+  "test": {
+    "description": "Phantom Action After Skiped Take Prisoner By Enlarge Of Tower",
+    "assertions": [
+      "Betty has 0 points.",
+      "John has 0 points.",
+      "Phase is PhantomPhase",
+      "Player can pass",
+      "Available action Meeple for Phantom",
+      "Meeple Phantom options: {Field,NL.NR.EL.ER.SL.SR.WL.WR,[-1,1]}; {Monastery,I,[-1,1]}; {Tower,I,[-1,1]}",
+      "Undo is allowed"
+    ]
+  }
+}
