@@ -78,7 +78,9 @@ export class PhantomPhase extends AbstractActionPhase {
   }
 
   handlePlaceToken(state: GameState, msg: PlaceTokenMessage): StepResult {
+    const player = state.getActivePlayer()!;
     const token = msg.getToken();
+    state = state.mapPlayers((ps) => ps.addTokenCount(player.getIndex(), token!, -1));
     if (!(token instanceof TunnelCapability.Tunnel)) {
       throw new Error("Only tunnel token placement is allowed");
     }
