@@ -1,0 +1,374 @@
+{
+  "appVersion": "6.3.0-alpha.8",
+  "gameId": "1",
+  "name": "",
+  "initialRandom": 0.7866696041227341,
+  "created": "2026-06-30T15:36:55.352Z",
+  "clock": 286516,
+  "setup": {
+    "options": {},
+    "sets": {
+      "basic:1": 1,
+      "bridges-castles-and-bazaars:1": 1,
+      "traders-and-builders:1": 1,
+      "princess-and-dragon:1": 1,
+      "abbey-and-mayor:1": 1
+    },
+    "elements": {
+      "small-follower": 7,
+      "farmers": true,
+      "bridge": 1,
+      "castle": 1,
+      "bazaar": true,
+      "builder": 1,
+      "pig": 1,
+      "traders": true,
+      "dragon": 1,
+      "fairy": 1,
+      "princess": true,
+      "portal": true,
+      "barn": 1,
+      "wagon": 1,
+      "mayor": 1,
+      "abbey": 1
+    },
+    "rules": {},
+    "timer": null,
+    "start": [
+      {
+        "tile": "BA/RCr",
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      }
+    ],
+    "ai": false
+  },
+  "players": [
+    {
+      "name": "Betty",
+      "slot": 2,
+      "ai": false
+    },
+    {
+      "name": "John",
+      "slot": 1,
+      "ai": false
+    }
+  ],
+  "chat": [],
+  "replay": [
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "DG/R.v",
+        "rotation": "R90",
+        "position": [
+          1,
+          0
+        ]
+      },
+      "player": 0,
+      "clock": 4080
+    },
+    {
+      "type": "PLACE_TOKEN",
+      "payload": {
+        "token": "BRIDGE",
+        "pointer": {
+          "position": [
+            1,
+            0
+          ],
+          "location": "NS",
+          "feature": "Road"
+        }
+      },
+      "player": 0,
+      "clock": 5401
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.8440692157130967
+      },
+      "player": 0,
+      "clock": 6009
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "TB/CcR.c",
+        "rotation": "R0",
+        "position": [
+          -1,
+          0
+        ]
+      },
+      "player": 1,
+      "clock": 7209
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 1,
+      "clock": 8200
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.5854299686206148
+      },
+      "player": 1,
+      "clock": 8203
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BB/CFc.b",
+        "rotation": "R90",
+        "position": [
+          0,
+          -1
+        ]
+      },
+      "player": 0,
+      "clock": 9200
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 9784
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.699702143126826
+      },
+      "player": 0,
+      "clock": 9787
+    },
+    {
+      "type": "BAZAAR_BID",
+      "payload": {
+        "supplyIndex": 0,
+        "price": 0
+      },
+      "player": 1,
+      "clock": 11785
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 12857
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "DG/CcRr.p",
+        "rotation": "R270",
+        "position": [
+          -1,
+          -1
+        ]
+      },
+      "player": 1,
+      "clock": 13800
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            -1,
+            -1
+          ],
+          "location": "SW",
+          "feature": "City"
+        },
+        "meepleId": "1.small.1"
+      },
+      "player": 1,
+      "clock": 16217
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.7485302033758949
+      },
+      "player": 1,
+      "clock": 216816
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "TB/CR",
+        "rotation": "R90",
+        "position": [
+          -1,
+          -2
+        ]
+      },
+      "player": 0,
+      "clock": 218742
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            -1,
+            -2
+          ],
+          "location": "S",
+          "feature": "Road"
+        },
+        "meepleId": "0.small.1"
+      },
+      "player": 0,
+      "clock": 219721
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.127313324735842
+      },
+      "player": 0,
+      "clock": 220198
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/CC.2",
+        "rotation": "R270",
+        "position": [
+          0,
+          -2
+        ]
+      },
+      "player": 1,
+      "clock": 222420
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 1,
+      "clock": 223499
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.7800294573980506
+      },
+      "player": 1,
+      "clock": 223503
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "TB/CFc.w",
+        "rotation": "R0",
+        "position": [
+          -2,
+          -1
+        ]
+      },
+      "player": 0,
+      "clock": 225755
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 225935
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.32803233939562904
+      },
+      "player": 0,
+      "clock": 225939
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/CccR+",
+        "rotation": "R180",
+        "position": [
+          1,
+          1
+        ]
+      },
+      "player": 1,
+      "clock": 228199
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 1,
+      "clock": 228336
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.479402534175692
+      },
+      "player": 1,
+      "clock": 228340
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/RRR",
+        "rotation": "R0",
+        "position": [
+          1,
+          -1
+        ]
+      },
+      "player": 0,
+      "clock": 230216
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            1,
+            -1
+          ],
+          "location": "S",
+          "feature": "Road"
+        },
+        "meepleId": "0.small.2"
+      },
+      "player": 0,
+      "clock": 231665
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.02005543391303144
+      },
+      "player": 0,
+      "clock": 235531
+    }
+  ],
+  "test": {
+    "description": "Bridge Over Bazaar Tile Bug Fix Test",
+    "assertions": [
+      "Betty scored road for 4 points.",
+      "Betty scored road for 3 points.",
+      "Betty has 7 points.",
+      "John has 0 points.",
+      "Phase is TilePhase",
+      "Player can't pass",
+      "Available action TilePlacement for AM/CCRR",
+      "TilePlacement AM/CCRR options: [2,1] - [0,270]; [1,2] - [0,90]; [2,-1] - [90,180]; [-3,-1] - [90,180]; [-2,0] - [180]",
+      "Undo is not allowed"
+    ]
+  }
+}
