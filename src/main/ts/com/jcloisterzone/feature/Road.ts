@@ -94,16 +94,20 @@ export class Road
     }
   }
 
-  override isOpen(state: GameState): boolean {
+  /** True when this road has an open end OF ITS OWN — an unmatched edge or an open tunnel end —
+   *  independent of any marketplace it adjoins. `Marketplace.isOpen` queries THIS (not `isOpen`)
+   *  so the marketplace check in `isOpen` cannot recurse back through the marketplace. */
+  hasOpenEnd(state: GameState): boolean {
     return super.isOpen(state) || !this.openTunnelEnds.isEmpty();
   }
 
-  override isCompleted(state: GameState): boolean {
-    if (this.isOpen(state)) {
-      return false;
+  override isOpen(state: GameState): boolean {
+    if (this.hasOpenEnd(state)) {
+      return true;
     }
     // marketplace-adjoining roads stay open while their marketplace is open — but ONLY
     // when the Marketplace capability is active (Java gates on `marketplaceCap != null`).
+    // Marketplace.isOpen only inspects each road's hasOpenEnd, so this does not recurse.
     if (state.hasCapability(MarketplaceCapability as never) && !this.marketplaces.isEmpty()) {
       for (const fp of this.marketplaces) {
         const feature = state
@@ -113,12 +117,12 @@ export class Road
           .get();
         if (feature instanceof Marketplace) {
           if (feature.isOpen(state)) {
-            return false;
+            return true;
           }
         }
       }
     }
-    return true;
+    return false;
   }
 
   isLabyrinth(state: GameState): boolean {

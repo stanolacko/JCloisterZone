@@ -49,7 +49,9 @@ export class Marketplace extends TileFeature {
         .get(fp.getPosition())
         .flatMap((m) => m.get(fp))
         .get() as Road;
-      if (road.isOpen(state)) {
+      // Query the road's OWN open end (edges/tunnels), NOT road.isOpen — road.isOpen consults
+      // its marketplaces (this one included), which would recurse back into here indefinitely.
+      if (road.hasOpenEnd(state)) {
         return true;
       }
     }

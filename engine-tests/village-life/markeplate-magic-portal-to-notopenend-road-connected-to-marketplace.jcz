@@ -1,0 +1,269 @@
+{
+  "appVersion": "6.3.0-alpha.9",
+  "gameId": "1",
+  "name": "",
+  "initialRandom": 0.432530498397834,
+  "created": "2026-07-01T17:47:48.825Z",
+  "clock": 1291952,
+  "setup": {
+    "options": {},
+    "sets": {
+      "basic:1": 1,
+      "princess-and-dragon:1": 1,
+      "village-life": 1
+    },
+    "elements": {
+      "small-follower": 7,
+      "farmers": true,
+      "dragon": 1,
+      "fairy": 1,
+      "princess": true,
+      "portal": true,
+      "windmill": 1,
+      "donkey": 1,
+      "flowers": true,
+      "marketplace": true
+    },
+    "rules": {},
+    "timer": null,
+    "start": [
+      {
+        "tile": "BA/RCr",
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      }
+    ],
+    "ai": false,
+    "addons": {
+      "village-life": 0
+    }
+  },
+  "players": [
+    {
+      "name": "Betty",
+      "slot": 2,
+      "ai": false
+    },
+    {
+      "name": "John",
+      "slot": 1,
+      "ai": false
+    }
+  ],
+  "chat": [],
+  "replay": [
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "village-life/rrbf.wf3f4",
+        "rotation": "R0",
+        "position": [
+          -1,
+          0
+        ]
+      },
+      "player": 0,
+      "clock": 4574
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 6662
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.24666649814747488
+      },
+      "player": 0,
+      "clock": 6666
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "village-life/rrff.f1m",
+        "rotation": "R180",
+        "position": [
+          1,
+          0
+        ]
+      },
+      "player": 1,
+      "clock": 8486
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 1,
+      "clock": 9863
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.26634896811539766
+      },
+      "player": 1,
+      "clock": 9865
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/RRR",
+        "rotation": "R90",
+        "position": [
+          1,
+          1
+        ]
+      },
+      "player": 0,
+      "clock": 13726
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 15134
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.9125931945553951
+      },
+      "player": 0,
+      "clock": 15137
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/RFr",
+        "rotation": "R0",
+        "position": [
+          1,
+          -1
+        ]
+      },
+      "player": 1,
+      "clock": 17774
+    },
+    {
+      "type": "MOVE_NEUTRAL_FIGURE",
+      "payload": {
+        "figureId": "donkey.1",
+        "to": [
+          1,
+          -1
+        ]
+      },
+      "player": 1,
+      "clock": 19550
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.44294629843440925
+      },
+      "player": 1,
+      "clock": 22199
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/Rr",
+        "rotation": "R0",
+        "position": [
+          -1,
+          -1
+        ]
+      },
+      "player": 0,
+      "clock": 25438
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            -1,
+            -1
+          ],
+          "location": "SW",
+          "feature": "Road"
+        },
+        "meepleId": "0.small.1"
+      },
+      "player": 0,
+      "clock": 32833
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.4973484164387201
+      },
+      "player": 0,
+      "clock": 33999
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "DG/RRR.g",
+        "rotation": "R180",
+        "position": [
+          2,
+          -1
+        ]
+      },
+      "player": 1,
+      "clock": 247006
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            1,
+            0
+          ],
+          "location": "S",
+          "feature": "Road"
+        },
+        "meepleId": "1.small.1"
+      },
+      "player": 1,
+      "clock": 249872
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.03746267829077099
+      },
+      "player": 1,
+      "clock": 250729
+    }
+  ],
+  "gameAnnotations": {
+    "drawOrder": [
+      "village-life/rrbf.wf3f4",
+      "village-life/rrff.f1m",
+      "BA/RRR",
+      "BA/RFr",
+      "BA/Rr",
+      "DG/RRR.g"
+    ],
+    "endTurn": 6
+  },
+  "test": {
+    "description": "Markeplate Magic Portal To Notopenend Road Connected To Marketplace",
+    "assertions": [
+      "Betty scored road for 4 points at [-1,-1].",
+      "Betty scored flowers for 3 points at [-1,-1].",
+      "John scored road for 2 points at [1,0].",
+      "John scored flowers for 3 points at [1,0].",
+      "Betty has 7 points.",
+      "John has 5 points.",
+      "Phase is GameOverPhase",
+      "Undo is not allowed"
+    ]
+  }
+}
