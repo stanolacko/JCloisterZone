@@ -97,6 +97,12 @@ const FEATURES: Record<string, ClassToken> = Object.fromEntries(
 interface ReplayEntry {
   type: string;
   payload: Record<string, unknown>;
+  // Top-level message fields (present on live wire messages). The AI request carries
+  // `player`/`seq`/`random` at the top level — matching Java, which deserializes the
+  // whole message line into AiMessage (Engine.java: gson.fromJson(line, AiMessage.class)).
+  player?: number | null;
+  seq?: number | null;
+  random?: number | null;
 }
 
 /** Parses replay JSON entries into Message objects (subset used by basic games). */
@@ -203,9 +209,16 @@ export class MessageParser {
         return new PassMessage();
       case "AI": {
         const m = new AiMessage();
-        m.setPlayer((p.player as number) ?? null);
-        m.setSeq((p.seq as number) ?? null);
-        if (p.random !== undefined && p.random !== null) m.setRandom(p.random as number);
+        // `player`/`seq`/`random` live at the TOP LEVEL of an AI message on the live wire
+        // (the client sets message.player = action.player; payload holds only gameId).
+        // Java reads the same from the whole line. Fall back to payload for callers that
+        // nest them (e.g. the AI smoke test).
+        const player = (entry.player ?? (p.player as number | null | undefined)) ?? null;
+        const seq = (entry.seq ?? (p.seq as number | null | undefined)) ?? null;
+        const random = entry.random ?? (p.random as number | null | undefined);
+        m.setPlayer(player);
+        m.setSeq(seq);
+        if (random !== undefined && random !== null) m.setRandom(random as number);
         return m;
       }
       default:
