@@ -1,30 +1,17 @@
 import { HashMap, type Map as VMap } from "../../../../io/vavr/Map.js";
 import { HashSet } from "../../../../io/vavr/Set.js";
-import { List, Queue } from "../../../../io/vavr/SeqTypes.js";
+import { Queue } from "../../../../io/vavr/SeqTypes.js";
 import { Tuple2 } from "../../../../io/vavr/Tuple.js";
 import type { ClassToken } from "../../../../lang/Class.js";
-import { Location } from "../../board/Location.js";
-import type { Position } from "../../board/Position.js";
 import { FeaturePointer } from "../../board/pointer/FeaturePointer.js";
-import { ShortEdge } from "../../board/ShortEdge.js";
-import { TokenPlacedEvent } from "../../event/TokenPlacedEvent.js";
 import { Barn } from "../../figure/Barn.js";
 import { Wagon } from "../../figure/Wagon.js";
 import type { Capability } from "../Capability.js";
 import { BarnCapability } from "../capability/BarnCapability.js";
 import { CastleCapability } from "../capability/CastleCapability.js";
-import { FerriesCapability } from "../capability/FerriesCapability.js";
-import { FerriesCapabilityModel } from "../capability/FerriesCapabilityModel.js";
-import { MarketplaceCapability } from "../capability/MarketplaceCapability.js";
-import { TunnelCapability } from "../capability/TunnelCapability.js";
 import { WagonCapability, type WagonModel } from "../capability/WagonCapability.js";
-import { City } from "../../feature/City.js";
-import { Marketplace } from "../../feature/Marketplace.js";
-import { Road } from "../../feature/Road.js";
-import { type Completable, isInstanceOfCompletable } from "../../feature/Completable.js";
+import type { Completable } from "../../feature/Completable.js";
 import { Field } from "../../feature/Field.js";
-import { Monastery } from "../../feature/Monastery.js";
-import { isInstanceOfMonastic } from "../../feature/Monastic.js";
 import type { Scoreable } from "../../feature/Scoreable.js";
 import type { RandomGenerator } from "../../random/RandomGenerator.js";
 import { ReturnMeepleSource } from "../ReturnMeepleSource.js";
@@ -34,8 +21,8 @@ import { ScoreFieldWhenBarnIsConnected } from "../../reducers/ScoreFieldWhenBarn
 import { UndeployMeeples } from "../../reducers/UndeployMeeples.js";
 import type { ScoreFeatureReducer } from "../ScoreFeatureReducer.js";
 import type { GameState } from "../state/GameState.js";
-import type { PlacedTile } from "../state/PlacedTile.js";
 import { Phase } from "./Phase.js";
+import { collectCompletedThisTurn } from "./collectCompletedThisTurn.js";
 import type { StepResult } from "./StepResult.js";
 
 const WAGON_CLS = WagonCapability as unknown as ClassToken<Capability<WagonModel>>;
@@ -53,70 +40,6 @@ export class ScoringPhase extends Phase {
     super(random, defaultNext);
   }
 
-  private collectCompleted(state: GameState, completable: Completable): void {
-    if (completable.isCompleted(state) && !this.completedMutable.has(completable)) {
-      if (completable instanceof Monastery && completable.isSpecialMonastery(state)) {
-        const meeples = List.ofAll(completable.getMeeplesIncludingSpecialMonastery2(state));
-        if (meeples.size() > 0 && meeples.filter((t) => t._2.getLocation() === Location.I).size() === 0) {
-          return; // only abbots on monastery
-        }
-      }
-      this.completedMutable.set(completable, new ScoreCompletable(completable, false));
-    }
-  }
-
-  private collectClosedByFerries(state: GameState): void {
-    const model = state.getCapabilityModel<FerriesCapabilityModel>(
-      FerriesCapability as unknown as ClassToken<Capability<FerriesCapabilityModel>>,
-    )!;
-    for (const t of model.getMovedFerries()) {
-      const pos = t._1;
-      const from = t._2._1;
-      const to = t._2._2;
-      // disconnected sides: the road segment on the "from" side that is no longer connected
-      for (const loc of from.subtract(to).splitToSides()) {
-        const road = state.getFeature(new FeaturePointer(pos, Road, loc));
-        if (road !== null) this.collectCompleted(state, road as unknown as Completable);
-      }
-      // connected side: the road segment that is now merged (first side is enough — both ends belong to the same road)
-      const connectedLoc = to.subtract(from).splitToSides().get(0);
-      const road = state.getFeature(new FeaturePointer(pos, Road, connectedLoc));
-      if (road !== null) this.collectCompleted(state, road as unknown as Completable);
-    }
-  }
-
-  private collectCompletedOnTile(state: GameState, tile: PlacedTile): void {
-    for (const t of state.getTileFeatures2(tile.getPosition())) {
-      if (isInstanceOfCompletable(t._2)) this.collectCompleted(state, t._2);
-    }
-  }
-
-  private collectCompletedOnAdjacentEdges(state: GameState, pos: Position): void {
-    const isMarketplaceCap = state.hasCapability(MarketplaceCapability as unknown as ClassToken<never>);
-    for (const t of state.getAdjacentTiles2(pos)) {
-      const pt = t._2;
-      const adj = state.getFeaturePartOf2(pt.getPosition(), t._1.rev());
-      if (adj === null) continue;
-      const feature = adj._2;
-      if (isInstanceOfCompletable(feature)) this.collectCompleted(state, feature);
-      if (feature instanceof City) {
-        const edge = new ShortEdge(pos, pt.getPosition());
-        const multiEdge = feature.getMultiEdges().find((me) => me._1.equals(edge)).getOrNull();
-        if (multiEdge !== null) {
-          this.collectCompleted(state, state.getFeature(multiEdge._2) as City);
-        }
-      }
-      if (isMarketplaceCap && feature instanceof Road && feature.isCompleted(state)) {
-        for (const mfp of feature.getMarketplaces()) {
-          const marketplace = state.getFeature(mfp) as Marketplace;
-          for (const marketplaceRoad of marketplace.getMarketplaceRoads(state)) {
-            this.collectCompleted(state, marketplaceRoad as unknown as Completable);
-          }
-        }
-      }
-    }
-  }
-
   enter(state: GameState): StepResult {
     const lastPlaced = state.getLastPlaced()!;
     const pos = lastPlaced.getPosition();
@@ -126,43 +49,10 @@ export class ScoringPhase extends Phase {
       if (t._1 instanceof Wagon) wagonsBefore.push([t._1, t._2]);
     }
 
-    this.collectCompletedOnTile(state, lastPlaced);
-    this.collectCompletedOnAdjacentEdges(state, pos);
-
-    if (state.hasCapability(FerriesCapability as unknown as ClassToken<never>)) {
-      this.collectClosedByFerries(state);
-    }
-
-    if (state.hasCapability(TunnelCapability as unknown as ClassToken<never>)) {
-      for (const ev of state.getCurrentTurnEvents()) {
-        if (!(ev instanceof TokenPlacedEvent)) continue;
-        if (!(ev.getToken() instanceof TunnelCapability.Tunnel)) continue;
-        const road = state.getFeature(ev.getPointer() as FeaturePointer);
-        if (road !== null) this.collectCompleted(state, road as unknown as Completable);
-      }
-    }
-
-    if (state.hasCapability(MarketplaceCapability as unknown as ClassToken<never>)) {
-      // roads on the placed tile adjoin a marketplace → the marketplace may have just
-      // closed, completing ALL its roads at once
-      for (const t of state.getTileFeatures2(pos)) {
-        if (!(t._2 instanceof Road)) continue;
-        for (const mfp of t._2.getMarketplaces()) {
-          const marketplace = state.getFeature(mfp) as Marketplace;
-          for (const marketplaceRoad of marketplace.getMarketplaceRoads(state)) {
-            this.collectCompleted(state, marketplaceRoad as unknown as Completable);
-          }
-        }
-      }
-    }
-
-    const neighbourPositions = HashSet.ofAll(
-      state.getAdjacentAndDiagonalTiles2(pos).map((pt) => pt._2.getPosition()),
-    );
-    for (const f of state.getFeatures()) {
-      if (isInstanceOfMonastic(f) && neighbourPositions.contains(f.getPosition())) {
-        this.collectCompleted(state, f as unknown as Completable);
-      }
+    // Which completables finished this turn — shared with CocScoringPhase so the two phases
+    // never drift (see collectCompletedThisTurn). Order is preserved for deterministic scoring.
+    for (const completable of collectCompletedThisTurn(state)) {
+      this.completedMutable.set(completable, new ScoreCompletable(completable, false));
     }
 
     const completedSet = HashSet.ofAll([...this.completedMutable.keys()]);

@@ -3,22 +3,20 @@ import type { ClassToken } from "../../../../lang/Class.js";
 import type { Player } from "../../Player.js";
 import { ConfirmAction } from "../../action/ConfirmAction.js";
 import { Location } from "../../board/Location.js";
-import { Position } from "../../board/Position.js";
 import { type Completable, isInstanceOfCompletable } from "../../feature/Completable.js";
 import type { Feature } from "../../feature/Feature.js";
 import { Field } from "../../feature/Field.js";
-import { Monastery } from "../../feature/Monastery.js";
 import { Barn } from "../../figure/Barn.js";
 import type { CommitMessage } from "../../io/message/CommitMessage.js";
 import { CommitMessage as CommitMessageClass } from "../../io/message/CommitMessage.js";
 import type { PassMessage } from "../../io/message/PassMessage.js";
 import type { Capability } from "../Capability.js";
-import { AbbeyCapability } from "../capability/AbbeyCapability.js";
 import { BarnCapability } from "../capability/BarnCapability.js";
 import { RussianPromosTrapCapability } from "../capability/RussianPromosTrapCapability.js";
 import { ActionsState } from "../state/ActionsState.js";
 import type { GameState } from "../state/GameState.js";
 import { AbstractCocScoringPhase } from "./AbstractCocScoringPhase.js";
+import { collectCompletedThisTurn } from "./collectCompletedThisTurn.js";
 import type { Phase, PhaseHandler } from "./Phase.js";
 import type { RandomGenerator } from "../../random/RandomGenerator.js";
 import type { StepResult } from "./StepResult.js";
@@ -83,18 +81,6 @@ export class CocScoringPhase extends AbstractCocScoringPhase {
 
   protected getAllowedFeaturesFilter(state: GameState): (f: Feature) => boolean {
     const lastPlaced = state.getLastPlaced()!;
-    const lastPlacedPos = lastPlaced.getPosition();
-
-    const justPlacedAbbeyAdjacent = new globalThis.Set<Completable>();
-    if (AbbeyCapability.isAbbey(lastPlaced.getTile())) {
-      for (const t of state.getAdjacentTiles2(lastPlacedPos)) {
-        const pt = t._2;
-        const feature = state.getFeaturePartOf(pt.getPosition(), t._1.rev());
-        if (feature !== null && isInstanceOfCompletable(feature)) {
-          justPlacedAbbeyAdjacent.add(feature as unknown as Completable);
-        }
-      }
-    }
 
     const barnInvolvedFields = new globalThis.Set<Feature>();
     if (state.getCapabilities().contains(BarnCapability as never)) {
@@ -115,25 +101,17 @@ export class CocScoringPhase extends AbstractCocScoringPhase {
       }
     }
 
+    // Completables finished this turn — shared with ScoringPhase so both phases agree on what
+    // "finished this turn" means (marketplaces, ferries, tunnels, …). Fields are handled
+    // separately above (they never appear in the completed-this-turn set).
+    const completedThisTurn = new globalThis.Set<Completable>(collectCompletedThisTurn(state));
+
     return (f: Feature) => {
       if (f instanceof Field) {
         return barnInvolvedFields.has(f as unknown as Feature);
       }
       if (isInstanceOfCompletable(f)) {
-        const completable = f as unknown as Completable;
-        if (!completable.isCompleted(state)) return false;
-        if (justPlacedAbbeyAdjacent.has(completable)) return true;
-        // feature lies on last placed tile -> finished this turn
-        if (f.getPlaces().find((pp) => pp.getPosition().equals(lastPlacedPos)).isDefined()) {
-          return true;
-        }
-        if (f instanceof Monastery) {
-          const monPos = f.getPosition();
-          for (const t of Position.ADJACENT_AND_DIAGONAL) {
-            if (monPos.add(t._2).equals(lastPlacedPos)) return true;
-          }
-        }
-        return false;
+        return completedThisTurn.has(f as unknown as Completable);
       }
       throw new Error("Unsupported feature");
     };
