@@ -2,19 +2,23 @@
   "appVersion": "6.3.0-alpha.9",
   "gameId": "1",
   "name": "",
-  "initialRandom": 0.4539076399810644,
-  "created": "2026-07-01T17:47:02.228Z",
-  "clock": 136443,
+  "initialRandom": 0.9273148289920803,
+  "created": "2026-07-01T17:52:33.486Z",
+  "clock": 184543,
   "setup": {
     "options": {},
     "sets": {
       "basic:1": 1,
-      "flier:1": 1,
+      "abbey-and-mayor:1": 1,
       "village-life": 1
     },
     "elements": {
       "small-follower": 7,
       "farmers": true,
+      "barn": 1,
+      "wagon": 1,
+      "mayor": 1,
+      "abbey": 1,
       "windmill": 1,
       "flowers": true,
       "marketplace": true
@@ -59,7 +63,7 @@
         ]
       },
       "player": 0,
-      "clock": 2487
+      "clock": 2815
     },
     {
       "type": "DEPLOY_MEEPLE",
@@ -75,178 +79,204 @@
         "meepleId": "0.small.1"
       },
       "player": 0,
-      "clock": 3135
+      "clock": 4520
     },
     {
       "type": "COMMIT",
       "payload": {
-        "random": 0.619691104696815
+        "random": 0.4416212095927883
       },
       "player": 0,
-      "clock": 4551
+      "clock": 5552
     },
     {
       "type": "PLACE_TILE",
       "payload": {
-        "tileId": "village-life/crfr.f2m",
-        "rotation": "R0",
+        "tileId": "village-life/rrff.f1m",
+        "rotation": "R180",
         "position": [
           1,
           0
         ]
       },
       "player": 1,
-      "clock": 6863
+      "clock": 7543
     },
     {
       "type": "PASS",
       "payload": {},
       "player": 1,
-      "clock": 8288
+      "clock": 10358
     },
     {
       "type": "COMMIT",
       "payload": {
-        "random": 0.8463087315624025
+        "random": 0.5647325576147284
       },
       "player": 1,
-      "clock": 8292
-    },
-    {
-      "type": "PLACE_TILE",
-      "payload": {
-        "tileId": "BA/RFr",
-        "rotation": "R0",
-        "position": [
-          2,
-          0
-        ]
-      },
-      "player": 0,
-      "clock": 9215
-    },
-    {
-      "type": "PASS",
-      "payload": {},
-      "player": 0,
-      "clock": 10056
-    },
-    {
-      "type": "COMMIT",
-      "payload": {
-        "random": 0.9821071314670438
-      },
-      "player": 0,
-      "clock": 10058
-    },
-    {
-      "type": "PLACE_TILE",
-      "payload": {
-        "tileId": "BA/RFr",
-        "rotation": "R0",
-        "position": [
-          3,
-          0
-        ]
-      },
-      "player": 1,
-      "clock": 10664
-    },
-    {
-      "type": "PASS",
-      "payload": {},
-      "player": 1,
-      "clock": 12135
-    },
-    {
-      "type": "COMMIT",
-      "payload": {
-        "random": 0.6552948374548591
-      },
-      "player": 1,
-      "clock": 12139
+      "clock": 10363
     },
     {
       "type": "PLACE_TILE",
       "payload": {
         "tileId": "BA/RRR",
-        "rotation": "R0",
+        "rotation": "R180",
         "position": [
-          4,
-          0
+          1,
+          1
         ]
       },
       "player": 0,
-      "clock": 14823
+      "clock": 12663
     },
     {
       "type": "PASS",
       "payload": {},
       "player": 0,
-      "clock": 18368
+      "clock": 14623
     },
     {
       "type": "COMMIT",
       "payload": {
-        "random": 0.8614425063959248
+        "random": 0.5848188941209176
       },
       "player": 0,
-      "clock": 18373
+      "clock": 14627
     },
     {
       "type": "PLACE_TILE",
       "payload": {
-        "tileId": "FL/RFr.WE.o",
+        "tileId": "BA/RRRR",
         "rotation": "R0",
         "position": [
-          5,
-          0
+          2,
+          1
         ]
       },
       "player": 1,
-      "clock": 19704
+      "clock": 15831
     },
     {
       "type": "DEPLOY_MEEPLE",
       "payload": {
         "pointer": {
           "position": [
-            5,
-            0
+            2,
+            1
           ],
-          "location": "I",
-          "feature": "FlyingMachine"
+          "location": "W",
+          "feature": "Road"
         },
-        "meepleId": "1.small.1",
-        "random": 0.6683100239906155
+        "meepleId": "1.wagon.1"
       },
       "player": 1,
-      "clock": 21272
+      "clock": 18103
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.4902941550372524
+      },
+      "player": 1,
+      "clock": 18903
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            1,
+            0
+          ],
+          "location": "S",
+          "feature": "Road"
+        },
+        "meepleId": "1.wagon.1"
+      },
+      "player": 1,
+      "clock": 23367
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.7062050537150855
+      },
+      "player": 1,
+      "clock": 26208
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/LR",
+        "rotation": "R270",
+        "position": [
+          -2,
+          0
+        ]
+      },
+      "player": 0,
+      "clock": 27479
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 31361
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.11740324984651385
+      },
+      "player": 0,
+      "clock": 31367
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            0,
+            0
+          ],
+          "location": "N",
+          "feature": "City"
+        },
+        "meepleId": "1.wagon.1"
+      },
+      "player": 1,
+      "clock": 38016
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.1589769732474582
+      },
+      "player": 1,
+      "clock": 39288
     }
   ],
   "gameAnnotations": {
     "drawOrder": [
       "village-life/rbrb.f1f3",
-      "village-life/crfr.f2m",
-      "BA/RFr",
-      "BA/RFr",
+      "village-life/rrff.f1m",
       "BA/RRR",
-      "FL/RFr.WE.o",
+      "BA/RRRR",
       "BA/LR"
     ],
-    "endTurn": 7
+    "endTurn": 5
   },
   "test": {
-    "description": "Marketplace Flying Machine To Notopenend Road",
+    "description": "Marketplace Wagon Move From 1st Marketplace Road After Final Finish 2nd Road",
     "assertions": [
-      "Betty has 0 points.",
-      "John has 0 points.",
-      "Phase is ActionPhase",
-      "Turn player is John",
-      "Active player is John",
-      "Player can't pass",
-      "Available action Meeple for SmallFollower",
-      "Meeple SmallFollower options: {Road,WE,[2,0]}",
+      "John scored road for 2 points at [2,1].",
+      "Betty scored road for 6 points at [-1,0].",
+      "Betty scored flowers for 3 points at [-1,0].",
+      "John scored road for 6 points at [1,0].",
+      "John scored city for 1 point at [0,0].",
+      "Betty has 9 points.",
+      "John has 9 points.",
+      "Phase is GameOverPhase",
       "Undo is not allowed"
     ]
   }
