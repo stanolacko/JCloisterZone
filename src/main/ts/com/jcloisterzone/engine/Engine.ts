@@ -131,6 +131,8 @@ export class Engine {
     );
     const annotations = setupMsg.getGameAnnotations();
     builder.setGameAnnotations(annotations && Object.keys(annotations).length > 0 ? annotations : null);
+    const tileOverrides = setupMsg.getTiles();
+    builder.setTileOverrides(tileOverrides && Object.keys(tileOverrides).length > 0 ? tileOverrides : null);
 
     let state = builder.createInitialState();
     const firstPhase = this.reducer.getFirstPhase();

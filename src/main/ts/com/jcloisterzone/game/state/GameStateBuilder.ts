@@ -25,9 +25,15 @@ export class GameStateBuilder {
   private players: Arr<Player> = Arr.empty<Player>();
   private state!: GameState;
   private gameAnnotations: Record<string, unknown> | null = null;
+  private tileOverrides: Record<string, number> | null = null;
 
   setGameAnnotations(gameAnnotations: Record<string, unknown> | null): void {
     this.gameAnnotations = gameAnnotations;
+  }
+
+  /** Per-tile final-count overrides from GAME_SETUP `tiles` (see TilePackBuilder). */
+  setTileOverrides(tileOverrides: Record<string, number> | null): void {
+    this.tileOverrides = tileOverrides;
   }
 
   /** `definitions` = tile-definition XML *contents* (one per loaded set file). */
@@ -127,6 +133,7 @@ export class GameStateBuilder {
     const tilePackBuilder = new TilePackBuilder();
     tilePackBuilder.setGameState(this.state);
     tilePackBuilder.setTileSets(this.setup.getTileSets());
+    tilePackBuilder.setTileOverrides(this.tileOverrides);
     this.state = this.state.setTilePack(tilePackBuilder.createTilePack(this.definitions));
   }
 

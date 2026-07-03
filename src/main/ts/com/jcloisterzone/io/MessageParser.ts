@@ -111,6 +111,7 @@ export class MessageParser {
   parseSetup(payload: Record<string, unknown>): GameSetupMessage {
     const msg = new GameSetupMessage();
     msg.sets = (payload.sets as Record<string, number>) ?? {};
+    msg.tiles = (payload.tiles as Record<string, number> | null) ?? null;
     msg.elements = (payload.elements as Record<string, unknown>) ?? {};
     msg.rules = (payload.rules as Record<string, unknown>) ?? {};
     msg.timer = (payload.timer as Record<string, unknown> | null) ?? null;

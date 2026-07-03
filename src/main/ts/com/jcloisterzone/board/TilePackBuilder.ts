@@ -32,6 +32,7 @@ export class TilePackBuilder {
   private readonly tileBuilder = new TileBuilder();
   private state!: GameState;
   private tileSets!: VMap<string, number>;
+  private tileOverrides: Record<string, number> | null = null;
 
   private readonly usedIds = new Set<string>(); // assertion only
   private readonly tiles = new Map<string, Tile[]>();
@@ -43,6 +44,14 @@ export class TilePackBuilder {
 
   setTileSets(tileSets: VMap<string, number>): void {
     this.tileSets = tileSets;
+  }
+
+  /** Per-tile final-count overrides from GAME_SETUP `tiles`. An entry replaces the count
+   *  computed from the sets (0 excludes the tile). Only applies to tiles the sets actually
+   *  produce — it cannot resurrect `remove`d tiles or add tiles from unselected sets — and
+   *  the per-tile XML `max` cap still holds. */
+  setTileOverrides(tileOverrides: Record<string, number> | null): void {
+    this.tileOverrides = tileOverrides;
   }
 
   private isTunnelActive(tileId: string): boolean {
@@ -141,6 +150,11 @@ export class TilePackBuilder {
         let count = tilesCount.get(tileId) ?? 0;
         if (count === 0 || removedTiles.has(tileId)) {
           return;
+        }
+        const override = this.tileOverrides?.[tileId];
+        if (override !== undefined && override !== null) {
+          count = override;
+          if (count <= 0) return;
         }
         if (tileElement.hasAttribute("max")) {
           count = Math.min(count, attributeIntValue(tileElement, "max", 0)!);

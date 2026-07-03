@@ -8,6 +8,10 @@ export class GameSetupMessage extends AbstractMessage implements Message {
 
   // plain-JSON fields (set by the parser); converted to Vavr collections by GameStateBuilder.
   sets: Record<string, number> = {};
+  /** Optional per-tile count overrides (final counts). An entry replaces the count computed
+   *  from `sets` for that tile id (0 excludes the tile). Removed tiles stay removed and the
+   *  per-tile XML `max` cap still applies. Absent ⇒ behavior identical to sets-only setup. */
+  tiles: Record<string, number> | null = null;
   elements: Record<string, unknown> = {};
   rules: Record<string, unknown> = {};
   timer: Record<string, unknown> | null = null;
@@ -18,6 +22,9 @@ export class GameSetupMessage extends AbstractMessage implements Message {
 
   getSets(): Record<string, number> {
     return this.sets;
+  }
+  getTiles(): Record<string, number> | null {
+    return this.tiles;
   }
   getElements(): Record<string, unknown> {
     return this.elements;
