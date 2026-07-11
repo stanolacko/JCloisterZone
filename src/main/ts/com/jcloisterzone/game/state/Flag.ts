@@ -22,6 +22,12 @@ export class Flag extends JavaEnum {
   // turn end to grant the placing player another turn. Cleared at the turn end.
   static readonly RIVER_VOLCANO_DOUBLE_TURN = new Flag("RIVER_VOLCANO_DOUBLE_TURN", 10);
 
+  // Keep Building (cooperative variant): set when the turn player enlarges an occupied
+  // completable feature or occupies a new feature. Checked (and cleared with the rest)
+  // at the turn end — if unset, everyone loses. Survives turn-PART cleanup (a Builder
+  // double turn counts as one turn for the condition).
+  static readonly COOP_CONDITION_MET = new Flag("COOP_CONDITION_MET", 11);
+
   private static readonly VALUES: readonly Flag[] = [
     Flag.RANSOM_PAID,
     Flag.BAZAAR_AUCTION,
@@ -34,6 +40,7 @@ export class Flag extends JavaEnum {
     Flag.POST_WOOD_ACTION_STARTED,
     Flag.WOOD_ACTION_CONFIRMED,
     Flag.RIVER_VOLCANO_DOUBLE_TURN,
+    Flag.COOP_CONDITION_MET,
   ];
 
   static values(): readonly Flag[] {

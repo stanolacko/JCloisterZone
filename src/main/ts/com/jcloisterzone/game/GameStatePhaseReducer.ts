@@ -74,7 +74,8 @@ export class GameStatePhaseReducer {
     this.randomGenerator = new RandomGenerator(initialRandom);
     const rng = this.randomGenerator;
 
-    let endChain: Phase = new GameOverPhase(rng, null);
+    const gameOverPhase = new GameOverPhase(rng, null);
+    let endChain: Phase = gameOverPhase;
     if (setup.contains(CountCapability as never)) {
       endChain = new CocFinalScoringPhase(rng, endChain);
     }
@@ -189,6 +190,7 @@ export class GameStatePhaseReducer {
     cleanUpTurnPhase.setDefaultNext(next); // after last phase, the first is default
     cleanUpTurnPhase.setAbbeyEndGamePhase(abbeyEndGamePhase);
     cleanUpTurnPhase.setEndPhase(endChain);
+    cleanUpTurnPhase.setGameOverPhase(gameOverPhase); // coop-variant loss goes straight to game over
     cleanUpTurnPartPhase.setSecondPartStartPhase(tileFromSupplyPhase);
     if (abbeyEndGamePhase !== null) abbeyEndGamePhase.setActionPhase(actionPhase);
     tileFromSupplyPhase.setTilePhase(tilePhase);

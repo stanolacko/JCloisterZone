@@ -73,6 +73,7 @@ import { BazaarCapability } from "../game/capability/BazaarCapability.js";
 import { PreDrawCapability } from "../game/capability/PreDrawCapability.js";
 import { BuilderCapability } from "../game/capability/BuilderCapability.js";
 import { FamiliesCapability } from "../game/capability/FamiliesCapability.js";
+import { KeepBuildingCapability } from "../game/capability/KeepBuildingCapability.js";
 import { TowerCapability } from "../game/capability/TowerCapability.js";
 import { TradeGoodsCapability } from "../game/capability/TradeGoodsCapability.js";
 import { TunnelCapability } from "../game/capability/TunnelCapability.js";
@@ -161,6 +162,7 @@ const CAPABILITIES: Array<[string, CapClass]> = [
   ["pre-draw", PreDrawCapability as unknown as CapClass],
   ["builder", BuilderCapability as unknown as CapClass],
   ["families", FamiliesCapability as unknown as CapClass],
+  ["keep-building", KeepBuildingCapability as unknown as CapClass],
   // TODO(capabilities): the many unported expansion capabilities.
 ];
 

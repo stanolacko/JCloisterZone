@@ -57,6 +57,8 @@ import { TokenRemovedEvent } from "../event/TokenRemovedEvent.js";
 import { FollowerCaptured } from "../event/FollowerCaptured.js";
 import { RansomPaidEvent } from "../event/RansomPaidEvent.js";
 import { PrisonersExchangeEvent } from "../event/PrisonersExchangeEvent.js";
+import { CoopGameLostEvent } from "../event/CoopGameLostEvent.js";
+import { KeepBuildingCapability } from "../game/capability/KeepBuildingCapability.js";
 import { Field } from "../feature/Field.js";
 import { Tower } from "../feature/Tower.js";
 import { isInstanceOfScoreable } from "../feature/Scoreable.js";
@@ -176,7 +178,19 @@ export class StateGsonBuilder {
       flags: state.hasFlag(Flag.RANSOM_PAID) ? { ransomPaid: true } : {},
       undo: { allowed: game.isUndoAllowed(), depth: game.getUndoDepth() },
       bazaar: this.bazaar(state),
+      coop: this.coop(state),
     };
+  }
+
+  /** Keep Building (cooperative variant) outcome — null unless the variant is active.
+   *  `lost` becomes true (with the losing player's index) the moment a turn ends without
+   *  either coop condition met; on a normal game end it stays false = everyone won. */
+  private coop(state: GameState): unknown {
+    if (!state.hasCapability(KeepBuildingCapability)) return null;
+    const loser = state.getCapabilityModel<number | null>(
+      KeepBuildingCapability as unknown as ClassToken<Capability<number | null>>,
+    );
+    return { lost: loser !== null && loser !== undefined, loser: loser ?? null };
   }
 
   /** Bazaar supply (when an auction is in progress / supply unresolved). */
@@ -714,6 +728,9 @@ export class StateGsonBuilder {
           player: ev.getSecond().getPlayer().getIndex(),
         };
         turnEvents.push({ type: "prisoners-exchange", exchange: [first, {}] });
+      } else if (ev instanceof CoopGameLostEvent) {
+        // Keep Building (coop variant): this player's turn met neither condition — all lose.
+        turnEvents.push({ type: "coop-lost", player: ev.getPlayer().getIndex() });
       }
     }
     return events;
