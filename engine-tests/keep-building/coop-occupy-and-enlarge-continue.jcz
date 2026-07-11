@@ -1,0 +1,148 @@
+{
+  "appVersion": "7.0.0",
+  "gameId": "1",
+  "name": "",
+  "initialRandom": 0.5,
+  "created": "2026-07-10T10:00:00.000Z",
+  "clock": 60000,
+  "test": {
+    "description": "Keep Building: occupy then enlarge keep the game alive; a passive turn loses it",
+    "assertions": [
+      "Phase is GameOverPhase",
+      "Alice has 3 points.",
+      "Bob has 0 points."
+    ]
+  },
+  "setup": {
+    "options": {},
+    "sets": {
+      "basic:1": 1
+    },
+    "elements": {
+      "small-follower": 7,
+      "farmers": true,
+      "keep-building": true
+    },
+    "rules": {},
+    "timer": null,
+    "start": [
+      {
+        "tile": "BA/RCr",
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      }
+    ],
+    "ai": false
+  },
+  "players": [
+    {
+      "name": "Alice",
+      "slot": 0
+    },
+    {
+      "name": "Bob",
+      "slot": 1
+    }
+  ],
+  "replay": [
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/RRR",
+        "rotation": "R0",
+        "position": [
+          1,
+          0
+        ]
+      },
+      "player": 0,
+      "clock": 5000
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            1,
+            0
+          ],
+          "location": "W",
+          "feature": "Road"
+        },
+        "meepleId": "0.small.1"
+      },
+      "player": 0,
+      "clock": 6000
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.21
+      },
+      "player": 0,
+      "clock": 7000
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/RRR",
+        "rotation": "R0",
+        "position": [
+          -1,
+          0
+        ]
+      },
+      "player": 1,
+      "clock": 8000
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 1,
+      "clock": 9000
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.22
+      },
+      "player": 1,
+      "clock": 10000
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/RRR",
+        "rotation": "R0",
+        "position": [
+          2,
+          0
+        ]
+      },
+      "player": 0,
+      "clock": 11000
+    },
+    {
+      "type": "PASS",
+      "payload": {},
+      "player": 0,
+      "clock": 12000
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.23
+      },
+      "player": 0,
+      "clock": 13000
+    }
+  ],
+  "gameAnnotations": {
+    "drawOrder": [
+      "BA/RRR",
+      "BA/RRR",
+      "BA/RRR"
+    ]
+  }
+}

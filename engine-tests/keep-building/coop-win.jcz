@@ -1,0 +1,131 @@
+{
+  "appVersion": "7.0.0",
+  "gameId": "1",
+  "name": "",
+  "initialRandom": 0.5,
+  "created": "2026-07-10T10:00:00.000Z",
+  "clock": 60000,
+  "test": {
+    "description": "Keep Building: nobody fails until the last tile - all win",
+    "assertions": [
+      "Phase is GameOverPhase",
+      "Alice has 2 points.",
+      "Bob has 3 points."
+    ]
+  },
+  "setup": {
+    "options": {},
+    "sets": {
+      "basic:1": 1
+    },
+    "elements": {
+      "small-follower": 7,
+      "farmers": true,
+      "keep-building": true
+    },
+    "rules": {},
+    "timer": null,
+    "start": [
+      {
+        "tile": "BA/RCr",
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      }
+    ],
+    "ai": false
+  },
+  "players": [
+    {
+      "name": "Alice",
+      "slot": 0
+    },
+    {
+      "name": "Bob",
+      "slot": 1
+    }
+  ],
+  "replay": [
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/RRR",
+        "rotation": "R0",
+        "position": [
+          1,
+          0
+        ]
+      },
+      "player": 0,
+      "clock": 26000
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            1,
+            0
+          ],
+          "location": "W",
+          "feature": "Road"
+        },
+        "meepleId": "0.small.1"
+      },
+      "player": 0,
+      "clock": 27000
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.51
+      },
+      "player": 0,
+      "clock": 28000
+    },
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/L",
+        "rotation": "R0",
+        "position": [
+          0,
+          1
+        ]
+      },
+      "player": 1,
+      "clock": 29000
+    },
+    {
+      "type": "DEPLOY_MEEPLE",
+      "payload": {
+        "pointer": {
+          "position": [
+            0,
+            1
+          ],
+          "location": "I",
+          "feature": "Monastery"
+        },
+        "meepleId": "1.small.1"
+      },
+      "player": 1,
+      "clock": 30000
+    },
+    {
+      "type": "COMMIT",
+      "payload": {
+        "random": 0.52
+      },
+      "player": 1,
+      "clock": 31000
+    }
+  ],
+  "gameAnnotations": {
+    "drawOrder": [
+      "BA/RRR",
+      "BA/L"
+    ],
+    "endTurn": 2
+  }
+}
