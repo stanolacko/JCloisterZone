@@ -36,6 +36,21 @@ jobs:
       - name: Build single-file bundle
         run: npm run build:bundle      # → bundle/jcz-engine.js (version baked in from package.json)
 
+      - name: Verify the bundle reports the tag version
+        # Guard against a bundle stamped with a stale/default version (this shipped once as
+        # "0.1.0"). Run from a temp dir: the repo's package.json "type: module" would make
+        # node treat the CJS bundle as ESM. --version must end with the tag's version.
+        run: |
+          mkdir -p /tmp/engine-verify
+          cp bundle/jcz-engine.js /tmp/engine-verify/
+          reported="$(cd /tmp/engine-verify && node jcz-engine.js --version)"
+          expected="${GITHUB_REF_NAME#v}"
+          echo "reported: $reported / expected: $expected"
+          case "$reported" in
+            *" $expected") ;;
+            *) echo "::error::bundle reports '$reported', expected version '$expected'"; exit 1 ;;
+          esac
+
       - name: Attach bundle to the release
         uses: softprops/action-gh-release@v2
         with:
