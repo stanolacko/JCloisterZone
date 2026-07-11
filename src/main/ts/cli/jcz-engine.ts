@@ -25,8 +25,9 @@ import { createServer, type Socket } from "node:net";
 import { DOMParser } from "@xmldom/xmldom";
 import { setDomParserFactory, type XmlDOMParser } from "../com/jcloisterzone/XmlUtils.js";
 import { Engine } from "../com/jcloisterzone/engine/Engine.js";
+import { ENGINE_VERSION } from "../version.js";
 
-const VERSION = "jcloisterzone-engine-ts 0.1.0";
+const VERSION = "jcloisterzone-engine-ts " + ENGINE_VERSION;
 
 if (process.argv.includes("--version")) {
   process.stdout.write(VERSION + "\n");
