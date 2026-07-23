@@ -233,6 +233,8 @@ export class StateGsonBuilder {
     }
     const fairyPtr = nf.getFairyDeployment();
     if (fairyPtr !== null) out.fairy = { placement: this.boardPtr(fairyPtr) };
+    const blackFairyPtr = nf.getBlackFairyDeployment();
+    if (blackFairyPtr !== null) out["black-fairy"] = { placement: this.boardPtr(blackFairyPtr) };
     const magePtr = nf.getMageDeployment();
     if (magePtr !== null) out.mage = { placement: this.boardPtr(magePtr) };
     const witchPtr = nf.getWitchDeployment();

@@ -40,6 +40,7 @@ import { WatchtowerCapability } from "../game/capability/WatchtowerCapability.js
 import { ShrineCapability } from "../game/capability/ShrineCapability.js";
 import { PhantomCapability } from "../game/capability/PhantomCapability.js";
 import { FairyCapability } from "../game/capability/FairyCapability.js";
+import { BlackFairyCapability } from "../game/capability/BlackFairyCapability.js";
 import { ChurchCapability } from "../game/capability/ChurchCapability.js";
 import { FerriesCapability } from "../game/capability/FerriesCapability.js";
 import { FieldCapability } from "../game/capability/FieldCapability.js";
@@ -124,6 +125,7 @@ const CAPABILITIES: Array<[string, CapClass]> = [
   ["shrine", ShrineCapability as unknown as CapClass],
   ["wagon", WagonCapability as unknown as CapClass],
   ["fairy", FairyCapability as unknown as CapClass],
+  ["black-fairy", BlackFairyCapability as unknown as CapClass],
   ["church", ChurchCapability as unknown as CapClass],
   ["monastery", MonasteriesCapability as unknown as CapClass],
   ["wind-rose", WindRoseCapability as unknown as CapClass],

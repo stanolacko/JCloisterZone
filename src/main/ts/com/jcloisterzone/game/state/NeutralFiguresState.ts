@@ -5,6 +5,7 @@ import type { FeaturePointer } from "../../board/pointer/FeaturePointer.js";
 import type { BigTop } from "../../figure/neutral/BigTop.js";
 import type { Count } from "../../figure/neutral/Count.js";
 import type { Courier } from "../../figure/neutral/Courier.js";
+import type { BlackFairy } from "../../figure/neutral/BlackFairy.js";
 import type { Donkey } from "../../figure/neutral/Donkey.js";
 import type { Dragon } from "../../figure/neutral/Dragon.js";
 import type { Fairy } from "../../figure/neutral/Fairy.js";
@@ -25,6 +26,7 @@ export class NeutralFiguresState {
     private readonly bigtop: BigTop | null = null,
     private readonly donkey: Donkey | null = null,
     private readonly courier: Courier | null = null,
+    private readonly blackFairy: BlackFairy | null = null,
     private readonly deployedNeutralFigures: DeployedMap = LinkedHashMap.empty<
       NeutralFigure<BoardPointer>,
       BoardPointer
@@ -40,6 +42,7 @@ export class NeutralFiguresState {
     bigtop: BigTop | null;
     donkey: Donkey | null;
     courier: Courier | null;
+    blackFairy: BlackFairy | null;
     deployedNeutralFigures: DeployedMap;
   }>): NeutralFiguresState {
     return new NeutralFiguresState(
@@ -51,6 +54,7 @@ export class NeutralFiguresState {
       overrides.bigtop !== undefined ? overrides.bigtop : this.bigtop,
       overrides.donkey !== undefined ? overrides.donkey : this.donkey,
       overrides.courier !== undefined ? overrides.courier : this.courier,
+      overrides.blackFairy !== undefined ? overrides.blackFairy : this.blackFairy,
       overrides.deployedNeutralFigures ?? this.deployedNeutralFigures,
     );
   }
@@ -60,6 +64,9 @@ export class NeutralFiguresState {
   }
   setFairy(fairy: Fairy | null): NeutralFiguresState {
     return this.copy({ fairy });
+  }
+  setBlackFairy(blackFairy: BlackFairy | null): NeutralFiguresState {
+    return this.copy({ blackFairy });
   }
   setMage(mage: Mage | null): NeutralFiguresState {
     return this.copy({ mage });
@@ -93,6 +100,7 @@ export class NeutralFiguresState {
       this.bigtop,
       this.donkey,
       this.courier,
+      this.blackFairy,
     ];
     for (const fig of all) {
       if (fig !== null && figureId === fig.getId()) {
@@ -119,6 +127,12 @@ export class NeutralFiguresState {
   }
   getFairyDeployment(): BoardPointer | null {
     return this.deploymentOf(this.fairy as unknown as NeutralFigure<BoardPointer>);
+  }
+  getBlackFairy(): BlackFairy | null {
+    return this.blackFairy;
+  }
+  getBlackFairyDeployment(): BoardPointer | null {
+    return this.deploymentOf(this.blackFairy as unknown as NeutralFigure<BoardPointer>);
   }
   getMage(): Mage | null {
     return this.mage;

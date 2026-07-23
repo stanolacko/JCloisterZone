@@ -25,6 +25,7 @@ import { TowerCapability } from "../capability/TowerCapability.js";
 import { TowerCapturePhase } from "./TowerCapturePhase.js";
 import { Donkey } from "../../figure/neutral/Donkey.js";
 import { Fairy } from "../../figure/neutral/Fairy.js";
+import { BlackFairy } from "../../figure/neutral/BlackFairy.js";
 import type { NeutralFigure } from "../../figure/neutral/NeutralFigure.js";
 import { BridgeCapability } from "../capability/BridgeCapability.js";
 import { TunnelCapability } from "../capability/TunnelCapability.js";
@@ -192,7 +193,7 @@ export class ActionPhase extends AbstractActionPhase {
   handleMoveNeutralFigure(state: GameState, msg: MoveNeutralFigureMessage): StepResult {
     const ptr = msg.getTo();
     const fig = state.getNeutralFigures().getById(msg.getFigureId()!);
-    if (fig instanceof Fairy) {
+    if (fig instanceof Fairy || fig instanceof BlackFairy) {
       state = new MoveNeutralFigure(
         fig as unknown as NeutralFigure<BoardPointer>,
         ptr,

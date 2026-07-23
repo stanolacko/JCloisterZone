@@ -33,6 +33,7 @@ import { CourierPhase } from "./phase/CourierPhase.js";
 import type { Phase } from "./phase/Phase.js";
 import { RewindActionContainer } from "./phase/RewindActionContainer.js";
 import { FairyPhase } from "./phase/FairyPhase.js";
+import { BlackFairyPhase } from "./phase/BlackFairyPhase.js";
 import { ScoringPhase } from "./phase/ScoringPhase.js";
 import { ShepherdPhase } from "./phase/ShepherdPhase.js";
 import { ShepherdPlacementConfirmPhase } from "./phase/ShepherdPlacementConfirmPhase.js";
@@ -56,6 +57,7 @@ import { CourierCapability } from "./capability/CourierCapability.js";
 import { Rule } from "./Rule.js";
 import { SheepCapability } from "./capability/SheepCapability.js";
 import { FairyCapability } from "./capability/FairyCapability.js";
+import { BlackFairyCapability } from "./capability/BlackFairyCapability.js";
 import { WagonCapability } from "./capability/WagonCapability.js";
 import type { GameState } from "./state/GameState.js";
 
@@ -185,6 +187,9 @@ export class GameStatePhaseReducer {
     next = tileFromSupplyPhase;
     if (setup.contains(FairyCapability as never)) {
       next = new FairyPhase(rng, next);
+    }
+    if (setup.contains(BlackFairyCapability as never)) {
+      next = new BlackFairyPhase(rng, next);
     }
 
     cleanUpTurnPhase.setDefaultNext(next); // after last phase, the first is default
