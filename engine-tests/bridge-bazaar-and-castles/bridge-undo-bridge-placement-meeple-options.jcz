@@ -1,0 +1,73 @@
+{
+  "appVersion": "6.3.0-alpha.17",
+  "gameId": "1",
+  "name": "",
+  "initialRandom": 0.22490140781766166,
+  "created": "2026-07-25T11:33:30.245Z",
+  "clock": 53077,
+  "setup": {
+    "sets": {
+      "basic:1": 1
+    },
+    "elements": {
+      "small-follower": 7,
+      "farmers": true,
+      "bridge": 1
+    },
+    "rules": {},
+    "timer": null,
+    "start": [
+      {
+        "tile": "BA/RCr",
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      }
+    ],
+    "ai": false,
+    "options": {
+      "randomizeSeating": true
+    }
+  },
+  "players": [
+    {
+      "name": "Betty",
+      "slot": 2,
+      "ai": false
+    }
+  ],
+  "chat": [],
+  "replay": [
+    {
+      "type": "PLACE_TILE",
+      "payload": {
+        "tileId": "BA/LR",
+        "rotation": "R90",
+        "position": [
+          1,
+          0
+        ]
+      },
+      "player": 0,
+      "clock": 2712
+    }
+  ],
+  "gameAnnotations": {
+    "drawOrder": [
+      "BA/LR"
+    ]
+  },
+  "test": {
+    "description": "Bridge Undo Bridge Placement Meeple Options",
+    "assertions": [
+      "Betty has 0 points.",
+      "Phase is ActionPhase",
+      "Turn player is Betty",
+      "Active player is Betty",
+      "Player can pass",
+      "Available action Meeple for SmallFollower",
+      "Meeple SmallFollower options: {Monastery,I,[1,0]}; {Road,W,[1,0]}; {Field,NL.NR.EL.ER.SL.SR.WL.WR,[1,0]}",
+      "Undo is allowed"
+    ]
+  }
+}
