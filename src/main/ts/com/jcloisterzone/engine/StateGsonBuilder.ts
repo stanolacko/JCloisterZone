@@ -651,12 +651,22 @@ export class StateGsonBuilder {
           }
         } else {
           // non-dragon neutral move; note Java emits getTo() for BOTH from and to here.
-          turnEvents.push({
+          const entry: Record<string, unknown> = {
             type: "neutral-moved",
             figure: ev.getNeutralFigure().getId(),
             from: this.boardPtr(ev.getTo()),
             to: this.boardPtr(ev.getTo()),
-          });
+          };
+          // TS-only: the meeple the figure was placed next to (captured at move time), so the UI can
+          // still render it after it is removed, without parsing the meeple id. Stripped in parity.
+          const host = ev.getHostMeeple();
+          if (host !== null) {
+            entry.hostMeeple = {
+              type: simpleName(host.constructor as ClassToken),
+              player: host.getPlayer().getIndex(),
+            };
+          }
+          turnEvents.push(entry);
         }
       } else if (ev instanceof FlierRollEvent) {
         turnEvents.push({
@@ -767,21 +777,39 @@ export class StateGsonBuilder {
   /** Serialize one player action (port of the per-action serializers). */
   private serializeAction(action: PlayerAction<unknown>): Record<string, unknown> {
     if (action instanceof TilePlacementAction) {
-      const byPos = new Map<string, { pos: Position; rots: number[] }>();
+      const byPos = new Map<
+        string,
+        { pos: Position; rots: number[]; bridges: Record<number, unknown> }
+      >();
       for (const opt of action.getOptions()) {
         const p = opt.getPosition();
         const key = `${p.x},${p.y}`;
         let g = byPos.get(key);
         if (!g) {
-          g = { pos: p, rots: [] };
+          g = { pos: p, rots: [], bridges: {} };
           byPos.set(key, g);
         }
-        g.rots.push(this.rotationToPrimitive(opt.getRotation()));
+        const rot = this.rotationToPrimitive(opt.getRotation());
+        g.rots.push(rot);
+        // A rotation that is only legal because a bridge is auto-placed carries a
+        // mandatoryBridge. Emit it keyed by rotation so the client can warn the player
+        // and preview the bridge. Its position may differ from the tile position
+        // (adjacent-tile case), so serialize the full FeaturePointer.
+        const bridge = opt.getMandatoryBridge();
+        if (bridge !== null) {
+          g.bridges[rot] = this.fp(bridge);
+        }
       }
-      const options = [...byPos.values()].map((g) => ({
-        position: this.pos(g.pos),
-        rotations: g.rots.slice().sort((a, b) => a - b),
-      }));
+      const options = [...byPos.values()].map((g) => {
+        const o: Record<string, unknown> = {
+          position: this.pos(g.pos),
+          rotations: g.rots.slice().sort((a, b) => a - b),
+        };
+        if (Object.keys(g.bridges).length > 0) {
+          o.bridges = g.bridges;
+        }
+        return o;
+      });
       return { type: "TilePlacement", tileId: action.getTile().getId(), options };
     }
     if (action instanceof MeepleAction) {
