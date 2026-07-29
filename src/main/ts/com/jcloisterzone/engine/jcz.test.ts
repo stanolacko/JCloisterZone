@@ -41,6 +41,7 @@ interface Jcz {
   setup: {
     addons?: unknown;
     sets: Record<string, number>;
+    tiles?: Record<string, number> | null;
     elements: Record<string, unknown>;
     rules: Record<string, unknown>;
     start: Array<{ tile: string; x: number; y: number; rotation: number }>;
@@ -109,6 +110,7 @@ function expandRules(
 function buildSetupMessage(jcz: Jcz, xmlContents: string[]): GameSetupMessage {
   const msg = new GameSetupMessage();
   msg.sets = jcz.setup.sets;
+  msg.tiles = jcz.setup.tiles ?? null;
   const elements = expandElements(jcz.setup.sets, jcz.setup.elements ?? {}, xmlContents);
   msg.elements = elements;
   msg.rules = expandRules(jcz.setup.sets, jcz.setup.rules ?? {}, elements);
@@ -133,6 +135,7 @@ function runReplay(jcz: Jcz): number[] {
   const reducer = new GameStatePhaseReducer(setup, jcz.initialRandom);
   const builder = new GameStateBuilder(xmlContents, setup, jcz.players.length, jcz.initialRandom);
   builder.setGameAnnotations(jcz.gameAnnotations ?? null);
+  builder.setTileOverrides(jcz.setup.tiles ?? null);
 
   let state = builder.createInitialState();
   const firstPhase = reducer.getFirstPhase();

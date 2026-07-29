@@ -167,6 +167,8 @@ function stripScoredMeeples(v: unknown): void {
       delete o.majority;
       delete o.hillMode;
     }
+    // TS-only enrichment on the neutral-moved event (the host meeple); Java goldens lack it
+    delete o.hostMeeple;
     for (const k of Object.keys(o)) stripScoredMeeples(o[k]);
   }
 }

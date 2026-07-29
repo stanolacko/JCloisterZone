@@ -63,6 +63,38 @@ describe("engine-side AI (LegacyAiPlayer)", () => {
     expect(afterMove).not.toBeNull();
   });
 
+  it("reads `player` from the top level of the message (live-wire shape)", () => {
+    // Regression: the live client sends `player` at the TOP LEVEL of the AI message
+    // (message.player = action.player; payload holds only {gameId}). The engine must
+    // read it there — reading payload.player left it null and the AI never moved.
+    const jcz = JSON.parse(
+      readFileSync(join(REPO, "engine-tests/basic/city-and-road-scoring.jcz"), "utf8"),
+    ) as { setup: Record<string, unknown>; players: unknown[]; initialRandom: number; gameAnnotations: unknown };
+    const xml = resolve(join(REPO, "xmls/basic.xml"));
+    const engine = new Engine((p) => readFileSync(p, "utf8"));
+    engine.processInput("%load " + xml);
+    engine.processInput(
+      JSON.stringify({
+        type: "GAME_SETUP",
+        payload: {
+          ...jcz.setup,
+          players: jcz.players.length,
+          initialRandom: jcz.initialRandom,
+          gameAnnotations: jcz.gameAnnotations,
+        },
+      }),
+    );
+    // top-level player (NOT nested in payload), exactly like the client's apply()
+    const aiResp = engine.processInput(
+      JSON.stringify({ type: "AI", payload: { gameId: "g1" }, player: 0, seq: 0 }),
+    );
+    expect(aiResp).not.toBeNull();
+    const parsed = JSON.parse(aiResp!) as { type: string; payload: { player: number; type: string } };
+    expect(parsed.type).toBe("AI_MESSAGE");
+    expect(parsed.payload.player).toBe(0);
+    expect(parsed.payload.type).toBe("PLACE_TILE");
+  });
+
   it("does not answer an AI request for a non-active player", () => {
     const jcz = JSON.parse(
       readFileSync(join(REPO, "engine-tests/basic/city-and-road-scoring.jcz"), "utf8"),
