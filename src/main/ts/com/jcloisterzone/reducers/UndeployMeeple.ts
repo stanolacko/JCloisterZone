@@ -53,6 +53,18 @@ export class UndeployMeeple extends AbstractUndeploy {
         state = state.setNeutralFigures(nfState);
       }
     }
+    // Black Fairy: unbind it from a returned meeple too (stays lonely on the feature).
+    const blackFairyPtr = nfState.getBlackFairyDeployment();
+    if (blackFairyPtr instanceof MeeplePointer) {
+      if (this.meeple.getId() === blackFairyPtr.getMeepleId()) {
+        const mp = new MeeplePointer(blackFairyPtr.asFeaturePointer(), null);
+        const deployed = nfState.getDeployedNeutralFigures();
+        nfState = nfState.setDeployedNeutralFigures(
+          deployed.put(nfState.getBlackFairy()!, mp) as typeof deployed,
+        );
+        state = state.setNeutralFigures(nfState);
+      }
+    }
     return state;
   }
 

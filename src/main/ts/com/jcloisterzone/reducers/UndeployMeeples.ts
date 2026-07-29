@@ -58,6 +58,23 @@ export class UndeployMeeples implements Reducer {
         }
       }
     }
+    // Black Fairy: same — unbind it from a returned meeple so it stays "lonely" on the feature,
+    // instead of visually following the returned meeple to its next placement.
+    const blackFairyPtr = nfState.getBlackFairyDeployment();
+    if (blackFairyPtr instanceof MeeplePointer) {
+      for (const meeple of meeples) {
+        if (meeple.getId() === blackFairyPtr.getMeepleId()) {
+          const mp = new MeeplePointer(blackFairyPtr.asFeaturePointer(), null);
+          nfState = nfState.setDeployedNeutralFigures(
+            nfState.getDeployedNeutralFigures().put(nfState.getBlackFairy()!, mp) as ReturnType<
+              typeof nfState.getDeployedNeutralFigures
+            >,
+          );
+          state = state.setNeutralFigures(nfState);
+          break;
+        }
+      }
+    }
     return state;
   }
 
