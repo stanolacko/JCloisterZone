@@ -1,4 +1,5 @@
 import type { BoardPointer } from "../board/pointer/BoardPointer.js";
+import type { Meeple } from "../figure/Meeple.js";
 import type { NeutralFigure } from "../figure/neutral/NeutralFigure.js";
 import { PlayEvent, type PlayEventMeta } from "./PlayEvent.js";
 
@@ -11,6 +12,9 @@ export class NeutralFigureMoved extends PlayEvent {
     private readonly neutralFigure: NeutralFigure<BoardPointer>,
     private readonly from: BoardPointer | null,
     private readonly to: BoardPointer | null,
+    // the meeple the figure was placed next to, captured now (while it is on the board) so the UI can
+    // still show it after it is removed — without the client having to parse/guess its type. TS-only.
+    private readonly hostMeeple: Meeple | null = null,
   ) {
     super(metadata);
   }
@@ -23,5 +27,8 @@ export class NeutralFigureMoved extends PlayEvent {
   }
   getNeutralFigure(): NeutralFigure<BoardPointer> {
     return this.neutralFigure;
+  }
+  getHostMeeple(): Meeple | null {
+    return this.hostMeeple;
   }
 }

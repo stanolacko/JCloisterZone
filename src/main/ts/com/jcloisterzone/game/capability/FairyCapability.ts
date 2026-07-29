@@ -7,7 +7,7 @@ import type { FeaturePointer } from "../../board/pointer/FeaturePointer.js";
 import { MeeplePointer } from "../../board/pointer/MeeplePointer.js";
 import { ExprItem } from "../../event/ExprItem.js";
 import { PointsExpression } from "../../event/PointsExpression.js";
-import { ReceivedPoints } from "../../event/ScoreEvent.js";
+import { ReceivedPoints, type ScoredMeeple } from "../../event/ScoreEvent.js";
 import { Monastery } from "../../feature/Monastery.js";
 import type { Scoreable } from "../../feature/Scoreable.js";
 import { Follower } from "../../figure/Follower.js";
@@ -96,7 +96,11 @@ export class FairyCapability extends Capability<void> {
         "fairy.completed",
         new ExprItem("fairy", FairyCapability.FAIRY_POINTS_FINISHED_OBJECT),
       );
-      return bonusPoints.append(new ReceivedPoints(expr, m.getPlayer(), t._2)) as List<ReceivedPoints>;
+      // attach the host meeple so the UI can show which meeple earned the bonus
+      const meeples = List.of(new Tuple2(m, t._2)) as List<ScoredMeeple>;
+      return bonusPoints.append(
+        new ReceivedPoints(expr, m.getPlayer(), t._2, meeples),
+      ) as List<ReceivedPoints>;
     }
     return bonusPoints;
   }

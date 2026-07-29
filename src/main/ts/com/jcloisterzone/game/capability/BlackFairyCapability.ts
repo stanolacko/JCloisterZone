@@ -6,7 +6,7 @@ import type { FeaturePointer } from "../../board/pointer/FeaturePointer.js";
 import { MeeplePointer } from "../../board/pointer/MeeplePointer.js";
 import { ExprItem } from "../../event/ExprItem.js";
 import { PointsExpression } from "../../event/PointsExpression.js";
-import { ReceivedPoints } from "../../event/ScoreEvent.js";
+import { ReceivedPoints, type ScoredMeeple } from "../../event/ScoreEvent.js";
 import { Monastery } from "../../feature/Monastery.js";
 import type { Scoreable } from "../../feature/Scoreable.js";
 import { Follower } from "../../figure/Follower.js";
@@ -30,7 +30,7 @@ export class BlackFairyCapability extends Capability<void> {
   }
 
   override onActionPhaseEntered(state: GameState): GameState {
-    const onTile = state.getStringRule(Rule.FAIRY_PLACEMENT) === "on-tile";
+    const onTile = state.getStringRule(Rule.BLACK_FAIRY_PLACEMENT) === "on-tile";
     const blackFairy = state.getNeutralFigures().getBlackFairy()!;
     const ptr = state.getNeutralFigures().getBlackFairyDeployment();
 
@@ -41,7 +41,6 @@ export class BlackFairyCapability extends Capability<void> {
         // any player's follower — no active-player filter (unlike the Fairy)
         if (!(t._1 instanceof Follower)) continue;
         const p = t._2.getPosition();
-        if (ptr !== null && p.equals(ptr.getPosition())) continue; // not its own current tile
         const key = `${p.x},${p.y}`;
         if (!seen.has(key)) {
           seen.add(key);
@@ -95,7 +94,11 @@ export class BlackFairyCapability extends Capability<void> {
         "black-fairy.completed",
         new ExprItem("black-fairy", BlackFairyCapability.BLACK_FAIRY_POINTS_FINISHED_OBJECT),
       );
-      return bonusPoints.append(new ReceivedPoints(expr, m.getPlayer(), t._2)) as List<ReceivedPoints>;
+      // attach the host meeple so the UI can show/pulse which meeple was cursed
+      const meeples = List.of(new Tuple2(m, t._2)) as List<ScoredMeeple>;
+      return bonusPoints.append(
+        new ReceivedPoints(expr, m.getPlayer(), t._2, meeples),
+      ) as List<ReceivedPoints>;
     }
     return bonusPoints;
   }
